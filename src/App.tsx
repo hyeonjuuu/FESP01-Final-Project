@@ -1,12 +1,13 @@
 import React from "react";
 import "./tailwind.css";
 import VideoMain from "./layout/VideoMain";
-import VideoDetail from './layout/VideoDetail';
+import VideoDetail from "./layout/VideoDetail";
+import Header from "./layout/Header";
 
 function App() {
   return (
     <div>
-      {/* <h1 className="text-red-400">안녕</h1> */}
+      {/* <Header /> */}
       <VideoMain />
       <VideoDetail />
     </div>
