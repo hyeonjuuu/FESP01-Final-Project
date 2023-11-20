@@ -1,16 +1,12 @@
 import React from "react";
+import SearchBar from "../components/SearchBar";
 
-function header() {
+function Header() {
   return (
-    <div>
-      <div>
-        <form action="post">
-          <input type="text" />
-          <button type="button"></button>
-        </form>
-      </div>
+    <div className="flex justify-center">
+      <SearchBar />
     </div>
   );
 }
 
-export default header;
+export default Header;
