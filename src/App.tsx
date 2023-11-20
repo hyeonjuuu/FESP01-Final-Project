@@ -1,8 +1,7 @@
 import React from "react";
 import "./tailwind.css";
-import VideoMain from "./layout/VideoMain";
-import VideoDetail from "./layout/VideoDetail";
-import Header from "./layout/Header";
+import VideoMain from "./pages/VideoMain";
+import VideoDetail from "./pages/VideoDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout/RootLayout";
 import GetData from "./pages/GetData";
