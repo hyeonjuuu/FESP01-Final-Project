@@ -27,20 +27,21 @@ function GetData() {
           {/* 채널id : {item.snippet.channelId} */}
           <Link
             to={`/detail/${item.id}`}
-            state={{ channelId: item.snippet.channelId }}
+            // state={{ channelId: item.snippet.channelId }}
+            state={{ item: item }}
           >
             <img
               src={item.snippet.thumbnails.default.url}
               alt=""
               width={item.snippet.thumbnails.default.width}
               height={item.snippet.thumbnails.default.height}
-              aria-labelledby="title"
+              aria-labelledby={`title-${item.id}`}
             ></img>
           </Link>
-          <li>채널이름: {item.snippet.channelTitle}</li>
-          <li id="title">제목: {item.snippet.title}</li>
-          <li>상세설명: {item.snippet.description}</li>
-          <li>생성날짜: {item.snippet.publishedAt}</li>
+          <li>채널 이름: {item.snippet.channelTitle}</li>
+          <li id={`title-${item.id}`}>제목: {item.snippet.title}</li>
+          <li>상세 설명: {item.snippet.description}</li>
+          <li>생성 날짜: {item.snippet.publishedAt}</li>
         </ul>
       ))}
     </div>
