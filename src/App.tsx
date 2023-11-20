@@ -1,14 +1,10 @@
 import React from "react";
 import "./tailwind.css";
-import GetData from "./pages/GetData";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
 function App() {
-  return (
-    <div>
-      <h1 className="text-red-400">안녕</h1>
-      <GetData />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
