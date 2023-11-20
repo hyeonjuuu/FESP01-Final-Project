@@ -1,6 +1,6 @@
-import React from "react-router-dom";
+import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../header";
+import Header from "../Header";
 
 export const RootLayout = (): JSX.Element => {
   return (
