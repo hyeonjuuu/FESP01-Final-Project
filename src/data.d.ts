@@ -17,6 +17,7 @@ interface VideoData {
           height: number;
         };
       };
+      channelTitle: string;
     };
   }[];
   nextPageToken: string;
