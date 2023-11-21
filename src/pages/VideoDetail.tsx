@@ -72,10 +72,18 @@ function VideoDetail() {
         <p>해당 영상</p>
         <ul key={location.state.item.id}>
           <img
-            src={location.state.item.snippet.thumbnails.default.url}
+            src={
+              size === "sm"
+                ? location.state.item.snippet.thumbnails.default.url
+                : size === "md"
+                  ? location.state.item.snippet.thumbnails.medium.url
+                  : size === "lg"
+                    ? location.state.item.snippet.thumbnails.high.url
+                    : size === "xl"
+                      ? location.state.item.snippet.thumbnails.standard.url
+                      : location.state.item.snippet.thumbnails.default.url
+            }
             alt=""
-            // width={location.state.item.snippet.thumbnails.default.width}
-            // height={location.state.item.snippet.thumbnails.default.height}
             aria-labelledby="title"
           ></img>
           <li id="title">영상 제목: {location.state.item.snippet.title}</li>
