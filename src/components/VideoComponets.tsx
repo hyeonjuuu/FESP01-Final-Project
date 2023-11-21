@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import defaultImage from "@assets/480x270.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import getImage from "../utils/getImage";
+import getImage from "@utils/getImage";
 
 interface VideoComponentsProps {
   detail: string;
@@ -10,13 +9,16 @@ interface VideoComponentsProps {
 }
 
 function VideoComponets({ detail, page }: VideoComponentsProps) {
+  const [size, setSize] = useState("sm");
+  const [image, setImage] = useState<
+    { url: string; width: number; height: number }[]
+  >([]);
   const [data, setData] = useState<VideoData | null>(null);
   const currentTime = new Date();
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/videos/popular.json");
-      // console.log(response);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -37,12 +39,7 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
     return monthsAgo;
   });
 
-  console.log(publishTime);
-
-  const [size, setSize] = useState("sm");
-  const [image, setImage] = useState<
-    { url: string; width: number; height: number }[]
-  >([]);
+  // console.log(publishTime);
 
   // 화면 크기에 따라 size 값을 변경하는 함수
   const updateSize = () => {
@@ -86,7 +83,17 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
         <div key={item.id} className="sm:w-[70%] md:w-full">
           <Link to={`/detail/${item.id}`} state={{ item: item }}>
             <img
-              src={item.snippet.thumbnails.default.url}
+              src={
+                size === "sm"
+                  ? item.snippet.thumbnails.default.url
+                  : size === "md"
+                    ? item.snippet.thumbnails.medium.url
+                    : size === "lg"
+                      ? item.snippet.thumbnails.high.url
+                      : size === "xl"
+                        ? item.snippet.thumbnails.standard.url
+                        : item.snippet.thumbnails.default.url
+              }
               alt={item.snippet.title}
               className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px]"
             ></img>
@@ -116,34 +123,6 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
         </div>
       ))}
     </>
-    <div className="mx-auto">
-      {image.map((img, index) => (
-        <img
-          key={index}
-          src={img.url}
-          alt={`비디오 썸네일 ${index}`}
-          className={`w-[${img.width}px] h-[${img.height}px] border-neutral-500 border-[0.5px]`}
-        />
-      ))}
-      <div className="pt-2">
-        <dl className=" flex flex-col">
-          <dt className="text-lg font-semibold">제목</dt>
-          <dd className={`text-sm ${page === "main" ? "order-first" : ""}`}>
-            채널 이름
-          </dd>
-          {detail === "상세설명" ? (
-            <dd className="text-base">상세 설명</dd>
-          ) : detail === "생성날짜" ? (
-            <dd className="text-sm">생성 날짜</dd>
-          ) : (
-            <>
-              <dd className="text-base">상세 설명</dd>
-              <dd className="text-sm">생성 날짜</dd>
-            </>
-          )}
-        </dl>
-      </div>
-    </div>
   );
 }
 
