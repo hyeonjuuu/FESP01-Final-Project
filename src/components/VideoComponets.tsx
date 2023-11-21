@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import defaultImage from "@assets/480x270.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import getImage from "@utils/getImage";
 
 interface VideoComponentsProps {
   detail: string;
@@ -9,13 +9,16 @@ interface VideoComponentsProps {
 }
 
 function VideoComponets({ detail, page }: VideoComponentsProps) {
+  const [size, setSize] = useState("sm");
+  const [image, setImage] = useState<
+    { url: string; width: number; height: number }[]
+  >([]);
   const [data, setData] = useState<VideoData | null>(null);
   const currentTime = new Date();
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/videos/popular.json");
-      // console.log(response);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -36,7 +39,43 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
     return monthsAgo;
   });
 
-  console.log(publishTime);
+  // console.log(publishTime);
+
+  // 화면 크기에 따라 size 값을 변경하는 함수
+  const updateSize = () => {
+    const width = window.innerWidth;
+
+    if (width < 768) {
+      setSize("sm");
+    } else if (768 <= width && width < 1024) {
+      setSize("md");
+    } else if (1024 <= width) {
+      setSize("lg");
+    } else {
+      setSize("xl");
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 size 값을 업데이트
+    updateSize();
+
+    // 화면 크기가 변경될 때마다 size 값을 업데이트하는 이벤트 리스너 등록
+    window.addEventListener("resize", updateSize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
+  }, [size]);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const result = await getImage(size);
+      setImage(result);
+    };
+    fetchImage();
+  }, [size]);
 
   return (
     <>
@@ -44,7 +83,17 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
         <div key={item.id} className="sm:w-[70%] md:w-full">
           <Link to={`/detail/${item.id}`} state={{ item: item }}>
             <img
-              src={item.snippet.thumbnails.default.url}
+              src={
+                size === "sm"
+                  ? item.snippet.thumbnails.default.url
+                  : size === "md"
+                    ? item.snippet.thumbnails.medium.url
+                    : size === "lg"
+                      ? item.snippet.thumbnails.high.url
+                      : size === "xl"
+                        ? item.snippet.thumbnails.standard.url
+                        : item.snippet.thumbnails.default.url
+              }
               alt={item.snippet.title}
               className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px]"
             ></img>

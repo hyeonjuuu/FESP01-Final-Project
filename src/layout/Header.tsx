@@ -2,6 +2,7 @@ import React from "react";
 import SearchBar from "@components/SearchBar";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BackButton from "../components/BackButton";
 
 function Header() {
   return (
@@ -14,6 +15,7 @@ function Header() {
         <FontAwesomeIcon icon={faUser} />
         <span className="w-11">로그인</span>
       </button>
+      <BackButton />
     </div>
   );
 }
