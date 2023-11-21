@@ -15,10 +15,10 @@ function SearchBar() {
     }
   };
   return (
-    <div className="flex justify-center items-center border rounded-[35px] w-[39.375rem] h-[2.5rem]">
-      <form action="post" className="flex justify-between w-[39.375rem]">
+    <div className=" border rounded-[35px] w-[39.375rem] h-[2.5rem]">
+      <form action="post" className="flex justify-center">
         <div
-          className={`w-[37.5rem] h-[2.5rem] ${
+          className={` h-[2.5rem] ${
             searchBarClicked ? "border-[#e6e6e6]" : "border-[#1A62B9]"
           } border flex items-center rounded-s-[35px] pl-4`}
         >
@@ -29,7 +29,7 @@ function SearchBar() {
           <input
             type="text"
             placeholder="검색"
-            className="w-[30rem] mx-4 focus:outline-none"
+            // className="w-[30rem] mx-4 focus:outline-none"
             onClick={handleSearchBarClicked}
           />
         </div>

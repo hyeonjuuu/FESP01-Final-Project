@@ -6,7 +6,7 @@ interface VideoData {
     id: string;
     kind: string;
     snippet: {
-      publishedAt: string;
+      publishedAt: number;
       channelId: string;
       title: string;
       description: string;
@@ -18,6 +18,10 @@ interface VideoData {
         };
       };
       channelTitle: string;
+      localized: {
+        title: string;
+        description: string;
+      };
     };
   }[];
   nextPageToken: string;
