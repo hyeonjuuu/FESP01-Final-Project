@@ -1,5 +1,5 @@
 import React from "react";
-import VideoComponets from "../components/VideoComponets";
+import VideoComponets from "@components/VideoComponets";
 
 function VideoDetail() {
   return (
