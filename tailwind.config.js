@@ -4,6 +4,15 @@ export default {
   theme: {
     extend: {},
     screens: {
+      sm: "320px",
+
+      md: "768px",
+
+      lg: "1024px",
+
+      xl: "1280px",
+
+      "2xl": "1536px",
       // 데스크탑
       pc: { min: "1025px", max: "1920px" },
       // 테블릿
