@@ -74,8 +74,8 @@ function VideoDetail() {
           <img
             src={location.state.item.snippet.thumbnails.default.url}
             alt=""
-            width={location.state.item.snippet.thumbnails.default.width}
-            height={location.state.item.snippet.thumbnails.default.height}
+            // width={location.state.item.snippet.thumbnails.default.width}
+            // height={location.state.item.snippet.thumbnails.default.height}
             aria-labelledby="title"
           ></img>
           <li id="title">영상 제목: {location.state.item.snippet.title}</li>
@@ -85,16 +85,18 @@ function VideoDetail() {
 
         <p>관련된 영상</p>
         <div className="sm:flex sm:flex-col sm:items-center  mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
-          {detailData?.items.map((item) => (
-            <VideoComponets
-              detail="상세설명"
-              page="detail"
-              size={size}
-              image={image}
-              item={item}
-              key={item.id.videoId} // <-- 수정된 부분
-            />
-          ))}
+          {detailData?.items
+            .slice(1)
+            .map((item) => (
+              <VideoComponets
+                detail="상세설명"
+                page="detail"
+                size={size}
+                image={image}
+                item={item}
+                key={item.id.videoId}
+              />
+            ))}
         </div>
       </div>
     </div>
