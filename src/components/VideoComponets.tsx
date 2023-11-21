@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import defaultImage from "../assets/480x270.svg";
+// import defaultImage from "@assets/480x270.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
