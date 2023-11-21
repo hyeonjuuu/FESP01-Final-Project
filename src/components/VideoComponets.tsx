@@ -14,8 +14,8 @@ function VideoComponets({
 
   return (
     <>
-      <div key={item.id} className="sm:w-[70%] md:w-full">
-        <Link to={`/detail/${item.id}`} state={{ item: item }}>
+      <div className="sm:w-[70%] md:w-full">
+        <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
           <img
             src={
               size === "sm"

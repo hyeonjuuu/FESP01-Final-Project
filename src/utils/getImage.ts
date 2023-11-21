@@ -40,38 +40,27 @@ async function getImage(size: string) {
       case "sm":
         return {
           url: item.snippet?.thumbnails.default.url,
-          // width: item.snippet?.thumbnails.default.width,
-          // height: item.snippet?.thumbnails.default.height,
-          size: "sm", // 추가된 부분
+          size: "sm",
         };
       case "md":
         return {
           url: item.snippet?.thumbnails.medium.url,
-          // width: item.snippet?.thumbnails.medium.width,
-          // height: item.snippet?.thumbnails.medium.height,
-          size: "md", // 추가된 부분
+          size: "md",
         };
       case "lg":
         return {
           url: item.snippet?.thumbnails.high.url,
-          // width: item.snippet?.thumbnails.high.width,
-          // height: item.snippet?.thumbnails.high.height,
-          size: "lg", // 추가된 부분
+          size: "lg",
         };
       case "xl":
         return {
           url: item.snippet?.thumbnails.standard.url,
-          // width: item.snippet?.thumbnails.standard.width,
-          // height: item.snippet?.thumbnails.standard.height,
-          size: "xl", // 추가된 부분
+          size: "xl",
         };
       default:
-        // 기본 값
         return {
           url: item.snippet.thumbnails.default.url,
-          // width: item.snippet.thumbnails.default.width,
-          // height: item.snippet.thumbnails.default.height,
-          size: "default", // 추가된 부분
+          size: "default",
         };
     }
   });
