@@ -1,46 +1,16 @@
-import React, { useEffect, useState } from "react";
-// import defaultImage from "@assets/480x270.svg";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
 
 interface VideoComponentsProps {
   detail: string;
   page: string;
+  item?: Item;
 }
 
-function VideoComponets({ detail, page }: VideoComponentsProps) {
-  const [data, setData] = useState<VideoData | null>(null);
-  const currentTime = new Date();
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("/videos/popular.json");
-      // console.log(response);
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const publishTime = data?.items.map((item) => {
-    const publishDate = new Date(item.snippet.publishedAt);
-    const monthsAgo =
-      currentTime.getMonth() -
-      publishDate.getMonth() +
-      12 * (currentTime.getFullYear() - publishDate.getFullYear());
-
-    return monthsAgo;
-  });
-
-  console.log(publishTime);
-
-  return (
-    <>
-      {data?.items.map((item) => (
+function VideoComponets({ detail, page, item }: VideoComponentsProps) {
+  if (item) {
+    return (
+      <>
         <div key={item.id} className="sm:w-[70%] md:w-full">
           <Link to={`/detail/${item.id}`} state={{ item: item }}>
             <img
@@ -60,7 +30,7 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
               {detail === "상세설명" ? (
                 <dd className="text-base ">{item.snippet.description}</dd>
               ) : detail === "생성날짜" ? (
-                <dd className="text-sm ">{item.snippet.publishedAt}</dd>
+                <dd className="text-sm ">{Number(item.snippet.publishedAt)}</dd>
               ) : (
                 <>
                   <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate ">
@@ -72,9 +42,9 @@ function VideoComponets({ detail, page }: VideoComponentsProps) {
             </dl>
           </div>
         </div>
-      ))}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 export default VideoComponets;

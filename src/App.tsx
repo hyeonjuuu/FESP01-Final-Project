@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<GetData />} />
           <Route path="videoDetail" element={<VideoDetail />} />
-          <Route path="videoMain" element={<VideoMain />} />
+          <Route index element={<VideoMain />} />
           <Route path="detail/:id" element={<GetDetailData />} />
           <Route path="*" element={<NotFound />} />
         </Route>
