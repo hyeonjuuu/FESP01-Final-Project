@@ -29,7 +29,7 @@ function SearchBar() {
             type="text"
             placeholder="검색"
             className="w-full mx-4 focus:outline-none "
-            onFocus={handleSearchBarClicked}
+            onClick={handleSearchBarClicked}
           />
         </div>
         <button

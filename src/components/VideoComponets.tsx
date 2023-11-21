@@ -1,5 +1,5 @@
 import React from "react";
-import defaultImage from "../assets/480x270.svg";
+import defaultImage from "@assets/480x270.svg";
 
 interface VideoComponentsProps {
   detail: string;
