@@ -29,51 +29,49 @@ function VideoComponets({
   }
 
   return (
-    <div>
-      <div className="mo:w-[70%] flex flex-col justify-center items-center">
-        <Link
-          to={`/videoDetail/${item.id}`}
-          state={{ item: item }}
-          className="inline-block "
-        >
-          <img
-            src={
-              size === "mo"
-                ? item.snippet.thumbnails.default.url
-                : size === "tb"
-                  ? item.snippet.thumbnails.medium.url
-                  : size === "pc"
-                    ? item.snippet.thumbnails.high.url
-                    : size === "lgpc"
-                      ? item.snippet.thumbnails.standard.url
-                      : item.snippet.thumbnails.default.url
-            }
-            alt={item.snippet.title}
-            className="max-w-full aspect-video h-[14.75rem]"
-          ></img>
-        </Link>
-        <div className="pt-2 w-full tb:self-start bg-blue-100">
-          <dl className=" flex flex-col w-full">
-            <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
-              {item.snippet.title}
-            </dt>
-            <dd className={`text-sm ${page === "main" ? "order-first" : ""}`}>
-              {item.snippet.channelTitle}
-            </dd>
-            {detail === "상세설명" ? (
-              <dd className="text-base ">{item.snippet.description}</dd>
-            ) : detail === "생성날짜" ? (
-              <dd className="text-sm ">{getPassedDay()}</dd>
-            ) : (
-              <>
-                <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate ">
-                  {item.snippet.description}
-                </dd>
-                <dd className="text-sm">{getPassedDay()}</dd>
-              </>
-            )}
-          </dl>
-        </div>
+    <div className="mo:w-[70%] flex flex-col bg-green-100">
+      <Link
+        to={`/videoDetail/${item.id}`}
+        state={{ item: item }}
+        className="inline-block "
+      >
+        <img
+          src={
+            size === "mo"
+              ? item.snippet.thumbnails.default.url
+              : size === "tb"
+                ? item.snippet.thumbnails.medium.url
+                : size === "pc"
+                  ? item.snippet.thumbnails.high.url
+                  : size === "lgpc"
+                    ? item.snippet.thumbnails.standard.url
+                    : item.snippet.thumbnails.default.url
+          }
+          alt={item.snippet.title}
+          className="max-w-full aspect-video h-[14.75rem]"
+        ></img>
+      </Link>
+      <div className="pt-2 w-full bg-blue-100">
+        <dl className=" flex flex-col w-full">
+          <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
+            {item.snippet.title}
+          </dt>
+          <dd className={`text-sm ${page === "main" ? "order-first" : ""}`}>
+            {item.snippet.channelTitle}
+          </dd>
+          {detail === "상세설명" ? (
+            <dd className="text-base ">{item.snippet.description}</dd>
+          ) : detail === "생성날짜" ? (
+            <dd className="text-sm ">{getPassedDay()}</dd>
+          ) : (
+            <>
+              <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate ">
+                {item.snippet.description}
+              </dd>
+              <dd className="text-sm">{getPassedDay()}</dd>
+            </>
+          )}
+        </dl>
       </div>
     </div>
   );
