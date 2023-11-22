@@ -49,10 +49,10 @@ function VideoComponets({
                       : item.snippet.thumbnails.default.url
             }
             alt={item.snippet.title}
-            className="max-w-full aspect-video h-[14.75rem]  border-neutral-500 border-[0.5px]"
+            className="max-w-full aspect-video h-[14.75rem]"
           ></img>
         </Link>
-        <div className="pt-2 w-full tb:self-start bg-red-100">
+        <div className="pt-2 w-full tb:self-start bg-blue-100">
           <dl className=" flex flex-col w-full">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
