@@ -30,7 +30,7 @@ function VideoComponets({
 
   return (
     <>
-      <div className="mo:w-[70%] tb:w-full">
+      <div>
         <Link
           to={`/videoDetail/${item.id}`}
           state={{ item: item }}

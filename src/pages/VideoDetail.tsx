@@ -68,11 +68,8 @@ function VideoDetail() {
       <h2 className="sr-only">유튜브 상세 페이지</h2>
       <section className="w-full">
         <h3 className="sr-only">해당 영상</h3>
-        <div className="  min-w-[360px] bg-pink-200">
-          <ul
-            key={location.state.item.id}
-            className="flex flex-col mx-auto min-w-[360px] bg-yellow-300"
-          >
+        <div className="  min-w-[360px]">
+          <ul key={location.state.item.id}>
             <img
               className="w-full h-auto mx-auto min-w-[360px]"
               src={
@@ -107,7 +104,7 @@ function VideoDetail() {
 
       <section>
         <h3>관련된 영상</h3>
-        <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 lgpc:grid-cols-4 gap-4 min-w-[360px] bg-green-300">
+        <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-3 gap-4 min-w-[360px]">
           {detailData?.items
             .slice(1)
             .map((item) => (
