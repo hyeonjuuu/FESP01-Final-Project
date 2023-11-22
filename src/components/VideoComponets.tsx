@@ -29,7 +29,7 @@ function VideoComponets({
   }
 
   return (
-    <div className="mo:w-[70%] flex flex-col bg-green-100">
+    <div className="mo:w-[70%] flex flex-col">
       <Link
         to={`/videoDetail/${item.id}`}
         state={{ item: item }}
@@ -38,20 +38,20 @@ function VideoComponets({
         <img
           src={
             size === "mo"
-              ? item.snippet.thumbnails.default.url
+              ? item.snippet.thumbnails.medium.url
               : size === "tb"
-                ? item.snippet.thumbnails.medium.url
+                ? item.snippet.thumbnails.high.url
                 : size === "pc"
-                  ? item.snippet.thumbnails.high.url
+                  ? item.snippet.thumbnails.standard.url
                   : size === "lgpc"
-                    ? item.snippet.thumbnails.standard.url
+                    ? item.snippet.thumbnails.maxres.url
                     : item.snippet.thumbnails.default.url
           }
           alt={item.snippet.title}
           className="max-w-full aspect-video h-[14.75rem]"
         ></img>
       </Link>
-      <div className="pt-2 w-full bg-blue-100">
+      <div className="pt-2 w-full ">
         <dl className=" flex flex-col w-full">
           <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
             {item.snippet.title}
