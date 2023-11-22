@@ -30,11 +30,11 @@ function VideoComponets({
 
   return (
     <>
-      <div>
+      <div className="bg-red-200 tb:flex tb:flex-col tb:justify-center tb:items-center">
         <Link
           to={`/videoDetail/${item.id}`}
           state={{ item: item }}
-          className="inline-block"
+          className="inline-block "
         >
           <img
             src={
@@ -49,11 +49,11 @@ function VideoComponets({
                       : item.snippet.thumbnails.default.url
             }
             alt={item.snippet.title}
-            className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px]"
+            className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px] mx-auto"
           ></img>
         </Link>
-        <div className="pt-2 h-full w-full">
-          <dl className=" flex flex-col h-full w-full">
+        <div className="pt-2 h-full w-[90%]">
+          <dl className=" flex flex-col w-full">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
