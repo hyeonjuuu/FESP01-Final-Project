@@ -1,5 +1,3 @@
-import React from "react-router-dom";
-
 const NotFound = function () {
   return (
     <div>
