@@ -48,9 +48,15 @@ interface VideoDetailData {
   }>;
 }
 
+interface CommonItem {
+  snippet: Snippet;
+  id: string | { videoId: string };
+}
+
 interface VideoComponentsProps {
   detail: string;
   page: string;
-  // size: string;
-  item: Item;
+  size: string;
+  image: { url: string }[];
+  item: CommonItem;
 }
