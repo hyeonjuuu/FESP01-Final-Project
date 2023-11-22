@@ -12,7 +12,7 @@ function GetDetailData() {
     const fetchDetailData = async () => {
       try {
         const response = await axios.get(
-          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`
+          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
         );
         // console.log(response.data);
         setDetailData(response.data);
