@@ -74,7 +74,7 @@ function VideoDetail() {
             className="flex flex-col mx-auto min-w-[360px] bg-yellow-300"
           >
             <img
-              className=" md:w-full h-auto mx-auto min-w-[360px]"
+              className="w-full h-auto mx-auto min-w-[360px]"
               src={
                 size === "sm"
                   ? location.state.item.snippet.thumbnails.default.url
