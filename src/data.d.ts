@@ -33,7 +33,7 @@ interface Item {
 interface VideoData {
   kind: string;
   etag: string;
-  items?: Item[];
+  items: Item[];
   nextPageToken: string;
   pageInfo: {
     totalResults: number;
@@ -48,9 +48,15 @@ interface VideoDetailData {
   }>;
 }
 
+interface CommonItem {
+  snippet: Snippet;
+  id: string | { videoId: string };
+}
+
 interface VideoComponentsProps {
   detail: string;
   page: string;
   size: string;
-  item: Item; // VideoComponets에 전달되는 item의 타입을 Item으로 정의
+  image: { url: string }[];
+  item: CommonItem;
 }
