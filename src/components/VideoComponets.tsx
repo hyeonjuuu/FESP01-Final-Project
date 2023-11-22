@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
-import getImage from "@utils/getImage";
 
 function VideoComponets({
   detail,

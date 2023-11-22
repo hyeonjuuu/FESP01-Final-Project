@@ -92,12 +92,12 @@ function VideoDetail() {
         </ul>
 
         <p>관련된 영상</p>
-        <div className="sm:flex sm:flex-col sm:items-center  mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
+        <div className="sm:flex sm:flex-col sm:items-center md:items-start mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
           {detailData?.items
             .slice(1)
             .map((item) => (
               <VideoComponets
-                detail="상세설명"
+                detail="생성날짜"
                 page="detail"
                 size={size}
                 image={image}
