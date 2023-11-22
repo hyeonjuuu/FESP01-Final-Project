@@ -18,11 +18,11 @@ function VideoDetail() {
     const width = window.innerWidth;
 
     if (width < 768) {
-      setSize("sm");
+      setSize("mo");
     } else if (768 <= width && width < 1024) {
-      setSize("md");
+      setSize("tb");
     } else if (1024 <= width) {
-      setSize("lg");
+      setSize("pc");
     }
   };
 
@@ -68,21 +68,18 @@ function VideoDetail() {
       <h2 className="sr-only">유튜브 상세 페이지</h2>
       <section className="w-full">
         <h3 className="sr-only">해당 영상</h3>
-        <div className="  min-w-[360px] bg-pink-200">
-          <ul
-            key={location.state.item.id}
-            className="flex flex-col mx-auto min-w-[360px] bg-yellow-300"
-          >
+        <div className="  min-w-[360px]">
+          <ul key={location.state.item.id}>
             <img
               className="w-full h-auto mx-auto min-w-[360px]"
               src={
-                size === "sm"
+                size === "mo"
                   ? location.state.item.snippet.thumbnails.default.url
-                  : size === "md"
+                  : size === "tb"
                     ? location.state.item.snippet.thumbnails.medium.url
-                    : size === "lg"
+                    : size === "pc"
                       ? location.state.item.snippet.thumbnails.high.url
-                      : size === "xl"
+                      : size === "lgpc"
                         ? location.state.item.snippet.thumbnails.standard.url
                         : location.state.item.snippet.thumbnails.default.url
               }
@@ -91,14 +88,14 @@ function VideoDetail() {
             ></img>
             <li
               id="title"
-              className="text-lg font-semibold sm:w-[70%] md:w-full mx-auto min-w-[360px]"
+              className="text-lg font-semibold mo:w-[70%] tb:w-full mx-auto min-w-[360px]"
             >
               {location.state.item.snippet.title}
             </li>
-            <li className="text-sm sm:w-[70%] md:w-full mx-auto min-w-[360px]">
+            <li className="text-sm mo:w-[70%] tb:w-full mx-auto min-w-[360px]">
               {location.state.item.snippet.channelTitle}
             </li>
-            <li className="text-base sm:w-[70%] md:w-full mx-auto min-w-[360px] text-ellipsis overflow-hidden truncate">
+            <li className="text-base mo:w-[70%] tb:w-full mx-auto min-w-[360px] text-ellipsis overflow-hidden truncate">
               {location.state.item.snippet.description}
             </li>
           </ul>
@@ -107,12 +104,12 @@ function VideoDetail() {
 
       <section>
         <h3>관련된 영상</h3>
-        <div className="sm:flex sm:flex-col sm:items-center   md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px] bg-green-300">
+        <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-3 gap-4 min-w-[360px]">
           {detailData?.items
             .slice(1)
             .map((item) => (
               <VideoComponets
-                detail="상세설명"
+                detail="생성날짜"
                 page="detail"
                 size={size}
                 image={image}

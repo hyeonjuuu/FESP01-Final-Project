@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
-import getImage from "@utils/getImage";
 
 function VideoComponets({
   detail,
@@ -10,30 +8,52 @@ function VideoComponets({
   image,
   item,
 }: VideoComponentsProps) {
-  // console.log("size:", size);
+  function getPassedDay() {
+    const today = new Date();
+
+    const publishDay = new Date(item.snippet.publishedAt);
+
+    const passedSec = today.getTime() - publishDay.getTime();
+
+    const passedDay = passedSec / 1000 / 60 / 60 / 24;
+
+    if (passedDay < 7 && passedDay < 365) {
+      return Math.floor(passedDay) + "일 전";
+    } else if (passedDay >= 7 && passedDay < 30) {
+      return Math.floor(passedDay / 7) + "주 전";
+    } else if (passedDay >= 30 && passedDay < 365) {
+      return Math.floor(passedDay / 30) + "개월 전";
+    } else {
+      return Math.floor(passedDay / 365) + "년 전";
+    }
+  }
 
   return (
     <>
-      <div className="sm:w-[70%] md:w-full">
-        <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
+      <div className="bg-red-200 tb:flex tb:flex-col tb:justify-center tb:items-center">
+        <Link
+          to={`/videoDetail/${item.id}`}
+          state={{ item: item }}
+          className="inline-block "
+        >
           <img
             src={
-              size === "sm"
+              size === "mo"
                 ? item.snippet.thumbnails.default.url
-                : size === "md"
+                : size === "tb"
                   ? item.snippet.thumbnails.medium.url
-                  : size === "lg"
+                  : size === "pc"
                     ? item.snippet.thumbnails.high.url
-                    : size === "xl"
+                    : size === "lgpc"
                       ? item.snippet.thumbnails.standard.url
                       : item.snippet.thumbnails.default.url
             }
             alt={item.snippet.title}
-            className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px]"
+            className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px] mx-auto"
           ></img>
         </Link>
-        <div className="pt-2 h-full w-full">
-          <dl className=" flex flex-col h-full w-full">
+        <div className="pt-2 h-full w-[90%]">
+          <dl className=" flex flex-col w-full">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
@@ -43,13 +63,13 @@ function VideoComponets({
             {detail === "상세설명" ? (
               <dd className="text-base ">{item.snippet.description}</dd>
             ) : detail === "생성날짜" ? (
-              <dd className="text-sm ">{item.snippet.publishedAt}</dd>
+              <dd className="text-sm ">{getPassedDay()}</dd>
             ) : (
               <>
                 <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate ">
                   {item.snippet.description}
                 </dd>
-                <dd className="text-sm">{item.snippet.publishedAt}</dd>
+                <dd className="text-sm">{getPassedDay()}</dd>
               </>
             )}
           </dl>
