@@ -64,35 +64,50 @@ function VideoDetail() {
   }, [channelId]);
 
   return (
-    <div>
-      {/* <VideoComponets detail="상세설명" page="detail" />
-      <VideoComponets detail="생성날짜" page="detail" /> */}
-      <div className="py-6 px-8">
-        <h1 className="sr-only">유튜브 상세 페이지</h1>
-        <p>해당 영상</p>
-        <ul key={location.state.item.id}>
-          <img
-            src={
-              size === "sm"
-                ? location.state.item.snippet.thumbnails.default.url
-                : size === "md"
-                  ? location.state.item.snippet.thumbnails.medium.url
-                  : size === "lg"
-                    ? location.state.item.snippet.thumbnails.high.url
-                    : size === "xl"
-                      ? location.state.item.snippet.thumbnails.standard.url
-                      : location.state.item.snippet.thumbnails.default.url
-            }
-            alt=""
-            aria-labelledby="title"
-          ></img>
-          <li id="title">영상 제목: {location.state.item.snippet.title}</li>
-          <li>채널 이름: {location.state.item.snippet.channelTitle}</li>
-          <li>상세 내용: {location.state.item.snippet.description}</li>
-        </ul>
+    <div className="py-6 px-8">
+      <h2 className="sr-only">유튜브 상세 페이지</h2>
+      <section className="w-full">
+        <h3 className="sr-only">해당 영상</h3>
+        <div className="  min-w-[360px] bg-pink-200">
+          <ul
+            key={location.state.item.id}
+            className="flex flex-col mx-auto min-w-[360px] bg-yellow-300"
+          >
+            <img
+              className="w-full h-auto mx-auto min-w-[360px]"
+              src={
+                size === "sm"
+                  ? location.state.item.snippet.thumbnails.default.url
+                  : size === "md"
+                    ? location.state.item.snippet.thumbnails.medium.url
+                    : size === "lg"
+                      ? location.state.item.snippet.thumbnails.high.url
+                      : size === "xl"
+                        ? location.state.item.snippet.thumbnails.standard.url
+                        : location.state.item.snippet.thumbnails.default.url
+              }
+              alt=""
+              aria-labelledby="title"
+            ></img>
+            <li
+              id="title"
+              className="text-lg font-semibold sm:w-[70%] md:w-full mx-auto min-w-[360px]"
+            >
+              {location.state.item.snippet.title}
+            </li>
+            <li className="text-sm sm:w-[70%] md:w-full mx-auto min-w-[360px]">
+              {location.state.item.snippet.channelTitle}
+            </li>
+            <li className="text-base sm:w-[70%] md:w-full mx-auto min-w-[360px] text-ellipsis overflow-hidden truncate">
+              {location.state.item.snippet.description}
+            </li>
+          </ul>
+        </div>
+      </section>
 
-        <p>관련된 영상</p>
-        <div className="sm:flex sm:flex-col sm:items-center  mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
+      <section>
+        <h3>관련된 영상</h3>
+        <div className="sm:flex sm:flex-col sm:items-center   md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px] bg-green-300">
           {detailData?.items
             .slice(1)
             .map((item) => (
@@ -106,7 +121,7 @@ function VideoDetail() {
               />
             ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
