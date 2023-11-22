@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import VideoDetailItem from "@components/VideoDetailItem";
 import VideoComponents from "@components/VideoComponets";
 import formatDateDifference from "@api/formatDateDifference";
-import axios from "axios";
 import getImage from "@utils/getImage";
 import RelatedVideo from "@components/RelatedVideo";
 
