@@ -3,6 +3,7 @@ import VideoComponets from "@components/VideoComponets";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import getImage from "@utils/getImage";
+import RelatedVideo from "@components/RelatedVideo";
 
 function VideoDetail() {
   const location = useLocation();
@@ -104,13 +105,12 @@ function VideoDetail() {
 
       <section>
         <h3>관련된 영상</h3>
-        <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-3 gap-4 min-w-[360px]">
+        <div className="min-w-[360px]">
+          {/* <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-3 gap-4 min-w-[360px]"> */}
           {detailData?.items
             .slice(1)
             .map((item) => (
-              <VideoComponets
-                detail="생성날짜"
-                page="detail"
+              <RelatedVideo
                 size={size}
                 image={image}
                 item={item}
