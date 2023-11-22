@@ -88,21 +88,21 @@ function VideoDetail() {
             ></img>
             <li
               id="title"
-              className="text-lg font-semibold mo:w-[70%] tb:w-full mx-auto min-w-[360px]"
+              className="mo:text-ellipsis mo:overflow-hidden mo:truncate tb:text-lg lgpc:text-xl font-semibold"
             >
               {location.state.item.snippet.title}
             </li>
-            <li className="text-sm mo:w-[70%] tb:w-full mx-auto min-w-[360px]">
+            <li className="text-sm mo:w-[70%] tb:w-full min-w-[360px]">
               {location.state.item.snippet.channelTitle}
             </li>
-            <li className="text-base mo:w-[70%] tb:w-full mx-auto min-w-[360px] text-ellipsis overflow-hidden truncate">
+            <li className="text-base mo:w-[70%] tb:w-full min-w-[360px] text-ellipsis overflow-hidden truncate">
               {location.state.item.snippet.description}
             </li>
           </ul>
         </div>
       </section>
 
-      <section>
+      <section className="my-6">
         <h3>관련된 영상</h3>
         <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-3 gap-4 min-w-[360px]">
           {detailData?.items
