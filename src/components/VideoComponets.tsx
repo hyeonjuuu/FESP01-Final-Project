@@ -1,59 +1,42 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { VideoItem } from "../interface";
 
-function VideoComponets({
-  detail,
-  page,
-  size,
-  image,
-  item,
-}: VideoComponentsProps) {
-  // console.log("size:", size);
+interface VideoComponentsProps {
+  key: string;
+  item: VideoItem;
+  date: string;
+  page: string;
+}
+
+function VideoComponents({ item, date, page }: VideoComponentsProps) {
   return (
-    <>
-      <div className="sm:w-[70%] md:w-full">
-        <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
-          <img
-            src={
-              size === "sm"
-                ? item.snippet.thumbnails.default.url
-                : size === "md"
-                  ? item.snippet.thumbnails.medium.url
-                  : size === "lg"
-                    ? item.snippet.thumbnails.high.url
-                    : size === "xl"
-                      ? item.snippet.thumbnails.standard.url
-                      : item.snippet.thumbnails.default.url
-            }
-            alt={item.snippet.title}
-            className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px]"
-          ></img>
-        </Link>
-        <div className="pt-2 h-full w-full">
-          <dl className=" flex flex-col h-full w-full">
+    <div className="tb:flex tb:flex-col tb:justify-center tb:items-center w-[90%]">
+      <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
+        <img
+          src={
+            item.snippet.thumbnails.maxres?.url ||
+            item.snippet.thumbnails.high.url
+          }
+          alt={item.snippet.title}
+          className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px] mx-auto"
+        />
+        <div className="pt-2 h-full w-[90%]">
+          <dl className=" flex flex-col w-full">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
             <dd className={`text-sm ${page === "main" ? "order-first" : ""}`}>
               {item.snippet.channelTitle}
             </dd>
-            {detail === "상세설명" ? (
-              <dd className="text-base ">{item.snippet.description}</dd>
-            ) : detail === "생성날짜" ? (
-              <dd className="text-sm ">{item.snippet.publishedAt}</dd>
-            ) : (
-              <>
-                <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate ">
-                  {item.snippet.description}
-                </dd>
-                <dd className="text-sm">{item.snippet.publishedAt}</dd>
-              </>
-            )}
+            <dd className="text-base w-[96%] text-ellipsis overflow-hidden truncate">
+              {item.snippet.description}
+            </dd>
+            <dd className="text-sm">{date}</dd>
           </dl>
         </div>
-      </div>
-    </>
+      </Link>
+    </div>
   );
 }
 
-export default VideoComponets;
+export default VideoComponents;
