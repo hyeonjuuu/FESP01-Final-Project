@@ -8,16 +8,6 @@ function VideoComponets({
   image,
   item,
 }: VideoComponentsProps) {
-  /*   const today = new Date();
-
-  const publishDay = new Date(item.snippet.publishedAt);
-
-  const passedSec = today.getTime() - publishDay.getTime();
-
-  const passedDay = passedSec / 1000 / 60 / 60 / 24;
-  const passedPublishDate = Math.floor(passedDay) + "일 전";
-  console.log(passedPublishDate); */
-
   function getPassedDay() {
     const today = new Date();
 
@@ -26,7 +16,6 @@ function VideoComponets({
     const passedSec = today.getTime() - publishDay.getTime();
 
     const passedDay = passedSec / 1000 / 60 / 60 / 24;
-    // const passedPublishDate = Math.floor(passedDay) + "일 전";
 
     if (passedDay < 7 && passedDay < 365) {
       return Math.floor(passedDay) + "일 전";
@@ -39,21 +28,23 @@ function VideoComponets({
     }
   }
 
-  console.log(getPassedDay());
-
   return (
     <>
-      <div className="sm:w-[70%] md:w-full">
-        <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
+      <div className="mo:w-[70%] tb:w-full">
+        <Link
+          to={`/videoDetail/${item.id}`}
+          state={{ item: item }}
+          className="inline-block"
+        >
           <img
             src={
-              size === "sm"
+              size === "mo"
                 ? item.snippet.thumbnails.default.url
-                : size === "md"
+                : size === "tb"
                   ? item.snippet.thumbnails.medium.url
-                  : size === "lg"
+                  : size === "pc"
                     ? item.snippet.thumbnails.high.url
-                    : size === "xl"
+                    : size === "lgpc"
                       ? item.snippet.thumbnails.standard.url
                       : item.snippet.thumbnails.default.url
             }

@@ -4,7 +4,7 @@ import getImage from "@utils/getImage";
 import axios from "axios";
 
 function VideoMain() {
-  const [size, setSize] = useState("sm");
+  const [size, setSize] = useState("pc");
   const [image, setImage] = useState<{ url: string }[]>([]);
 
   const [data, setData] = useState<VideoData | null>(null);
@@ -38,13 +38,13 @@ function VideoMain() {
     const width = window.innerWidth;
 
     if (width < 768) {
-      setSize("sm");
+      setSize("mo");
     } else if (768 <= width && width < 1024) {
-      setSize("md");
+      setSize("tb");
     } else if (1024 <= width && width < 1280) {
-      setSize("lg");
+      setSize("pc");
     } else {
-      setSize("xl");
+      setSize("lgpc");
     }
   };
 
@@ -73,7 +73,7 @@ function VideoMain() {
     <div className="py-6 px-8">
       <h1 className="sr-only">유튜브 목록 페이지</h1>
 
-      <div className="sm:flex sm:flex-col sm:items-center  mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
+      <div className="mo:flex mo:flex-col mo:items-center  mx-auto tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid pc:grid-cols-3 lgpc:grid lgpc:grid-cols-4 gap-4 min-w-[360px]">
         {data?.items.map((item) => (
           <VideoComponets
             detail="both"

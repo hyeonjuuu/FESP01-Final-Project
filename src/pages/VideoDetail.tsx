@@ -18,11 +18,11 @@ function VideoDetail() {
     const width = window.innerWidth;
 
     if (width < 768) {
-      setSize("sm");
+      setSize("mo");
     } else if (768 <= width && width < 1024) {
-      setSize("md");
+      setSize("tb");
     } else if (1024 <= width) {
-      setSize("lg");
+      setSize("pc");
     }
   };
 
@@ -73,13 +73,13 @@ function VideoDetail() {
         <ul key={location.state.item.id}>
           <img
             src={
-              size === "sm"
+              size === "mo"
                 ? location.state.item.snippet.thumbnails.default.url
-                : size === "md"
+                : size === "tb"
                   ? location.state.item.snippet.thumbnails.medium.url
-                  : size === "lg"
+                  : size === "pc"
                     ? location.state.item.snippet.thumbnails.high.url
-                    : size === "xl"
+                    : size === "lgpc"
                       ? location.state.item.snippet.thumbnails.standard.url
                       : location.state.item.snippet.thumbnails.default.url
             }
@@ -92,7 +92,7 @@ function VideoDetail() {
         </ul>
 
         <p>관련된 영상</p>
-        <div className="sm:flex sm:flex-col sm:items-center md:items-start mx-auto md:grid md:grid-flow-row  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-w-[360px]">
+        <div className="mo:flex mo:flex-row mo:items-center tb:items-start mx-auto tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid pc:grid-cols-3 lgpc:grid lgpc:grid-cols-4 gap-4 min-w-[360px]">
           {detailData?.items
             .slice(1)
             .map((item) => (
