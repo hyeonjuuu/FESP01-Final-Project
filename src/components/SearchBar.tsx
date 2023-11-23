@@ -1,16 +1,28 @@
-import { useState } from "react";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react"
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useRecoilState } from "recoil"
+// import { filterVideoAtom, videoAtom } from "@store/videoAtom"
+import { searchBarValueAtom } from "@store/searchBarValueAtom"
 
 function SearchBar() {
-  const [searchBarClicked, setSearchBarClicked] = useState(false);
+  // const videoData = useRecoilValue(videoAtom)
+  const [searchBarValue, setSearchBarValue] = useRecoilState(searchBarValueAtom)
+  const [searchBarClicked, setSearchBarClicked] = useState(false)
 
   const handleSearchBarClicked = () => {
-    setSearchBarClicked((prevClicked) => !prevClicked);
-  };
+    setSearchBarClicked((prevClicked) => !prevClicked)
+  }
+
+  const handleSearchPopularVideo = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setSearchBarValue(event.target.value)
+    console.log(searchBarValue)
+  }
 
   return (
-    <div className="flex justify-center items-center border rounded-[35px] sm:w-full pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem]">
+    <div className="flex justify-center items-center border rounded-[35px] sm:w-full lgpc:w-[45rem] pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
       <form
         action="post"
         className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]"
@@ -22,13 +34,14 @@ function SearchBar() {
         >
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className="text-[14px] font-light text-[#111]"
+            className="text-[14px] font-light text-[#111] dark:text-white"
           />
           <input
             type="text"
             placeholder="검색"
-            className="w-full mx-4 focus:outline-none "
+            className="w-full mx-4 focus:outline-none dark:bg-[#202124]"
             onClick={handleSearchBarClicked}
+            onChange={handleSearchPopularVideo}
           />
         </div>
         <button
@@ -40,7 +53,7 @@ function SearchBar() {
         </button>
       </form>
     </div>
-  );
+  )
 }
 
-export default SearchBar;
+export default SearchBar
