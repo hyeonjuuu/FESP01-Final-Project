@@ -22,7 +22,7 @@ function SearchBar() {
   }
 
   return (
-    <div className="flex justify-center items-center border rounded-[35px] sm:w-full pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
+    <div className="flex justify-center items-center border rounded-[35px] sm:w-full lgpc:w-[45rem] pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
       <form
         action="post"
         className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]"

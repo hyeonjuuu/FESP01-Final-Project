@@ -1,14 +1,24 @@
 import axios from "axios"
 import { VideoItem } from "interface"
+import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import VideoComponents from "@components/VideoComponets"
+import AddComment from "@components/AddComment"
+import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
   const location = useLocation()
+  // console.log("location.state:", location.state); // 추가된 디버깅 로그
+
   const locationRoute = location.state.item.snippet
+  // const locationRoute = location.state?.item?.snippet || {};
+  // if (!location.state) {
+  //   // location.state가 null이면 에러가 발생하지 않도록 반환하거나 다른 처리를 수행
+  //   return <div>Invalid state</div>;
+  // }
+
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
 
@@ -34,7 +44,7 @@ function VideoDetail() {
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
-      <section className="w-full">
+      <section className="w-full pb-10">
         <h3 className="sr-only">해당 영상</h3>
         <div className="min-w-[360px]">
           <ul key={location.state.item.id}>
@@ -47,16 +57,17 @@ function VideoDetail() {
       </section>
 
       <h3 className="sr-only">관련된 영상</h3>
-      <div className="mo:flex mo:flex-col mo:items-center   tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-4 gap-4 min-w-[360px]">
+      <div className="min-w-[360px] pb-10">
         {detailData?.map((item, index) => (
-          <VideoComponents
-            key={item.id}
+          <RelatedVideo
+            key={`${item.id}_${index}`}
             item={item}
             date={dataVariable[index]}
-            page="detail"
           />
         ))}
       </div>
+      <AddComment />
+      <Comment />
     </div>
   )
 }

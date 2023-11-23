@@ -54,8 +54,8 @@ interface CommonItem {
 }
 
 interface VideoComponentsProps {
-  detail: string;
-  page: string;
+  detail?: string;
+  page?: string;
   size: string;
   image: { url: string }[];
   item: CommonItem;

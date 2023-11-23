@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
-import { VideoItem } from "../interface";
+import { Link } from "react-router-dom"
+import { VideoItem } from "../interface"
 
 interface VideoComponentsProps {
-  key: string;
-  item: VideoItem;
-  date: string;
-  page: string;
+  key: string
+  item: VideoItem
+  date: string
+  page: string
 }
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
   return (
-    <div className="tb:flex tb:flex-col tb:justify-center tb:items-center w-[90%]">
+    <div>
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <img
           src={
@@ -18,10 +18,10 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
             item.snippet.thumbnails.high.url
           }
           alt={item.snippet.title}
-          className="max-w-full h-[14.75rem] aspect-video"
+          className="mo:flex-shrink rounded-lg"
         />
-        <div className=" pt-2 h-full w-[90%]">
-          <dl className=" flex flex-col w-full">
+        <div className="mt-2 mo:mb-3 tb:mb-0">
+          <dl>
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
@@ -36,7 +36,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
         </div>
       </Link>
     </div>
-  );
+  )
 }
 
-export default VideoComponents;
+export default VideoComponents

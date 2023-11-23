@@ -23,11 +23,11 @@ function Header() {
       <SearchBar />
       <button className="w-28 h-11 ml-5 border rounded-[35px] p-4 border-[#e6e6e6] focus:border-none hover:bg-[#DEF0FE] flex justify-center items-center gap-2 dark:bg-[#202124]">
         <FontAwesomeIcon icon={faUser} />
-        <span className="w-11">로그인</span>
+        <span className="w-20">로그인</span>
       </button>
-      <button>
+      {/* <button>
         <FontAwesomeIcon icon={faGear} />
-      </button>
+      </button> */}
     </header>
   )
 }
