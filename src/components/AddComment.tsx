@@ -9,7 +9,7 @@ function AddComment() {
     setState(true);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
@@ -39,10 +39,11 @@ function AddComment() {
         </div>
 
         <form className=" w-full flex-col gap-10">
-          <input
-            type="text"
+          <textarea
             placeholder="댓글 추가..."
-            className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500"
+            className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
+              text ? "h-auto" : "h-[30px]"
+            }`}
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
