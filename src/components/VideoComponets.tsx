@@ -44,7 +44,7 @@ function VideoComponets({
                     : item.snippet.thumbnails.default.url
           }
           alt={item.snippet.title}
-          className="mo:flex-shrink"
+          className="mo:flex-shrink rounded-lg"
         />
         <div>
           <dl>
