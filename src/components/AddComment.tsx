@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import Button from "./Button";
 
 function AddComment() {
+  const [state, setState] = useState(false);
   const [text, setText] = useState<string>("");
+
+  const handleInputFocus = () => {
+    setState(true);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Button이 클릭되었습니다.");
+    setState(false);
+    setText("");
   };
 
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,18 +42,22 @@ function AddComment() {
           <input
             type="text"
             placeholder="댓글 추가..."
-            className="w-full border-b-2 mb-2"
+            className="w-full border-b-2 mb-2 "
             value={text}
+            onFocus={handleInputFocus}
             onChange={handleInputChange}
           />
-          <div className="flex gap-3 justify-end">
-            <Button text={"취소"} type={"button"} onClick={handleCancel} />
-            <Button
-              text={"등록"}
-              type={"submit"}
-              onClick={handleCommentSubmit}
-            />
-          </div>
+
+          {state && (
+            <div className="flex gap-3 justify-end">
+              <Button text={"취소"} type={"button"} onClick={handleCancel} />
+              <Button
+                text={"등록"}
+                type={"submit"}
+                onClick={handleCommentSubmit}
+              />
+            </div>
+          )}
         </form>
       </div>
     </div>

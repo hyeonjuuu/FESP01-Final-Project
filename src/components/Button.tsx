@@ -7,10 +7,6 @@ interface ButtonProps {
 }
 
 function Button({ text, type, onClick }: ButtonProps) {
-  // const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   console.log("버튼 타입: ", type);
-  // };
   return (
     <button
       type={type}
