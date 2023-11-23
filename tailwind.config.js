@@ -5,8 +5,8 @@ export default {
     extend: {},
     screens: {
       // 데스크탑
-      lgpc: { min: "1281px", max: "2220px" },
-      pc: { min: "1025px", max: "1920px" },
+      lgpc: { min: "1281px", max: "1920px" },
+      pc: { min: "1025px", max: "1280px" },
       // 테블릿
       tb: { min: "768px", max: "1024px" },
       // 모바일
