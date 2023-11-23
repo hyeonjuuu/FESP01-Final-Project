@@ -10,7 +10,15 @@ import AddComment from "@components/AddComment";
 
 function VideoDetail() {
   const location = useLocation();
+  // console.log("location.state:", location.state); // 추가된 디버깅 로그
+
   const locationRoute = location.state.item.snippet;
+  // const locationRoute = location.state?.item?.snippet || {};
+  // if (!location.state) {
+  //   // location.state가 null이면 에러가 발생하지 않도록 반환하거나 다른 처리를 수행
+  //   return <div>Invalid state</div>;
+  // }
+
   const [detailData, setDetailData] = useState<VideoItem[]>([]);
   const [dataVariable, setDataVariable] = useState<string[]>([]);
 
