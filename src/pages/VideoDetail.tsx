@@ -6,6 +6,7 @@ import VideoDetailItem from "@components/VideoDetailItem";
 import formatDateDifference from "@api/formatDateDifference";
 import RelatedVideo from "@components/RelatedVideo";
 import Comment from "@components/Comment";
+import AddComment from "@components/AddComment";
 
 function VideoDetail() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function VideoDetail() {
           <RelatedVideo key={item.id} item={item} date={dataVariable[index]} />
         ))}
       </div>
+      <AddComment />
       <Comment />
     </div>
   );
