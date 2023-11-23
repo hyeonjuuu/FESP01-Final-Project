@@ -35,7 +35,7 @@ function Comment() {
             health, love and happiness!
           </div>
           <div className="flex gap-5">
-            <div className="flex flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <div
                 onClick={handleLike}
                 className="w-[32px] h-[32px] flex items-center justify-center rounded-full hover:bg-slate-200"

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "./Button";
 
 function AddComment() {
   const [state, setState] = useState(false);
   const [text, setText] = useState<string>("");
+  const divRef = useRef<HTMLDivElement>(null);
 
   const handleInputFocus = () => {
     setState(true);
@@ -17,17 +18,23 @@ function AddComment() {
     e.preventDefault();
     setState(false);
     setText("");
+    // if (divRef.current) {
+    // divRef.current.innerText = "";
+    // }
   };
 
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("댓글 등록:", text);
     setText("");
+    // if (divRef.current) {
+    // divRef.current.innerText = "";
+    // }
   };
 
   return (
     <div className="w-full pb-2">
-      <div className="max-h-[142px] flex">
+      <div className="h-auto flex">
         <div className="h-auto pr-4">
           <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
             <img
@@ -39,24 +46,18 @@ function AddComment() {
         </div>
 
         <form className=" w-full flex-col gap-10">
-          {/* <textarea
-            placeholder="댓글 추가..."
-            className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
-              text ? "h-auto" : "h-[30px]"
-            }`}
-            value={text}
-            onFocus={handleInputFocus}
-            onChange={handleInputChange}
-          /> */}
           <div
+            ref={divRef}
             contentEditable="true"
             placeholder="댓글 추가..."
             className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
               text ? "h-auto" : "h-[30px]"
-            }`}
+            } placeholder-${text ? "hidden" : "visible"}`}
             onFocus={handleInputFocus}
             onInput={handleInputChange}
-          ></div>
+          >
+            {text ? text : "댓글 추가..."}
+          </div>
 
           {state && (
             <div className="flex gap-3 justify-end">
