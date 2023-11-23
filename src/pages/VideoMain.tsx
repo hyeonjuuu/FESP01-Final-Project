@@ -28,7 +28,7 @@ function VideoMain() {
   return (
     <div className="py-6 px-8">
       <h1 className="sr-only">유튜브 목록 페이지</h1>
-      <div className="mo:flex mo:flex-col mo:items-center tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid-cols-3 pc:grid lgpc:grid lgpc:grid-cols-4 gap-4 min-w-[360px]">
+      <div className="mo:w-3/4 mo:mx-auto tb:grid tb:grid-flow-row  tb:grid-cols-2 pc:grid pc:grid-cols-3 lgpc:grid lgpc:grid-cols-4 gap-4 min-w-[360px]">
         {videoData?.map((item, index) => (
           <VideoComponents
             page="main"

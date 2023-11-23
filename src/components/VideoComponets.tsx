@@ -10,7 +10,7 @@ interface VideoComponentsProps {
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
   return (
-    <div className="tb:flex tb:flex-col tb:justify-center tb:items-center w-[90%]">
+    <div>
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <img
           src={
@@ -18,10 +18,10 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
             item.snippet.thumbnails.high.url
           }
           alt={item.snippet.title}
-          className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px] mx-auto"
+          className="mo:flex-shrink rounded-lg"
         />
-        <div className="pt-2 h-full w-[90%]">
-          <dl className=" flex flex-col w-full">
+        <div className="mt-2 mo:mb-3 tb:mb-0">
+          <dl>
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
