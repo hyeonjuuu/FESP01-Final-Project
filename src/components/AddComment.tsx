@@ -3,24 +3,23 @@ import Button from "./Button"
 import { focusContentEditableTextToEnd } from "@utils/focusContentEditableTextToend"
 
 function AddComment() {
-  const [state, setState] = useState(false)
+  const [isState, setIsState] = useState(false)
   const [content, setContent] = useState<string>("댓글 추가...")
   const contentRef = useRef<HTMLDivElement>(null)
 
   const handleInputFocus = () => {
-    setState(true)
+    setIsState(true)
     setContent("")
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLDivElement>) => {
     setContent(e.target.innerText)
     focusContentEditableTextToEnd(contentRef.current!)
-    console.log(content)
   }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setState(false)
+    setIsState(false)
     setContent("댓글 추가...")
   }
 
@@ -56,7 +55,7 @@ function AddComment() {
             {content}
           </div>
 
-          {state && (
+          {isState && (
             <div className="flex gap-3 justify-end">
               <Button
                 text={"취소"}
