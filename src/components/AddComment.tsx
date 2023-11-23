@@ -42,7 +42,7 @@ function AddComment() {
           <input
             type="text"
             placeholder="댓글 추가..."
-            className="w-full border-b-2 mb-2 "
+            className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500"
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
@@ -50,11 +50,19 @@ function AddComment() {
 
           {state && (
             <div className="flex gap-3 justify-end">
-              <Button text={"취소"} type={"button"} onClick={handleCancel} />
+              <Button
+                text={"취소"}
+                type={"button"}
+                onClick={handleCancel}
+                activeClass="hover:bg-slate-200"
+              />
               <Button
                 text={"등록"}
                 type={"submit"}
                 onClick={handleCommentSubmit}
+                color={
+                  text ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-700"
+                }
               />
             </div>
           )}
