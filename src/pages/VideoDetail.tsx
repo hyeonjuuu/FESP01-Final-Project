@@ -32,7 +32,7 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   return (
-    <div className="py-6 px-8">
+    <div className="py-6 px-8 dark:bg-[#202124] dark:text-white">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
       <section className="w-full">
         <h3 className="sr-only">해당 영상</h3>

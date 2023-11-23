@@ -22,7 +22,7 @@ function SearchBar() {
   }
 
   return (
-    <div className="flex justify-center items-center border rounded-[35px] sm:w-full pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem]">
+    <div className="flex justify-center items-center border rounded-[35px] sm:w-full pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
       <form
         action="post"
         className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]"
@@ -34,12 +34,12 @@ function SearchBar() {
         >
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className="text-[14px] font-light text-[#111]"
+            className="text-[14px] font-light text-[#111] dark:text-white"
           />
           <input
             type="text"
             placeholder="검색"
-            className="w-full mx-4 focus:outline-none "
+            className="w-full mx-4 focus:outline-none dark:bg-[#202124]"
             onClick={handleSearchBarClicked}
             onChange={handleSearchPopularVideo}
           />
