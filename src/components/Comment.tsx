@@ -1,10 +1,17 @@
-import React from "react";
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 
 function Comment() {
+  const [count, setCount] = useState(0);
+
+  const handleLike = () => {
+    setCount(count + 1);
+  };
   return (
-    <div className="w-full bg-yellow-200">
+    <div className="w-full">
       <div className="max-h-[142px] flex">
-        <div className="h-auto pr-4 bg-green-300">
+        <div className="h-auto pr-4">
           <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
             <img
               src="/smile.png"
@@ -14,7 +21,7 @@ function Comment() {
           </div>
         </div>
 
-        <div className="bg-pink-200 w-full flex-col gap-10">
+        <div className="w-full flex-col gap-10">
           <div className="flex gap-4">
             <div className="flex gap-2 items-end">
               <p>작성자</p>
@@ -28,11 +35,23 @@ function Comment() {
             health, love and happiness!
           </div>
           <div className="flex gap-5">
-            <div>👍</div>
-            <div>👇</div>
-            <div>❤️</div>
-            <div>답글</div>
+            <div className="flex flex items-center justify-center">
+              <div
+                onClick={handleLike}
+                className="w-[32px] h-[32px] flex items-center justify-center rounded-full hover:bg-slate-200"
+              >
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </div>
+              {count}
+            </div>
+            <div className="w-[32px] h-[32px] flex items-center justify-center rounded-full hover:bg-slate-200">
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </div>
+            <div className="w-[32px] h-[32px] flex items-center justify-center rounded-full hover:bg-slate-200">
+              답글
+            </div>
           </div>
+          <div> ... </div>
         </div>
       </div>
     </div>

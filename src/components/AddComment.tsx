@@ -9,8 +9,8 @@ function AddComment() {
     setState(true);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLDivElement>) => {
+    setText(e.target.innerText);
   };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,7 +39,7 @@ function AddComment() {
         </div>
 
         <form className=" w-full flex-col gap-10">
-          <textarea
+          {/* <textarea
             placeholder="댓글 추가..."
             className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
               text ? "h-auto" : "h-[30px]"
@@ -47,7 +47,16 @@ function AddComment() {
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
-          />
+          /> */}
+          <div
+            contentEditable="true"
+            placeholder="댓글 추가..."
+            className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
+              text ? "h-auto" : "h-[30px]"
+            }`}
+            onFocus={handleInputFocus}
+            onInput={handleInputChange}
+          ></div>
 
           {state && (
             <div className="flex gap-3 justify-end">
