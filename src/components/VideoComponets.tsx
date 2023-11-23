@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import { VideoItem } from "../interface";
+import { Link } from "react-router-dom"
+import { VideoItem } from "../interface"
 
 interface VideoComponentsProps {
-  key: string;
-  item: VideoItem;
-  date: string;
-  page: string;
+  key: string
+  item: VideoItem
+  date: string
+  page: string
 }
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
@@ -36,7 +36,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
         </div>
       </Link>
     </div>
-  );
+  )
 }
 
-export default VideoComponents;
+export default VideoComponents

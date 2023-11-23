@@ -1,16 +1,14 @@
-import { VideoItem } from "interface";
-import React from "react";
-import { Link } from "react-router-dom";
+import { VideoItem } from "interface"
+import React from "react"
+import { Link } from "react-router-dom"
 
 interface RelatedVideoProps {
-  key: string;
-  item: VideoItem;
-  date: string;
+  key: string
+  item: VideoItem
+  date: string
 }
 
-function RelatedVideo({ key, item, date }: RelatedVideoProps) {
-  // console.log("key: ", key); //undefined
-
+function RelatedVideo({ item, date }: RelatedVideoProps) {
   return (
     <>
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
@@ -35,7 +33,7 @@ function RelatedVideo({ key, item, date }: RelatedVideoProps) {
         </div>
       </Link>
     </>
-  );
+  )
 }
 
-export default RelatedVideo;
+export default RelatedVideo
