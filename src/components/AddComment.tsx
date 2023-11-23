@@ -1,36 +1,34 @@
-import React, { useRef, useState } from "react";
-import Button from "./Button";
+import React, { useEffect, useRef, useState } from "react"
+import Button from "./Button"
+import { focusContentEditableTextToEnd } from "@utils/focusContentEditableTextToend"
 
 function AddComment() {
-  const [state, setState] = useState(false);
-  const [text, setText] = useState<string>("");
-  const divRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState(false)
+  const [content, setContent] = useState<string>("댓글 추가...")
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleInputFocus = () => {
-    setState(true);
-  };
+    setState(true)
+    setContent("")
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLDivElement>) => {
-    setText(e.target.innerText);
-  };
+    setContent(e.target.innerText)
+    focusContentEditableTextToEnd(contentRef.current!)
+    console.log(content)
+  }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setState(false);
-    setText("");
-    // if (divRef.current) {
-    // divRef.current.innerText = "";
-    // }
-  };
+    e.preventDefault()
+    setState(false)
+    setContent("댓글 추가...")
+  }
 
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("댓글 등록:", text);
-    setText("");
-    // if (divRef.current) {
-    // divRef.current.innerText = "";
-    // }
-  };
+    e.preventDefault()
+    console.log("댓글 등록:", content)
+    setContent("")
+  }
 
   return (
     <div className="w-full pb-2">
@@ -47,16 +45,15 @@ function AddComment() {
 
         <form className=" w-full flex-col gap-10">
           <div
-            ref={divRef}
-            contentEditable="true"
-            placeholder="댓글 추가..."
             className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
-              text ? "h-auto" : "h-[30px]"
-            } placeholder-${text ? "hidden" : "visible"}`}
+              content ? "h-auto" : "h-[30px]"
+            }`}
+            ref={contentRef}
+            contentEditable="true"
             onFocus={handleInputFocus}
             onInput={handleInputChange}
           >
-            {text ? text : "댓글 추가..."}
+            {content}
           </div>
 
           {state && (
@@ -72,7 +69,9 @@ function AddComment() {
                 type={"submit"}
                 onClick={handleCommentSubmit}
                 color={
-                  text ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-700"
+                  content
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-700"
                 }
               />
             </div>
@@ -80,7 +79,7 @@ function AddComment() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddComment;
+export default AddComment
