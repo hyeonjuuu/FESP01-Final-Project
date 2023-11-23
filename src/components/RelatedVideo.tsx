@@ -19,7 +19,7 @@ function RelatedVideo({ key, item, date }: RelatedVideoProps) {
             <img
               src={item.snippet.thumbnails.high.url}
               alt={item.snippet.title}
-              className="w-full h-full border-neutral-500 border-[0.5px]"
+              className="w-full h-full border-neutral-500 border-[0.5px] object-cover"
             ></img>
           </div>
 

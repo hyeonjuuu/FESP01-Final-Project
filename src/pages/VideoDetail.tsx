@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import VideoDetailItem from "@components/VideoDetailItem";
 import formatDateDifference from "@api/formatDateDifference";
 import RelatedVideo from "@components/RelatedVideo";
+import Comment from "@components/Comment";
+import AddComment from "@components/AddComment";
 
 function VideoDetail() {
   const location = useLocation();
@@ -47,11 +49,13 @@ function VideoDetail() {
       </section>
 
       <h3 className="sr-only">관련된 영상</h3>
-      <div className="min-w-[360px]">
+      <div className="min-w-[360px] pb-10">
         {detailData?.map((item, index) => (
           <RelatedVideo key={item.id} item={item} date={dataVariable[index]} />
         ))}
       </div>
+      <AddComment />
+      <Comment />
     </div>
   );
 }
