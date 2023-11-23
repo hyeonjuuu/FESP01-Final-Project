@@ -1,8 +1,8 @@
-import SearchBar from "@components/SearchBar";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BackButton from "@components/BackButton";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import SearchBar from "@components/SearchBar"
+import BackButton from "@components/BackButton"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser, faGear } from "@fortawesome/free-solid-svg-icons"
 
 function Header() {
   return (
@@ -25,8 +25,11 @@ function Header() {
         <FontAwesomeIcon icon={faUser} />
         <span className="w-11">로그인</span>
       </button>
+      <button>
+        <FontAwesomeIcon icon={faGear} />
+      </button>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from "axios"
 
 async function getData() {
   try {
-    const response = await axios.get("/videos/popular.json");
-    return response.data;
+    const response = await axios.get("/videos/popular.json")
+    return response.data
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
+    console.error("Error fetching data:", error)
+    return null
   }
 }
 
-export default getData;
+export default getData
