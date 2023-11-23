@@ -7,25 +7,25 @@ async function getImage(size: string) {
 
   return items.map((item) => {
     switch (size) {
-      case "sm":
+      case "mo":
         return {
           url: item.snippet?.thumbnails.default.url,
-          size: "sm",
+          size: "mo",
         };
-      case "md":
+      case "tb":
         return {
           url: item.snippet?.thumbnails.medium.url,
-          size: "md",
+          size: "tb",
         };
-      case "lg":
+      case "pc":
         return {
           url: item.snippet?.thumbnails.high.url,
-          size: "lg",
+          size: "pc",
         };
-      case "xl":
+      case "lgpc":
         return {
           url: item.snippet?.thumbnails.standard.url,
-          size: "xl",
+          size: "lgpc",
         };
       default:
         return {

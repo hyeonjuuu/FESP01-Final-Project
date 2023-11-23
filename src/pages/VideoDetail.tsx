@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { VideoItem } from "interface";
-import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import VideoDetailItem from "@components/VideoDetailItem";
 import formatDateDifference from "@api/formatDateDifference";
