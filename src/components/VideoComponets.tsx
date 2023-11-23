@@ -18,9 +18,9 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
             item.snippet.thumbnails.high.url
           }
           alt={item.snippet.title}
-          className=" w-[26.125rem] max-w-full h-[14.75rem]  border-neutral-500 border-[0.5px] mx-auto"
+          className="max-w-full h-[14.75rem] aspect-video"
         />
-        <div className="pt-2 h-full w-[90%]">
+        <div className=" pt-2 h-full w-[90%]">
           <dl className=" flex flex-col w-full">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}

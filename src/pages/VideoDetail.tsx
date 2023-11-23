@@ -40,7 +40,7 @@ function VideoDetail() {
           <ul key={location.state.item.id}>
             <VideoDetailItem
               item={locationRoute}
-              imageUrl={locationRoute.thumbnails.maxres.url}
+              imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
             />
           </ul>
         </div>
