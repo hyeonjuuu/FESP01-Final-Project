@@ -29,7 +29,7 @@ function VideoComponets({
   }
 
   return (
-    <div className="mo:w-[70%] flex flex-col">
+    <div className="mo:flex mo:flex-col mo:items-center">
       <Link
         to={`/videoDetail/${item.id}`}
         state={{ item: item }}
@@ -51,7 +51,7 @@ function VideoComponets({
           className="max-w-full aspect-video h-[14.75rem]"
         ></img>
       </Link>
-      <div className="pt-2 w-full ">
+      <div className="pt-2 mo:flex-1 w-full ">
         <dl className=" flex flex-col w-full">
           <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
             {item.snippet.title}
