@@ -14,9 +14,12 @@ const formatDateDifference = (publishedAt: string) => {
   } else if (daysDifference < 30) {
     const weeksDifference = Math.floor(daysDifference / 7);
     return `${weeksDifference}주 전`;
-  } else {
+  } else if (daysDifference < 365) {
     const monthsDifference = Math.floor(daysDifference / 30);
     return `${monthsDifference}개월 전`;
+  } else {
+    const yearsDifference = Math.floor(daysDifference / 365);
+    return `${yearsDifference}년 전`;
   }
 };
 
