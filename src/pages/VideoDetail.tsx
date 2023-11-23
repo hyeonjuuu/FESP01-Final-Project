@@ -1,35 +1,35 @@
-import axios from "axios";
-import { VideoItem } from "interface";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import VideoDetailItem from "@components/VideoDetailItem";
-import VideoComponents from "@components/VideoComponets";
-import formatDateDifference from "@api/formatDateDifference";
+import axios from "axios"
+import { VideoItem } from "interface"
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
+import VideoComponents from "@components/VideoComponets"
+import VideoDetailItem from "@components/VideoDetailItem"
+import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
-  const location = useLocation();
-  const locationRoute = location.state.item.snippet;
-  const [detailData, setDetailData] = useState<VideoItem[]>([]);
-  const [dataVariable, setDataVariable] = useState<string[]>([]);
+  const location = useLocation()
+  const locationRoute = location.state.item.snippet
+  const [detailData, setDetailData] = useState<VideoItem[]>([])
+  const [dataVariable, setDataVariable] = useState<string[]>([])
 
   useEffect(() => {
     const fetchDetailData = async () => {
       try {
         const response = await axios.get(
           `/videos/searchByChannels/search-by-channel-id-${locationRoute.channelId}.json`,
-        );
+        )
         const formattedDates = response.data.items.map((item: VideoItem) => {
-          return formatDateDifference(item.snippet.publishedAt);
-        });
-        setDataVariable(formattedDates);
-        setDetailData(response.data.items);
+          return formatDateDifference(item.snippet.publishedAt)
+        })
+        setDataVariable(formattedDates)
+        setDetailData(response.data.items)
       } catch (error) {
-        console.error("Error fetching detail data:", error);
+        console.error("Error fetching detail data:", error)
       }
-    };
+    }
 
-    fetchDetailData();
-  }, [locationRoute.channelId]);
+    fetchDetailData()
+  }, [locationRoute.channelId])
 
   return (
     <div className="py-6 px-8">
@@ -58,7 +58,7 @@ function VideoDetail() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default VideoDetail;
+export default VideoDetail
