@@ -1,5 +1,5 @@
 import axios from "axios"
-import { VideoItem } from "interface"
+import { CommentType, VideoItem } from "interface"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -7,12 +7,14 @@ import AddComment from "@components/AddComment"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
+import { readComment } from "@api/commentApi"
 
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [commentData, setCommentData] = useState<CommentType[]>([])
   const [windowWidth, setWindowWidth] = useState(window.outerWidth)
 
   useEffect(() => {
@@ -35,6 +37,36 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+
+    // console.log(promiseData)
+  }, [])
+
+  console.log(location)
+
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+
+    // console.log(promiseData)
+  }, [])
+
+  console.log(location)
+
+  useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.outerWidth)
     }
@@ -52,7 +84,7 @@ function VideoDetail() {
         <h2 className="sr-only">유튜브 상세 페이지</h2>
 
         {/* 왼쪽 윗칸 차지 */}
-        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
+        <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3">
           <h3 className="sr-only">해당 영상</h3>
           <div className="min-w-[360px]">
             <ul key={location.state.item.id}>
@@ -63,9 +95,11 @@ function VideoDetail() {
             </ul>
           </div>
           {/* 왼쪽 아래칸 차지 */}
-          <div className=" min-w-[360px] mt-6 py-2">
+          <div className=" min-w-[360px]">
             <AddComment videoId={locationRoute.channelId} />
-            <Comment />
+            {commentData.map((item) => (
+              <Comment key={item.id} text={item.text} />
+            ))}
           </div>
         </section>
 
@@ -115,7 +149,9 @@ function VideoDetail() {
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]  mt-6 py-2">
           <AddComment videoId={locationRoute.channelId} />
-          <Comment />
+          {commentData.map((item) => (
+            <Comment key={item.id} text={item.text} />
+          ))}
         </div>
       </div>
     )
