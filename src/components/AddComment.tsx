@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from "react"
 import Button from "./Button"
+import enterComment from "@api/commentApi"
+import { AddCommentProps } from "interface"
+import React, { useEffect, useRef, useState } from "react"
 
-function AddComment() {
+function AddComment({ videoId }: AddCommentProps) {
   const [isState, setIsState] = useState(false)
   const [text, setText] = useState<string>("")
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -20,10 +22,19 @@ function AddComment() {
     setText("")
   }
 
-  const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    console.log("댓글 등록:", text)
+  const handleCommentSubmit = () => {
+    enterComment(text, videoId)
     setText("")
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      if (text === "") {
+        return
+      } else {
+        handleCommentSubmit()
+      }
+    }
   }
 
   // useEffect를 사용하여 텍스트가 변경될 때마다 높이를 조절합니다.
@@ -55,6 +66,7 @@ function AddComment() {
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           />
 
           {isState && (
@@ -67,7 +79,7 @@ function AddComment() {
               />
               <Button
                 text={"등록"}
-                type={"submit"}
+                type={"button"}
                 onClick={handleCommentSubmit}
                 color={
                   text ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-700"
