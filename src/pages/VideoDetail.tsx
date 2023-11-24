@@ -50,7 +50,7 @@ function VideoDetail() {
         </div>
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]">
-          <AddComment />
+          <AddComment videoId={locationRoute.channelId} />
           <Comment />
         </div>
       </section>
