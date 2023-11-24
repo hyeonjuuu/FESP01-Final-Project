@@ -34,9 +34,11 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   return (
-    <div className="py-6 px-8 dark:bg-[#202124] dark:text-white">
+    <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
-      <section className="w-full pb-10">
+
+      {/* 왼쪽 윗칸 차지 */}
+      <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3">
         <h3 className="sr-only">해당 영상</h3>
         <div className="min-w-[360px]">
           <ul key={location.state.item.id}>
@@ -46,10 +48,16 @@ function VideoDetail() {
             />
           </ul>
         </div>
+        {/* 왼쪽 아래칸 차지 */}
+        <div className=" min-w-[360px]">
+          <AddComment />
+          <Comment />
+        </div>
       </section>
 
-      <h3 className="sr-only">관련된 영상</h3>
-      <div className="min-w-[360px] pb-10">
+      {/* 오른쪽 세로로 두칸 차지 */}
+      <div className="min-w-[360px] pb-10  bg-yellow-100 pc:col-span-1">
+        <h3 className="sr-only">관련된 영상</h3>
         {detailData?.map((item, index) => (
           <RelatedVideo
             key={`${item.id}_${index}`}
@@ -58,8 +66,6 @@ function VideoDetail() {
           />
         ))}
       </div>
-      <AddComment />
-      <Comment />
     </div>
   )
 }
