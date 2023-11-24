@@ -1,34 +1,43 @@
-import React, { useState } from "react";
-import Button from "./Button";
+import React, { useEffect, useRef, useState } from "react"
+import Button from "./Button"
 
 function AddComment() {
-  const [state, setState] = useState(false);
-  const [text, setText] = useState<string>("");
+  const [isState, setIsState] = useState(false)
+  const [text, setText] = useState<string>("")
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleInputFocus = () => {
-    setState(true);
-  };
+    setIsState(true)
+  }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLDivElement>) => {
-    setText(e.target.innerText);
-  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value)
+  }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setState(false);
-    setText("");
-  };
+    e.preventDefault()
+    setIsState(false)
+    setText("")
+  }
 
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("댓글 등록:", text);
-    setText("");
-  };
+    e.preventDefault()
+    console.log("댓글 등록:", text)
+    setText("")
+  }
+
+  // useEffect를 사용하여 텍스트가 변경될 때마다 높이를 조절합니다.
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "30px"
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    }
+  }, [text])
 
   return (
     <div className="w-full pb-2">
-      <div className="max-h-[142px] flex">
-        <div className="h-auto pr-4">
+      <div className="h-auto flex">
+        <div className="min-h-[102px] pr-4">
           <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
             <img
               src="/smile.png"
@@ -39,26 +48,16 @@ function AddComment() {
         </div>
 
         <form className=" w-full flex-col gap-10">
-          {/* <textarea
+          <textarea
+            ref={textareaRef}
             placeholder="댓글 추가..."
-            className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
-              text ? "h-auto" : "h-[30px]"
-            }`}
+            className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 overflow-hidden resize-none"
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
-          /> */}
-          <div
-            contentEditable="true"
-            placeholder="댓글 추가..."
-            className={`w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 ${
-              text ? "h-auto" : "h-[30px]"
-            }`}
-            onFocus={handleInputFocus}
-            onInput={handleInputChange}
-          ></div>
+          />
 
-          {state && (
+          {isState && (
             <div className="flex gap-3 justify-end">
               <Button
                 text={"취소"}
@@ -79,7 +78,7 @@ function AddComment() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddComment;
+export default AddComment
