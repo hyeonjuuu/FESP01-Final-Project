@@ -56,3 +56,11 @@ export interface VideoSearchResult {
   }
   snippet: VideoSnippet
 }
+
+export interface CommentType {
+  id: number
+  created_at: string
+  text: string
+  video_id: string
+  anonymous_user_id: string
+}

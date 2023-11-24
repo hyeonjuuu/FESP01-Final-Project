@@ -1,5 +1,5 @@
 import axios from "axios"
-import { VideoItem } from "interface"
+import { CommentType, VideoItem } from "interface"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -7,12 +7,14 @@ import AddComment from "@components/AddComment"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
+import { readComment } from "@api/commentApi"
 
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [commentData, setCommentData] = useState<CommentType[]>([])
 
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -33,6 +35,21 @@ function VideoDetail() {
     fetchDetailData()
   }, [locationRoute.channelId])
 
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+
+    // console.log(promiseData)
+  }, [])
+
+  console.log(location)
+
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
@@ -50,8 +67,10 @@ function VideoDetail() {
         </div>
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]">
-          <AddComment videoId={locationRoute.channelId} />
-          <Comment />
+          <AddComment videoId={location.state.item.id} />
+          {commentData.map((item) => (
+            <Comment key={item.id} text={item.text} />
+          ))}
         </div>
       </section>
 
