@@ -51,7 +51,7 @@ function AddComment() {
           <textarea
             ref={textareaRef}
             placeholder="댓글 추가..."
-            className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 overflow-hidden"
+            className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 overflow-hidden resize-none"
             value={text}
             onFocus={handleInputFocus}
             onChange={handleInputChange}
