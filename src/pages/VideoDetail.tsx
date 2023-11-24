@@ -34,11 +34,11 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   return (
-    <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
+    <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
 
       {/* 왼쪽 윗칸 차지 */}
-      <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3">
+      <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
         <h3 className="sr-only">해당 영상</h3>
         <div className="min-w-[360px]">
           <ul key={location.state.item.id}>
