@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"
 
 interface ButtonProps {
-  text: string;
-  type: "button" | "submit" | "reset";
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  activeClass?: string;
-  color?: string;
+  text: string
+  type: "button" | "submit" | "reset"
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  activeClass?: string
+  color?: string
 }
 
 function Button({
@@ -18,12 +18,12 @@ function Button({
   return (
     <button
       type={type}
-      className={`flex items-center justify-center bg-gray-200 py-2 px-3 rounded-full ${color} ${activeClass}`}
+      className={`flex items-center justify-center  py-2 px-3 rounded-full ${color} ${activeClass}`}
       onClick={onClick}
     >
       {text}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button
