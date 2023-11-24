@@ -49,7 +49,7 @@ function VideoDetail() {
           </ul>
         </div>
         {/* 왼쪽 아래칸 차지 */}
-        <div className=" min-w-[360px]">
+        <div className=" min-w-[360px]  mt-6 py-2">
           <AddComment />
           <Comment />
         </div>

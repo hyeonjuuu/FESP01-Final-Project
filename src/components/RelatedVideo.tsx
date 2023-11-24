@@ -10,20 +10,18 @@ interface RelatedVideoProps {
 
 function RelatedVideo({ item, date }: RelatedVideoProps) {
   const titleRef = useRef<HTMLDivElement>(null)
-  const [isTitleClamped, setIsTitleClamped] = useState(false)
+  const [limitTitle, setLimitTitle] = useState(false)
 
   useEffect(() => {
     if (titleRef.current) {
-      // 클램프된 높이를 계산
       const lineHeight = parseInt(
         getComputedStyle(titleRef.current).lineHeight,
         10,
       )
-      const maxLines = 2 // 최대 두 줄로 설정
+      const maxLines = 1
       const maxHeight = lineHeight * maxLines
 
-      // 제목의 높이가 최대 높이를 초과하면 클램프
-      setIsTitleClamped(titleRef.current.offsetHeight > maxHeight)
+      setLimitTitle(titleRef.current.offsetHeight > maxHeight)
     }
   }, [item.snippet.title])
 
@@ -39,18 +37,22 @@ function RelatedVideo({ item, date }: RelatedVideoProps) {
             ></img>
           </div>
 
-          <div className="pl-2 mo:w-[70%] tb:w-full bg-yellow-300">
-            <dl className="flex flex-col bg-blue-100 h-[94px] max-h-[94px]">
+          <div className="pl-2 mo:w-[70%] tb:w-full ">
+            <dl className="flex flex-col  h-[94px] max-h-[94px]">
               <dt
-                className={`text-sm bg-orange-400 w-[230px] ${
-                  isTitleClamped ? "line-clamp-2" : "whitespace-pre-wrap"
+                className={`text-sm  pc:w-[230px] ${
+                  limitTitle
+                    ? "pc:line-clamp-2 lgpc:line-clamp-2"
+                    : "pc:whitespace-pre-wrap lgpc:whitespace-pre-wrap max-h-[60px]"
                 }`}
                 ref={titleRef}
               >
                 {item.snippet.title}
               </dt>
-              <dd className="text-sm">{item.snippet.channelTitle}</dd>
-              <dd className="text-sm">{date}</dd>
+              <dd className="text-xs mt-[4px] text-gray-500">
+                {item.snippet.channelTitle}
+              </dd>
+              <dd className="text-xs text-gray-500">{date}</dd>
             </dl>
           </div>
         </div>
