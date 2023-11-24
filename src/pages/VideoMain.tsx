@@ -30,6 +30,8 @@ function VideoMain() {
     dataFetching()
   }, [setVideoData])
 
+  console.log(videoData)
+
   const filteredData = videoData.filter((video) =>
     video.snippet.title.toLowerCase().includes(searchBarValue.toLowerCase()),
   )
