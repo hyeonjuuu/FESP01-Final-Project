@@ -31,12 +31,21 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
           />
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
             {isSound ? (
-              <FontAwesomeIcon icon={faVolumeLow} style={{ color: "white" }} />
+              <button className="p-2">
+                <FontAwesomeIcon
+                  icon={faVolumeLow}
+                  className="text-white"
+                  title="음소거 해제"
+                />
+              </button>
             ) : (
-              <FontAwesomeIcon
-                icon={faVolumeXmark}
-                style={{ color: "white" }}
-              />
+              <button className="p-2">
+                <FontAwesomeIcon
+                  icon={faVolumeXmark}
+                  className="text-white"
+                  title="음소거"
+                />
+              </button>
             )}
           </div>
         </motion.div>
