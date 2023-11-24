@@ -13,6 +13,7 @@ function VideoDetail() {
   const locationRoute = location.state.item.snippet
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [windowWidth, setWindowWidth] = useState(window.outerWidth)
 
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -33,41 +34,92 @@ function VideoDetail() {
     fetchDetailData()
   }, [locationRoute.channelId])
 
-  return (
-    <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
-      <h2 className="sr-only">유튜브 상세 페이지</h2>
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.outerWidth)
+    }
 
-      {/* 왼쪽 윗칸 차지 */}
-      <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
-        <h3 className="sr-only">해당 영상</h3>
-        <div className="min-w-[360px]">
-          <ul key={location.state.item.id}>
-            <VideoDetailItem
-              item={locationRoute}
-              imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  if (window.outerWidth > 1024) {
+    return (
+      <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
+        <h2 className="sr-only">유튜브 상세 페이지</h2>
+
+        {/* 왼쪽 윗칸 차지 */}
+        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
+          <h3 className="sr-only">해당 영상</h3>
+          <div className="min-w-[360px]">
+            <ul key={location.state.item.id}>
+              <VideoDetailItem
+                item={locationRoute}
+                imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
+              />
+            </ul>
+          </div>
+          {/* 왼쪽 아래칸 차지 */}
+          <div className=" min-w-[360px] mt-6 py-2">
+            <AddComment />
+            <Comment />
+          </div>
+        </section>
+
+        {/* 오른쪽 세로로 두칸 차지 */}
+        <div className="min-w-[360px] pb-10   pc:col-span-1">
+          <h3 className="sr-only">관련된 영상</h3>
+          {detailData?.map((item, index) => (
+            <RelatedVideo
+              key={`${item.id}_${index}`}
+              item={item}
+              date={dataVariable[index]}
             />
-          </ul>
+          ))}
         </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
+        <h2 className="sr-only">유튜브 상세 페이지</h2>
+
+        {/* 왼쪽 윗칸 차지 */}
+        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
+          <h3 className="sr-only">해당 영상</h3>
+          <div className="min-w-[360px]">
+            <ul key={location.state.item.id}>
+              <VideoDetailItem
+                item={locationRoute}
+                imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
+              />
+            </ul>
+          </div>
+        </section>
+
+        {/* 오른쪽 세로로 두칸 차지 */}
+        <div className="min-w-[360px] pb-10   pc:col-span-1">
+          <h3 className="sr-only">관련된 영상</h3>
+          {detailData?.map((item, index) => (
+            <RelatedVideo
+              key={`${item.id}_${index}`}
+              item={item}
+              date={dataVariable[index]}
+            />
+          ))}
+        </div>
+
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]  mt-6 py-2">
           <AddComment />
           <Comment />
         </div>
-      </section>
-
-      {/* 오른쪽 세로로 두칸 차지 */}
-      <div className="min-w-[360px] pb-10  bg-yellow-100 pc:col-span-1">
-        <h3 className="sr-only">관련된 영상</h3>
-        {detailData?.map((item, index) => (
-          <RelatedVideo
-            key={`${item.id}_${index}`}
-            item={item}
-            date={dataVariable[index]}
-          />
-        ))}
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default VideoDetail
