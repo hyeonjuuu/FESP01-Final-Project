@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom"
 import { VideoItem } from "../interface"
+import { motion } from "framer-motion"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
+import { useEffect, useState } from "react"
 
 interface VideoComponentsProps {
   key: string
@@ -9,17 +13,34 @@ interface VideoComponentsProps {
 }
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
+  const [isSound, setIsSound] = useState(false)
+
+  const handleSound = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsSound(!isSound)
+    e.preventDefault()
+  }
+
   return (
-    <div>
+    <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
-        <img
-          src={
-            item.snippet.thumbnails.maxres?.url ||
-            item.snippet.thumbnails.high.url
-          }
-          alt={item.snippet.title}
-          className="mo:flex-shrink rounded-lg"
-        />
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
+          <img
+            src={item.snippet.thumbnails.maxres?.url}
+            alt={item.snippet.title}
+            className="mo:flex-shrink rounded-lg hover:rounded-none"
+          />
+          <div className="absolute top-1 right-1 group" onClick={handleSound}>
+            {isSound ? (
+              <FontAwesomeIcon icon={faVolumeLow} style={{ color: "white" }} />
+            ) : (
+              <FontAwesomeIcon
+                icon={faVolumeXmark}
+                style={{ color: "white" }}
+              />
+            )}
+          </div>
+        </motion.div>
+
         <div className="mt-2 mo:mb-3 tb:mb-0">
           <dl>
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
