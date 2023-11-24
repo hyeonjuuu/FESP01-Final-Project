@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 
-const EnterComment = async (text: string, video_id: string) => {
+const enterComment = async (text: string, video_id: string) => {
   const supabaseAdmin = createClient(
     "https://ufinqahbxsrpjbqmrvti.supabase.co",
     process.env.REACT_APP_SUPABASE_PROJECT_API_KEY as string,
@@ -24,4 +24,4 @@ const EnterComment = async (text: string, video_id: string) => {
   }
 }
 
-export default EnterComment
+export default enterComment
