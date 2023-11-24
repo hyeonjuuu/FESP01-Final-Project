@@ -1,12 +1,10 @@
 import { useState } from "react"
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRecoilState } from "recoil"
-// import { filterVideoAtom, videoAtom } from "@store/videoAtom"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 
 function SearchBar() {
-  // const videoData = useRecoilValue(videoAtom)
   const [searchBarValue, setSearchBarValue] = useRecoilState(searchBarValueAtom)
   const [searchBarClicked, setSearchBarClicked] = useState(false)
 
@@ -14,19 +12,27 @@ function SearchBar() {
     setSearchBarClicked((prevClicked) => !prevClicked)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      if (searchBarValue === "") {
+        return
+      } else {
+        handleSearchPopularVideo(e)
+      }
+    }
+  }
+
   const handleSearchPopularVideo = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<Element>,
   ) => {
-    setSearchBarValue(event.target.value)
-    console.log(searchBarValue)
+    setSearchBarValue(
+      (event as React.ChangeEvent<HTMLInputElement>).target.value,
+    )
   }
 
   return (
     <div className="flex justify-center items-center border rounded-[35px] sm:w-full lgpc:w-[45rem] pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
-      <form
-        action="post"
-        className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]"
-      >
+      <div className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]">
         <div
           className={`w-full h-[2.5rem] ${
             searchBarClicked ? "border-[#e6e6e6]" : "border-[#1A62B9]"
@@ -41,7 +47,8 @@ function SearchBar() {
             placeholder="검색"
             className="w-full mx-4 focus:outline-none dark:bg-[#202124]"
             onClick={handleSearchBarClicked}
-            onChange={handleSearchPopularVideo}
+            onBlur={handleSearchPopularVideo}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <button
@@ -51,7 +58,7 @@ function SearchBar() {
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} className="text-[#111]" />
         </button>
-      </form>
+      </div>
     </div>
   )
 }
