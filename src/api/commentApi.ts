@@ -1,11 +1,12 @@
 import { createClient } from "@supabase/supabase-js"
 
-const enterComment = async (text: string, video_id: string) => {
-  const supabaseAdmin = createClient(
-    "https://ufinqahbxsrpjbqmrvti.supabase.co",
-    process.env.REACT_APP_SUPABASE_PROJECT_API_KEY as string,
-  )
+const supabaseAdmin = createClient(
+  "https://ufinqahbxsrpjbqmrvti.supabase.co",
+  process.env.REACT_APP_SUPABASE_PROJECT_API_KEY as string,
+)
 
+// 댓글 등록 API
+export const enterComment = async (text: string, video_id: string) => {
   try {
     const { data, error } = await supabaseAdmin.from("video_comment").insert([
       {
@@ -24,4 +25,16 @@ const enterComment = async (text: string, video_id: string) => {
   }
 }
 
-export default enterComment
+// 댓글 삭제 API
+export const deleteComment = async (commentId: number) => {
+  const { data, error } = await supabaseAdmin
+    .from("video_comment")
+    .delete()
+    .eq("id", commentId)
+
+  if (error) {
+    console.error("Error deleting comment:", error.message)
+  } else {
+    console.log("Comment deleted successfully:", data)
+  }
+}

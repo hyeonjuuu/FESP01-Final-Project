@@ -1,12 +1,8 @@
-import {
-  faThumbsDown,
-  faThumbsUp,
-  faEdit,
-  faTrashCan,
-} from "@fortawesome/free-regular-svg-icons"
+import { useState } from "react"
+import { deleteComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { useState } from "react"
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
 function Comment() {
   const [count, setCount] = useState(0)
@@ -28,7 +24,7 @@ function Comment() {
 
   const handleDeleteClick = () => {
     console.log("Delete clicked!")
-    // 여기에 삭제 로직 추가
+    deleteComment(19)
   }
 
   return (

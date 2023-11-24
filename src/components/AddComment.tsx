@@ -1,5 +1,5 @@
 import Button from "./Button"
-import enterComment from "@api/commentApi"
+import { enterComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
