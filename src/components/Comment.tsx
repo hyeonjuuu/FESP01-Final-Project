@@ -1,10 +1,15 @@
-import { useState } from "react"
-import { deleteComment } from "@api/commentApi"
+import { useEffect, useState } from "react"
+import { deleteComment, readComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
+// import type { Comment } from "interface"
 
-function Comment() {
+interface CommentProps {
+  text: string
+}
+
+function Comment({ text }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -57,12 +62,7 @@ function Comment() {
                   <p className="text-sm">작성일</p>
                 </div>
               </div>
-              <div className="">
-                To the person who is reading this comment, its okay, its alright
-                to feel lonely sometimes, if you are going through tough times,
-                keep pushing through, but never give up, i wish you great
-                success in health, love and happiness!
-              </div>
+              <div className="">{text}</div>
               <div className="flex gap-5">
                 <div className="flex items-center justify-center">
                   <div

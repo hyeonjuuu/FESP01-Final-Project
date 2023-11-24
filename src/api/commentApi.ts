@@ -38,3 +38,21 @@ export const deleteComment = async (commentId: number) => {
     console.log("Comment deleted successfully:", data)
   }
 }
+
+// 댓글 가져오기 API
+export const readComment = async () => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("video_comment")
+      .select("*")
+
+    if (error) {
+      console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error.message}`)
+    } else {
+      console.log("Supabase 데이터 가져오기 성공:", data)
+      return data
+    }
+  } catch (error) {
+    console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error}`)
+  }
+}
