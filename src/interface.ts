@@ -11,10 +11,6 @@ export interface VideoItem {
   snippet: VideoSnippet
 }
 
-export interface AddCommentProps {
-  videoId: string
-}
-
 export interface VideoSnippet {
   publishedAt: string
   channelId: string
@@ -63,6 +59,11 @@ export interface CommentType {
   text: string
   video_id: string
   anonymous_user_id: string
+}
+
+export interface AddCommentProps {
+  videoId: string
+  setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
 }
 
 export interface CommentProps {

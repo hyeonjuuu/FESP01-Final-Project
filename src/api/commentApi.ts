@@ -49,7 +49,7 @@ export const readComment = async () => {
     if (error) {
       console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error.message}`)
     } else {
-      console.log("Supabase 데이터 가져오기 성공:", data)
+      // console.log("Supabase 데이터 가져오기 성공:", data)
       return data
     }
   } catch (error) {

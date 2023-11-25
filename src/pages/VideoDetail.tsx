@@ -65,7 +65,10 @@ function VideoDetail() {
         </div>
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]">
-          <AddComment videoId={location.state.item.id} />
+          <AddComment
+            videoId={location.state.item.id}
+            setCommentData={setCommentData}
+          />
           {commentData.map((item) => (
             <Comment
               key={item.id}

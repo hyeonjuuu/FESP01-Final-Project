@@ -1,12 +1,13 @@
 import Button from "./Button"
-import { enterComment } from "@api/commentApi"
+import { enterComment, readComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
-function AddComment({ videoId }: AddCommentProps) {
+function AddComment({ videoId, setCommentData }: AddCommentProps) {
   const [isFocus, setIsFocus] = useState(false)
   const [text, setText] = useState<string>("")
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const handleInputFocus = () => {
     setIsFocus(true)
@@ -22,10 +23,22 @@ function AddComment({ videoId }: AddCommentProps) {
     setText("")
   }
 
-  const handleCommentSubmit = () => {
-    enterComment(text, videoId)
+  const handleCommentSubmit = async () => {
+    await enterComment(text, videoId)
+    setIsSubmit((prevState) => !prevState)
     setText("")
   }
+
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+  }, [isSubmit])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
