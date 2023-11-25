@@ -64,8 +64,6 @@ function VideoDetail() {
     // console.log(promiseData)
   }, [])
 
-  console.log(location)
-
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.outerWidth)
@@ -84,7 +82,7 @@ function VideoDetail() {
         <h2 className="sr-only">유튜브 상세 페이지</h2>
 
         {/* 왼쪽 윗칸 차지 */}
-        <section className="w-full pb-10 bg-red-100 flex-shrink pc:col-span-3">
+        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
           <h3 className="sr-only">해당 영상</h3>
           <div className="min-w-[360px]">
             <ul key={location.state.item.id}>
@@ -96,7 +94,7 @@ function VideoDetail() {
           </div>
           {/* 왼쪽 아래칸 차지 */}
           <div className=" min-w-[360px]">
-            <AddComment videoId={locationRoute.channelId} />
+            <AddComment videoId={location.state.item.id} />
             {commentData.map((item) => (
               <Comment key={item.id} text={item.text} />
             ))}

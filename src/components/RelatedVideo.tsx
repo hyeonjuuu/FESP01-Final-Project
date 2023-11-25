@@ -42,7 +42,7 @@ function RelatedVideo({ item, date }: RelatedVideoProps) {
               <dt
                 className={`text-sm  pc:w-[230px] ${
                   limitTitle
-                    ? "pc:line-clamp-2 lgpc:line-clamp-2"
+                    ? "pc:line-clamp-2 lgpc:line-clamp-2 text-ellipsis overflow-clip"
                     : "pc:whitespace-pre-wrap lgpc:whitespace-pre-wrap max-h-[60px]"
                 }`}
                 ref={titleRef}
