@@ -72,6 +72,7 @@ function VideoDetail() {
               commentId={item.anonymous_user_id}
               date={item.created_at}
               text={item.text}
+              setCommentData={setCommentData}
             />
           ))}
         </div>

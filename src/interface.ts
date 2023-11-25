@@ -64,3 +64,10 @@ export interface CommentType {
   video_id: string
   anonymous_user_id: string
 }
+
+export interface CommentProps {
+  text: string
+  date: string
+  commentId: string
+  setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
+}

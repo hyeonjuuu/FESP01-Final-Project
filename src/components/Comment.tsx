@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react"
-import { deleteComment, enterComment, readComment } from "@api/commentApi"
+import { deleteComment, readComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
+import { CommentProps } from "interface"
 
-interface CommentProps {
-  text: string
-  date: string
-  commentId: string
-}
-
-function Comment({ text, date, commentId }: CommentProps) {
+function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
 
   const createdDate = formatDateDifference(date)
 
@@ -30,10 +26,22 @@ function Comment({ text, date, commentId }: CommentProps) {
     console.log("Edit clicked!")
   }
 
-  const handleDeleteClick = () => {
-    deleteComment(commentId)
-    console.log("Delete clicked!")
+  const handleDeleteClick = async () => {
+    await deleteComment(commentId)
+    setIsDelete((prevState) => !prevState)
+    alert("댓글이 삭제되었습니다!")
   }
+
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+  }, [isDelete])
 
   return (
     <div className="w-full">
