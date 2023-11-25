@@ -44,8 +44,6 @@ function VideoDetail() {
       .catch((error) => {
         console.error("에러 발생: ", error)
       })
-
-    // console.log(promiseData)
   }, [])
 
   // console.log("location: ", location)
@@ -71,9 +69,9 @@ function VideoDetail() {
           {commentData.map((item) => (
             <Comment
               key={item.id}
-              text={item.text}
-              date={item.created_at}
               commentId={item.anonymous_user_id}
+              date={item.created_at}
+              text={item.text}
             />
           ))}
         </div>

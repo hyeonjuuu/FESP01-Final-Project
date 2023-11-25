@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { deleteComment, enterComment } from "@api/commentApi"
+import { useEffect, useState } from "react"
+import { deleteComment, enterComment, readComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
@@ -31,8 +31,8 @@ function Comment({ text, date, commentId }: CommentProps) {
   }
 
   const handleDeleteClick = () => {
+    deleteComment(commentId)
     console.log("Delete clicked!")
-    deleteComment(19)
   }
 
   return (

@@ -26,11 +26,11 @@ export const enterComment = async (text: string, video_id: string) => {
 }
 
 // 댓글 삭제 API
-export const deleteComment = async (commentId: number) => {
+export const deleteComment = async (commentId: string) => {
   const { data, error } = await supabaseAdmin
     .from("video_comment")
     .delete()
-    .eq("id", commentId)
+    .eq("anonymous_user_id", commentId)
 
   if (error) {
     console.error("Error deleting comment:", error.message)
