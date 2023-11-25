@@ -48,7 +48,7 @@ function VideoDetail() {
     // console.log(promiseData)
   }, [])
 
-  console.log(location)
+  // console.log("location: ", location)
 
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
@@ -69,7 +69,12 @@ function VideoDetail() {
         <div className=" min-w-[360px]">
           <AddComment videoId={location.state.item.id} />
           {commentData.map((item) => (
-            <Comment key={item.id} text={item.text} />
+            <Comment
+              key={item.id}
+              text={item.text}
+              date={item.created_at}
+              commentId={item.anonymous_user_id}
+            />
           ))}
         </div>
       </section>

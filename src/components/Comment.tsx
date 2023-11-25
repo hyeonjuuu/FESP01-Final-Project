@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react"
-import { deleteComment, readComment } from "@api/commentApi"
+import { useState } from "react"
+import { deleteComment, enterComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
-// import type { Comment } from "interface"
+import formatDateDifference from "@api/formatDateDifference"
 
 interface CommentProps {
   text: string
+  date: string
+  commentId: string
 }
 
-function Comment({ text }: CommentProps) {
+function Comment({ text, date, commentId }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
+
+  const createdDate = formatDateDifference(date)
 
   const handleLike = () => {
     setCount(count + 1)
@@ -24,7 +28,6 @@ function Comment({ text }: CommentProps) {
 
   const handleEditClick = () => {
     console.log("Edit clicked!")
-    // 여기에 수정 로직 추가
   }
 
   const handleDeleteClick = () => {
@@ -58,8 +61,8 @@ function Comment({ text }: CommentProps) {
             <div>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-end">
-                  <p>작성자</p>
-                  <p className="text-sm">작성일</p>
+                  <p>{commentId}</p>
+                  <p className="text-sm">{createdDate}</p>
                 </div>
               </div>
               <div className="">{text}</div>
