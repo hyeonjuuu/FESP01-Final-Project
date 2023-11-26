@@ -1,7 +1,7 @@
 import { atom } from "recoil"
-import { readCommentItem } from "interface"
+import { CommentType } from "interface"
 
-export const commetnAtom = atom<readCommentItem[]>({
+export const commetnAtom = atom<CommentType[]>({
   key: "commetnState",
   default: [],
 })

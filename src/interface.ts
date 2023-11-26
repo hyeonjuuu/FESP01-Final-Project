@@ -11,18 +11,6 @@ export interface VideoItem {
   snippet: VideoSnippet
 }
 
-export interface AddCommentProps {
-  videoId: string
-}
-
-export interface readCommentItem {
-  anonymous_user_id: string
-  created_at: string
-  id: number
-  text: string
-  video_id: string
-}
-
 export interface VideoSnippet {
   publishedAt: string
   channelId: string
@@ -63,4 +51,24 @@ export interface VideoSearchResult {
     videoId: string
   }
   snippet: VideoSnippet
+}
+
+export interface CommentType {
+  id: number
+  created_at: string
+  text: string
+  video_id: string
+  anonymous_user_id: string
+}
+
+export interface AddCommentProps {
+  videoId: string
+  setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
+}
+
+export interface CommentProps {
+  text: string
+  date: string
+  commentId: string
+  setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
 }

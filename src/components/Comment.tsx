@@ -1,18 +1,21 @@
-import { useState } from "react"
-import { deleteComment, modifyComment, readComment } from "@api/commentApi"
+import { CommentProps } from "interface"
+import { useEffect, useState } from "react"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
+import formatDateDifference from "@api/formatDateDifference"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { deleteComment, modifyComment, readComment } from "@api/commentApi"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
-interface CommentProps {
-  text: string
-  anonymous_user_id: string
-}
-
-function Comment({ text, anonymous_user_id }: CommentProps) {
+function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   const [count, setCount] = useState(0)
+  const [isDelete, setIsDelete] = useState(false)
+  const [doneModifyComment, setDoneModifyComment] = useState(false)
+  const [modifyChecked, setModifyChecked] = useState(false)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
+  const [modifyCommentText, setModifyCommentText] = useState<string>("")
+
+  const createdDate = formatDateDifference(date)
 
   const handleLike = () => {
     setCount(count + 1)
@@ -22,13 +25,35 @@ function Comment({ text, anonymous_user_id }: CommentProps) {
     setIsButtonsVisible(!isButtonsVisible)
   }
 
-  const handleEditClick = () => {
-    modifyComment(anonymous_user_id)
+  // alert을 사용하면 페이지가 리렌더링?? alert사용을 안하실에는 댓글이 바로 렌더링되지않음.
+  const handleEditClick = async () => {
+    setModifyChecked((prevBtn) => !prevBtn)
+    setDoneModifyComment((prevBtn) => !prevBtn)
+    if (!modifyChecked) return
+    else await modifyComment(commentId, modifyCommentText)
+    alert("댓글이 수정되었습니다! 🛠️")
   }
 
-  const handleDeleteClick = () => {
-    deleteComment(anonymous_user_id)
+  const handleDeleteClick = async () => {
+    await deleteComment(commentId)
+    setIsDelete((prevState) => !prevState)
+    alert("댓글이 삭제되었습니다!")
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setModifyCommentText(e.target.value)
+  }
+
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+  }, [isDelete, doneModifyComment])
 
   return (
     <div className="w-full">
@@ -56,11 +81,19 @@ function Comment({ text, anonymous_user_id }: CommentProps) {
             <div>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-end">
-                  <p>작성자</p>
-                  <p className="text-sm">작성일</p>
+                  <p>{commentId}</p>
+                  <p className="text-sm">{createdDate}</p>
                 </div>
               </div>
-              <div className="">{text}</div>
+              {modifyChecked ? (
+                <textarea
+                  className="w-full border-b-2 mb-2 focus:outline-none focus:border-b-slate-500 overflow-hidden resize-none"
+                  defaultValue={text}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <div>{text}</div>
+              )}
               <div className="flex gap-5">
                 <div className="flex items-center justify-center">
                   <div
@@ -92,7 +125,7 @@ function Comment({ text, anonymous_user_id }: CommentProps) {
                 <div className="flex-col items-center justify-center py-2">
                   <div className="flex items-center justify-center pb-2">
                     <button onClick={handleEditClick} className="text-sm ">
-                      수정
+                      {modifyChecked ? "수정완료" : "댓글수정"}
                     </button>
                   </div>
 
