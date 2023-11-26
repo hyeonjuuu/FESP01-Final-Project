@@ -44,11 +44,9 @@ function VideoDetail() {
       .catch((error) => {
         console.error("에러 발생: ", error)
       })
-
-    // console.log(promiseData)
   }, [])
 
-  console.log(location)
+  // console.log("location: ", location)
 
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
@@ -67,9 +65,18 @@ function VideoDetail() {
         </div>
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]">
-          <AddComment videoId={location.state.item.id} />
+          <AddComment
+            videoId={location.state.item.id}
+            setCommentData={setCommentData}
+          />
           {commentData.map((item) => (
-            <Comment key={item.id} text={item.text} />
+            <Comment
+              key={item.id}
+              commentId={item.anonymous_user_id}
+              date={item.created_at}
+              text={item.text}
+              setCommentData={setCommentData}
+            />
           ))}
         </div>
       </section>

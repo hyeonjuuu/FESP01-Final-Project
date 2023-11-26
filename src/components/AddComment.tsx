@@ -1,15 +1,16 @@
 import Button from "./Button"
-import { enterComment } from "@api/commentApi"
+import { enterComment, readComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
-function AddComment({ videoId }: AddCommentProps) {
-  const [isState, setIsState] = useState(false)
+function AddComment({ videoId, setCommentData }: AddCommentProps) {
+  const [isFocus, setIsFocus] = useState(false)
   const [text, setText] = useState<string>("")
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const handleInputFocus = () => {
-    setIsState(true)
+    setIsFocus(true)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,14 +19,26 @@ function AddComment({ videoId }: AddCommentProps) {
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setIsState(false)
+    setIsFocus(false)
     setText("")
   }
 
-  const handleCommentSubmit = () => {
-    enterComment(text, videoId)
+  const handleCommentSubmit = async () => {
+    await enterComment(text, videoId)
+    setIsSubmit((prevState) => !prevState)
     setText("")
   }
+
+  useEffect(() => {
+    const promiseData = readComment()
+    promiseData
+      .then((comments) => {
+        setCommentData(comments || [])
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error)
+      })
+  }, [isSubmit])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -69,7 +82,7 @@ function AddComment({ videoId }: AddCommentProps) {
             onKeyDown={handleKeyDown}
           />
 
-          {isState && (
+          {isFocus && (
             <div className="flex gap-3 justify-end">
               <Button
                 text={"취소"}
