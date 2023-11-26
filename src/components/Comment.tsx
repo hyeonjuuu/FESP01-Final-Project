@@ -9,7 +9,7 @@ import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isDelete, setIsDelete] = useState(false)
-  const [doneModifyComment, setDoneModifyComment] = useState(false)
+  // const [doneModifyComment, setDoneModifyComment] = useState(false)
   const [modifyChecked, setModifyChecked] = useState(false)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -28,10 +28,12 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   // alert을 사용하면 페이지가 리렌더링?? alert사용을 안하실에는 댓글이 바로 렌더링되지않음.
   const handleEditClick = async () => {
     setModifyChecked((prevBtn) => !prevBtn)
-    setDoneModifyComment((prevBtn) => !prevBtn)
+    setIsDelete((prevState) => !prevState)
+    // setDoneModifyComment((prevBtn) => !prevBtn)
     if (!modifyChecked) return
     else await modifyComment(commentId, modifyCommentText)
     alert("댓글이 수정되었습니다! 🛠️")
+    setIsDelete((prevState) => !prevState)
   }
 
   const handleDeleteClick = async () => {
@@ -53,7 +55,7 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
       .catch((error) => {
         console.error("에러 발생: ", error)
       })
-  }, [isDelete, doneModifyComment])
+  }, [isDelete])
 
   return (
     <div className="w-full">
