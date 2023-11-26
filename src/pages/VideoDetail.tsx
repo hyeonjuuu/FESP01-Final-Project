@@ -49,21 +49,6 @@ function VideoDetail() {
     // console.log(promiseData)
   }, [])
 
-  console.log(location)
-
-  useEffect(() => {
-    const promiseData = readComment()
-    promiseData
-      .then((comments) => {
-        setCommentData(comments || [])
-      })
-      .catch((error) => {
-        console.error("에러 발생: ", error)
-      })
-
-    // console.log(promiseData)
-  }, [])
-
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.outerWidth)
@@ -76,102 +61,64 @@ function VideoDetail() {
     }
   }, [])
 
-  if (window.outerWidth > 1024) {
-    return (
-      <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
-        <h2 className="sr-only">유튜브 상세 페이지</h2>
+  const renderCommentsSection = () => (
+    <div className="min-w-[360px] lgpc:mt-3 pc:mt-3">
+      <AddComment
+        videoId={location.state.item.id}
+        setCommentData={setCommentData}
+      />
+      {commentData.map((item) => (
+        <Comment
+          key={item.id}
+          commentId={item.anonymous_user_id}
+          date={item.created_at}
+          text={item.text}
+          setCommentData={setCommentData}
+        />
+      ))}
+    </div>
+  )
 
-        {/* 왼쪽 윗칸 차지 */}
-        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
-          <h3 className="sr-only">해당 영상</h3>
-          <div className="min-w-[360px]">
-            <ul key={location.state.item.id}>
-              <VideoDetailItem
-                item={locationRoute}
-                imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
-              />
-            </ul>
-          </div>
-          {/* 왼쪽 아래칸 차지 */}
-          <div className=" min-w-[360px]">
-            <AddComment
-              videoId={location.state.item.id}
-              setCommentData={setCommentData}
+  const renderRelatedSection = () => (
+    <div className="min-w-[360px]  tb:mt-3 mo:mt-3  pc:col-span-1">
+      <h3 className="sr-only">관련된 영상</h3>
+      {detailData?.map((item, index) => (
+        <RelatedVideo
+          key={`${item.id}_${index}`}
+          item={item}
+          date={dataVariable[index]}
+        />
+      ))}
+    </div>
+  )
+
+  return (
+    <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
+      <h2 className="sr-only">유튜브 상세 페이지</h2>
+
+      {/* 왼쪽 윗칸 차지 */}
+      <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
+        <h3 className="sr-only">해당 영상</h3>
+        <div className="min-w-[360px]">
+          <ul key={location.state.item.id}>
+            <VideoDetailItem
+              item={locationRoute}
+              imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
             />
-            {commentData.map((item) => (
-              <Comment
-                key={item.id}
-                commentId={item.anonymous_user_id}
-                date={item.created_at}
-                text={item.text}
-                setCommentData={setCommentData}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* 오른쪽 세로로 두칸 차지 */}
-        <div className="min-w-[360px] pb-10   pc:col-span-1">
-          <h3 className="sr-only">관련된 영상</h3>
-          {detailData?.map((item, index) => (
-            <RelatedVideo
-              key={`${item.id}_${index}`}
-              item={item}
-              date={dataVariable[index]}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  } else {
-    return (
-      <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
-        <h2 className="sr-only">유튜브 상세 페이지</h2>
-
-        {/* 왼쪽 윗칸 차지 */}
-        <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr">
-          <h3 className="sr-only">해당 영상</h3>
-          <div className="min-w-[360px]">
-            <ul key={location.state.item.id}>
-              <VideoDetailItem
-                item={locationRoute}
-                imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
-              />
-            </ul>
-          </div>
-        </section>
-
-        {/* 오른쪽 세로로 두칸 차지 */}
-        <div className="min-w-[360px] pb-10   pc:col-span-1">
-          <h3 className="sr-only">관련된 영상</h3>
-          {detailData?.map((item, index) => (
-            <RelatedVideo
-              key={`${item.id}_${index}`}
-              item={item}
-              date={dataVariable[index]}
-            />
-          ))}
+          </ul>
         </div>
 
         {/* 왼쪽 아래칸 차지 */}
-        <div className=" min-w-[360px]">
-          <AddComment
-            videoId={location.state.item.id}
-            setCommentData={setCommentData}
-          />
-          {commentData.map((item) => (
-            <Comment
-              key={item.id}
-              commentId={item.anonymous_user_id}
-              date={item.created_at}
-              text={item.text}
-              setCommentData={setCommentData}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  }
+        {window.outerWidth > 1024
+          ? renderCommentsSection()
+          : renderRelatedSection()}
+      </section>
+      {/* 오른쪽 세로로 두칸 차지 */}
+      {window.outerWidth > 1024
+        ? renderRelatedSection()
+        : renderCommentsSection()}
+    </div>
+  )
 }
 
 export default VideoDetail
