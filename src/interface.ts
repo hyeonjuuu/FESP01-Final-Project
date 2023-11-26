@@ -15,6 +15,14 @@ export interface AddCommentProps {
   videoId: string
 }
 
+export interface readCommentItem {
+  anonymous_user_id: string
+  created_at: string
+  id: number
+  text: string
+  video_id: string
+}
+
 export interface VideoSnippet {
   publishedAt: string
   channelId: string

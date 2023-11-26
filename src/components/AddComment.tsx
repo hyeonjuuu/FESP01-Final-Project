@@ -1,6 +1,7 @@
 import Button from "./Button"
-import { enterComment } from "@api/commentApi"
-import { AddCommentProps } from "interface"
+import { enterComment, readComment } from "@api/commentApi"
+import { commetnAtom } from "@store/commentAtom"
+import { AddCommentProps, readCommentItem } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
 function AddComment({ videoId }: AddCommentProps) {
@@ -22,8 +23,9 @@ function AddComment({ videoId }: AddCommentProps) {
     setText("")
   }
 
-  const handleCommentSubmit = () => {
-    enterComment(text, videoId)
+  const handleCommentSubmit = async () => {
+    await enterComment(text, videoId)
+
     setText("")
   }
 

@@ -26,15 +26,49 @@ export const enterComment = async (text: string, video_id: string) => {
 }
 
 // 댓글 삭제 API
-export const deleteComment = async (commentId: number) => {
+export const deleteComment = async (anonymous_user_id: string) => {
   const { data, error } = await supabaseAdmin
     .from("video_comment")
     .delete()
-    .eq("id", commentId)
+    .eq("anonymous_user_id", anonymous_user_id)
 
   if (error) {
     console.error("Error deleting comment:", error.message)
   } else {
     console.log("Comment deleted successfully:", data)
+  }
+}
+
+// 댓글 데이터 불러오기 API
+export const readComment = async () => {
+  try {
+    const { data } = await supabaseAdmin.from("video_comment").select("*")
+    if (data) {
+      console.log("Supabase 데이터 삽입 성공 🚀:", data)
+      return data
+    }
+  } catch (error) {
+    console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error}`)
+    throw error
+  }
+}
+
+// 댓글 수정 API
+export const modifyComment = async (anonymous_user_id: string) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("video_comment")
+      .update({ text: "otherValue" })
+      .eq("anonymous_user_id", anonymous_user_id)
+      .select()
+
+    if (data) {
+      console.log("Supabase 데이터 수정 성공 🛠️:", data)
+    } else {
+      console.log("Error deleting comment:", error.message)
+    }
+  } catch (error) {
+    console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error}`)
+    throw error
   }
 }

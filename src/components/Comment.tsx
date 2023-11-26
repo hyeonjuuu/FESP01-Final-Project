@@ -1,10 +1,15 @@
 import { useState } from "react"
-import { deleteComment } from "@api/commentApi"
+import { deleteComment, modifyComment, readComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
-function Comment() {
+interface CommentProps {
+  text: string
+  anonymous_user_id: string
+}
+
+function Comment({ text, anonymous_user_id }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -18,13 +23,11 @@ function Comment() {
   }
 
   const handleEditClick = () => {
-    console.log("Edit clicked!")
-    // 여기에 수정 로직 추가
+    modifyComment(anonymous_user_id)
   }
 
   const handleDeleteClick = () => {
-    console.log("Delete clicked!")
-    deleteComment(19)
+    deleteComment(anonymous_user_id)
   }
 
   return (
@@ -57,12 +60,7 @@ function Comment() {
                   <p className="text-sm">작성일</p>
                 </div>
               </div>
-              <div className="">
-                To the person who is reading this comment, its okay, its alright
-                to feel lonely sometimes, if you are going through tough times,
-                keep pushing through, but never give up, i wish you great
-                success in health, love and happiness!
-              </div>
+              <div className="">{text}</div>
               <div className="flex gap-5">
                 <div className="flex items-center justify-center">
                   <div

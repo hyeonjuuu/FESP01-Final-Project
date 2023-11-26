@@ -1,18 +1,23 @@
 import axios from "axios"
-import { VideoItem } from "interface"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
+import { readComment } from "@api/commentApi"
 import { useLocation } from "react-router-dom"
 import AddComment from "@components/AddComment"
 import RelatedVideo from "@components/RelatedVideo"
+import { VideoItem, readCommentItem } from "interface"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
+import { useRecoilState } from "recoil"
+import { commetnAtom } from "@store/commentAtom"
 
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [commentData, setCommetData] =
+    useRecoilState<readCommentItem[]>(commetnAtom)
 
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -33,6 +38,16 @@ function VideoDetail() {
     fetchDetailData()
   }, [locationRoute.channelId])
 
+  useEffect(() => {
+    readComment()
+      .then((comments) => {
+        setCommetData(comments || [])
+      })
+      .catch((error) => {
+        console.error("Error reading comments:", error)
+      })
+  }, [])
+
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 ">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
@@ -51,7 +66,13 @@ function VideoDetail() {
         {/* 왼쪽 아래칸 차지 */}
         <div className=" min-w-[360px]">
           <AddComment videoId={locationRoute.channelId} />
-          <Comment />
+          {commentData?.map((item) => (
+            <Comment
+              key={item.id}
+              text={item.text}
+              anonymous_user_id={item.anonymous_user_id}
+            />
+          ))}
         </div>
       </section>
 
