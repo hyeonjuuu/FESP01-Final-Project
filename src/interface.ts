@@ -71,4 +71,5 @@ export interface CommentProps {
   date: string
   commentId: string
   setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
+  videoId: string
 }

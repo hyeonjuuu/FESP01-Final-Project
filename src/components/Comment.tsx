@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
-import { deleteComment, readComment } from "@api/commentApi"
+import { deleteComment, filterComment, readComment } from "@api/commentApi"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
 import { CommentProps } from "interface"
 
-function Comment({ text, date, commentId, setCommentData }: CommentProps) {
+function Comment({
+  text,
+  date,
+  commentId,
+  setCommentData,
+  videoId,
+}: CommentProps) {
   const [count, setCount] = useState(0)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -33,7 +39,7 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   }
 
   useEffect(() => {
-    const promiseData = readComment()
+    const promiseData = filterComment(videoId)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])

@@ -7,7 +7,7 @@ import AddComment from "@components/AddComment"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
-import { readComment } from "@api/commentApi"
+import { filterComment, readComment } from "@api/commentApi"
 
 function VideoDetail() {
   const location = useLocation()
@@ -37,7 +37,7 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   useEffect(() => {
-    const promiseData = readComment()
+    const promiseData = filterComment(location.state.item.id)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
@@ -72,6 +72,7 @@ function VideoDetail() {
           date={item.created_at}
           text={item.text}
           setCommentData={setCommentData}
+          videoId={location.state.item.id}
         />
       ))}
     </div>
@@ -91,7 +92,7 @@ function VideoDetail() {
   )
 
   return (
-   <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
+    <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
 
       {/* 왼쪽 윗칸 차지 */}
