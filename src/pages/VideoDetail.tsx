@@ -1,13 +1,13 @@
 import axios from "axios"
-import { CommentType, VideoItem } from "interface"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import AddComment from "@components/AddComment"
+import { filterComment } from "@api/commentApi"
+import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
-import { filterComment, readComment } from "@api/commentApi"
 
 function VideoDetail() {
   const location = useLocation()

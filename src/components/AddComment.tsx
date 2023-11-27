@@ -6,8 +6,8 @@ import React, { useEffect, useRef, useState } from "react"
 function AddComment({ videoId, setCommentData }: AddCommentProps) {
   const [isFocus, setIsFocus] = useState(false)
   const [text, setText] = useState<string>("")
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [isSubmit, setIsSubmit] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleInputFocus = () => {
     setIsFocus(true)

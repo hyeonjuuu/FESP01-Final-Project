@@ -1,5 +1,5 @@
-import { VideoSnippet } from "interface"
 import { useState } from "react"
+import { VideoSnippet } from "interface"
 
 export interface VideoDetailItemProps {
   item: VideoSnippet

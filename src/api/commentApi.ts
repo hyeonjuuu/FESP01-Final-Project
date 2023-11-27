@@ -54,6 +54,30 @@ export const readComment = async () => {
     }
   } catch (error) {
     console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error}`)
+    throw error
+  }
+}
+
+// 댓글 수정 API
+export const modifyComment = async (
+  anonymous_user_id: string,
+  modifyCommentText: string,
+) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("video_comment")
+      .update({ text: modifyCommentText })
+      .eq("anonymous_user_id", anonymous_user_id)
+      .select()
+
+    if (data) {
+      console.log("Supabase 데이터 수정 성공 🛠️:", data)
+    } else {
+      console.log("Error deleting comment:", error.message)
+    }
+  } catch (error) {
+    console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error}`)
+    throw error
   }
 }
 
