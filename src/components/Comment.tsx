@@ -25,11 +25,9 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
     setIsButtonsVisible(!isButtonsVisible)
   }
 
-  // alert을 사용하면 페이지가 리렌더링?? alert사용을 안하실에는 댓글이 바로 렌더링되지않음.
   const handleEditClick = async () => {
     setModifyChecked((prevBtn) => !prevBtn)
     setIsDelete((prevState) => !prevState)
-    // setDoneModifyComment((prevBtn) => !prevBtn)
     if (!modifyChecked) return
     else await modifyComment(commentId, modifyCommentText)
     alert("댓글이 수정되었습니다! 🛠️")
