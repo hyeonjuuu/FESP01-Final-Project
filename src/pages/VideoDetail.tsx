@@ -7,7 +7,7 @@ import AddComment from "@components/AddComment"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
-import { readComment } from "@api/commentApi"
+import { filterComment, readComment } from "@api/commentApi"
 
 function VideoDetail() {
   const location = useLocation()
@@ -37,7 +37,7 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   useEffect(() => {
-    const promiseData = readComment()
+    const promiseData = filterComment(location.state.item.id)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
@@ -45,8 +45,6 @@ function VideoDetail() {
       .catch((error) => {
         console.error("에러 발생: ", error)
       })
-
-    // console.log(promiseData)
   }, [])
 
   useEffect(() => {
@@ -74,6 +72,7 @@ function VideoDetail() {
           date={item.created_at}
           text={item.text}
           setCommentData={setCommentData}
+          videoId={location.state.item.id}
         />
       ))}
     </div>

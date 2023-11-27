@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { enterComment, readComment } from "@api/commentApi"
+import { enterComment, filterComment, readComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
@@ -30,7 +30,7 @@ function AddComment({ videoId, setCommentData }: AddCommentProps) {
   }
 
   useEffect(() => {
-    const promiseData = readComment()
+    const promiseData = filterComment(videoId)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
