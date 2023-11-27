@@ -16,6 +16,8 @@ function VideoDetail() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
   const [windowWidth, setWindowWidth] = useState(window.outerWidth)
+  console.log(location)
+  console.log(locationRoute)
 
   useEffect(() => {
     const fetchDetailData = async () => {

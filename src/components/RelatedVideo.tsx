@@ -11,6 +11,7 @@ interface RelatedVideoProps {
 function RelatedVideo({ item, date }: RelatedVideoProps) {
   const titleRef = useRef<HTMLDivElement>(null)
   const [limitTitle, setLimitTitle] = useState(false)
+  console.log(item)
 
   useEffect(() => {
     if (titleRef.current) {
