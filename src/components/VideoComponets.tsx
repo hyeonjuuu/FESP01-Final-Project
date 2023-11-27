@@ -25,7 +25,10 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
           <img
-            src={item.snippet.thumbnails.maxres?.url}
+            src={
+              item.snippet.thumbnails.maxres?.url ||
+              item.snippet.thumbnails.standard?.url
+            }
             alt={item.snippet.title}
             className="mo:flex-shrink rounded-lg hover:rounded-none"
           />

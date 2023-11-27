@@ -3,13 +3,18 @@ import { useEffect, useState } from "react"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { deleteComment, modifyComment, readComment } from "@api/commentApi"
+import { deleteComment, filterComment, modifyComment } from "@api/commentApi"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
-function Comment({ text, date, commentId, setCommentData }: CommentProps) {
+function Comment({
+  text,
+  date,
+  commentId,
+  setCommentData,
+  videoId,
+}: CommentProps) {
   const [count, setCount] = useState(0)
   const [isDelete, setIsDelete] = useState(false)
-  // const [doneModifyComment, setDoneModifyComment] = useState(false)
   const [modifyChecked, setModifyChecked] = useState(false)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -45,7 +50,7 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
   }
 
   useEffect(() => {
-    const promiseData = readComment()
+    const promiseData = filterComment(videoId)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
@@ -77,7 +82,7 @@ function Comment({ text, date, commentId, setCommentData }: CommentProps) {
         </div>
 
         <div className="w-full flex-col gap-10">
-          <div className="flex">
+          <div className="flex justify-between">
             <div>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-end">
