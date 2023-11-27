@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 interface VideoComponentsProps {
   key: string
@@ -19,6 +20,25 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     setIsSound(!isSound)
     e.preventDefault()
   }
+
+  // useEffect(() => {
+  //   const channelDetail = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${item.snippet.channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+  //       )
+
+  //       const channelThumbnail = response.data.items.map(
+  //         () => item?.snippet?.thumbnails?.maxres.url,
+  //       )
+  //       console.log(response)
+
+  //       // setTumbnail(channelThumbnail)
+  //     } catch (error) {
+  //       console.error("Error fetching detail data:", error)
+  //     }
+  //   }
+  // }, [])
 
   return (
     <div className="relative">
@@ -55,6 +75,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
 
         <div className="mt-2 mo:mb-3 tb:mb-0">
           <dl>
+            {/* <img src={thumbnail} alt="" className="w-5 h-5" /> */}
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>

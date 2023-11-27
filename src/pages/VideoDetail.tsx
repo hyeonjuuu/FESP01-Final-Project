@@ -15,13 +15,13 @@ function VideoDetail() {
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
-  const [windowWidth, setWindowWidth] = useState(window.outerWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   useEffect(() => {
     const fetchDetailData = async () => {
       try {
         const response = await axios.get(
-          `/videos/searchByChannels/search-by-channel-id-${locationRoute.channelId}.json`,
+          `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
         )
         const formattedDates = response.data.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
@@ -49,7 +49,7 @@ function VideoDetail() {
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.outerWidth)
+      setWindowWidth(window.innerWidth)
     }
 
     window.addEventListener("resize", handleResize)
@@ -108,12 +108,12 @@ function VideoDetail() {
         </div>
 
         {/* 왼쪽 아래칸 차지 */}
-        {window.outerWidth > 1024
+        {window.innerWidth > 1024
           ? renderCommentsSection()
           : renderRelatedSection()}
       </section>
       {/* 오른쪽 세로로 두칸 차지 */}
-      {window.outerWidth > 1024
+      {window.innerWidth > 1024
         ? renderRelatedSection()
         : renderCommentsSection()}
     </div>
