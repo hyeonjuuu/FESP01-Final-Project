@@ -71,7 +71,7 @@ function Comment({
         </div>
 
         <div className="w-full flex-col gap-10">
-          <div className="flex">
+          <div className="flex justify-between">
             <div>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-end">
