@@ -22,7 +22,8 @@ function VideoDetail() {
     const fetchDetailData = async () => {
       try {
         const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+          // `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+          `/videos/searchByChannels/search-by-channel-id-${locationRoute.channelId}.json`,
         )
         const formattedDates = response.data.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
