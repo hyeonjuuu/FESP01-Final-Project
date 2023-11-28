@@ -62,18 +62,18 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
         className="w-full h-auto min-w-[360px] rounded-lg"
       />
       {/* <ul className=" grid grid-cols-6"> */}
-      <ul className=" grid  grid-cols-[50px_minmax(50px,_1fr)_100px]">
-        <img
-          src={channelThumbnail}
-          alt={channelDescription}
-          className="w-[50px] h-[50px] rounded-full col-start-1 auto-rows-min auto-cols-min mt-3 "
-        />
+      <ul className=" grid  grid-cols-[50px_minmax(50px,_1fr)_100px] gap-1">
         <li
           id="title"
           className="text-lg font-semibold  tb:w-full min-w-[360px] mt-3 col-start-2 col-end-7 row-start-1"
         >
           {item.title}
         </li>
+        <img
+          src={channelThumbnail}
+          alt={channelDescription}
+          className="w-[50px] h-[50px] rounded-full col-start-1 auto-rows-min auto-cols-min mt-3  "
+        />
         <li className="text-sm  tb:w-full min-w-[360px] mb-2 col-start-2">
           {item.channelTitle}
         </li>
