@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { useRecoilState } from "recoil"
+import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 
 interface VideoComponentsProps {
   key: string
@@ -15,30 +17,36 @@ interface VideoComponentsProps {
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
   const [isSound, setIsSound] = useState(false)
+  const channelId = item.snippet.channelId
+  const [channelThumbnail, setChannelThumbnail] = useRecoilState(
+    channelThumbnailAtom(channelId),
+  )
 
   const handleSound = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsSound(!isSound)
     e.preventDefault()
   }
 
-  // useEffect(() => {
-  //   const channelDetail = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${item.snippet.channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-  //       )
+  useEffect(() => {
+    const channelDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+        )
 
-  //       const channelThumbnail = response.data.items.map(
-  //         () => item?.snippet?.thumbnails?.maxres.url,
-  //       )
-  //       console.log(response)
+        const channelThumbnailUrl = response.data.items.map(
+          (item: any) => item?.snippet?.thumbnails?.high.url,
+        )[0]
 
-  //       // setTumbnail(channelThumbnail)
-  //     } catch (error) {
-  //       console.error("Error fetching detail data:", error)
-  //     }
-  //   }
-  // }, [])
+        console.log(channelThumbnailUrl)
+        setChannelThumbnail(channelThumbnailUrl)
+      } catch (error) {
+        console.error("Error fetching detail data:", error)
+      }
+    }
+
+    channelDetail()
+  }, [channelId, setChannelThumbnail])
 
   return (
     <div className="relative">
@@ -73,9 +81,13 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
           </div>
         </motion.div>
 
-        <div className="mt-2 mo:mb-3 tb:mb-0">
-          <dl>
-            {/* <img src={thumbnail} alt="" className="w-5 h-5" /> */}
+        <div className="mt-2 mo:mb-3 tb:mb-0 flex gap-2 mo:mt-4 ">
+          <img
+            src={channelThumbnail}
+            alt=""
+            className="w-[10%] h-[10%] rounded-full"
+          />
+          <dl className=" grow-0 w-[90%]">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
