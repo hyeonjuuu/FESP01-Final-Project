@@ -1,44 +1,46 @@
-import { CommentType, VideoItem } from "../interface"
+import { VideoItem } from "../interface"
+import getVideoAPI from "@api/getVideoAPI"
 import { useEffect, useState } from "react"
 import { videoAtom } from "@store/videoAtom"
-import getVideoData from "@api/getVideoData"
 import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-// import getVideoAPI from "@api/getVideoAPI"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
   const [scrollFetching, setScrollFetching] = useState(false)
-  const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [pageToken, setPageToken] = useState<string>()
+  const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
   useEffect(() => {
     const dataFetching = async () => {
       try {
-        const response = await getVideoData()
-        const formattedDates = response.map((item: VideoItem) => {
+        const response = await getVideoAPI()
+        const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
-        setVideoData(response)
+        setVideoData(response.items)
         setDataVariable(formattedDates)
+        setPageToken(response.nextPageToken)
       } catch (error) {
         console.error(`❌ 에러가 발생하였습니다 : ${error}`)
       }
     }
 
     dataFetching()
-  }, [setVideoData])
+  }, [])
 
   const fetchMoreData = async () => {
     try {
       setScrollFetching(true)
-      const moreData = await getVideoData()
-      setVideoData((prevData) => [...prevData, ...moreData])
+      const moreData = await getVideoAPI(pageToken)
+      setPageToken(moreData.nextPageToken)
+      setVideoData((prevData) => [...prevData, ...moreData.items])
 
-      const formattedDates = moreData.map((item: VideoItem) => {
+      const formattedDates = moreData.items.map((item: VideoItem) => {
         return formatDateDifference(item.snippet.publishedAt)
       })
       setDataVariable((prevDates) => [...prevDates, ...formattedDates])
