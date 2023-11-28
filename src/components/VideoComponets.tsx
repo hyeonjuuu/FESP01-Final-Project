@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { useRecoilState } from "recoil"
+import { RecoilEnv, useRecoilState } from "recoil"
 import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
+
+// recoil Key 오류 방지
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 interface VideoComponentsProps {
   key: string
@@ -38,7 +41,6 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
           (item: any) => item?.snippet?.thumbnails?.high.url,
         )[0]
 
-        console.log(channelThumbnailUrl)
         setChannelThumbnail(channelThumbnailUrl)
       } catch (error) {
         console.error("Error fetching detail data:", error)
@@ -58,7 +60,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
               item.snippet.thumbnails.standard?.url
             }
             alt={item.snippet.title}
-            className="mo:flex-shrink rounded-lg hover:rounded-none"
+            className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
           />
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
             {isSound ? (

@@ -99,12 +99,12 @@ function VideoDetail() {
       <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr ">
         <h3 className="sr-only">해당 영상</h3>
         <div className="min-w-[360px]">
-          <ul key={location.state.item.id}>
+          <section key={location.state.item.id}>
             <VideoDetailItem
               item={locationRoute}
               imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
             />
-          </ul>
+          </section>
         </div>
 
         {/* 왼쪽 아래칸 차지 */}
