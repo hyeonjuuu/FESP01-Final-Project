@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
+import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
@@ -14,10 +15,11 @@ function VideoMain() {
   const [pageToken, setPageToken] = useState<string>()
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
-  useEffect(() => {
+  // #API 사용
+  /*   useEffect(() => {
     const dataFetching = async () => {
       try {
-        const response = await getVideoAPI()
+        const response = await getVideoData()
         const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
@@ -31,7 +33,26 @@ function VideoMain() {
     }
 
     dataFetching()
-  }, [])
+  }, []) */
+
+  // #JSON 사용
+  useEffect(() => {
+    const dataFetching = async () => {
+      try {
+        const response = await getVideoData()
+        const formattedDates = response.map((item: VideoItem) => {
+          return formatDateDifference(item.snippet.publishedAt)
+        })
+
+        setVideoData(response)
+        setDataVariable(formattedDates)
+      } catch (error) {
+        console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+      }
+    }
+
+    dataFetching()
+  }, [setVideoData])
 
   const fetchMoreData = async () => {
     try {
@@ -60,7 +81,7 @@ function VideoMain() {
     const scrollTop = document.documentElement.scrollTop
     const clientHeight = document.documentElement.clientHeight
 
-    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+    if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
       fetchMoreData()
     }
   }

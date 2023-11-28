@@ -30,7 +30,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     e.preventDefault()
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -48,7 +48,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail])
+  }, [channelId, setChannelThumbnail]) */
 
   return (
     <div className="relative">
