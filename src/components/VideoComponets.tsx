@@ -3,7 +3,9 @@ import { VideoItem } from "../interface"
 import { motion } from "framer-motion"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+// import YouTube, { YouTubeProps } from "react-youtube"
+// import YoutubeVideo from "./YoutubeVideo"
 
 interface VideoComponentsProps {
   key: string
@@ -24,6 +26,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
+          {/* <YoutubeVideo videoId={item.id} /> */}
           <img
             src={
               item.snippet.thumbnails.maxres?.url ||

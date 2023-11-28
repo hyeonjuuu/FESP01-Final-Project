@@ -1,4 +1,4 @@
-import { VideoItem } from "../interface"
+import { CommentType, VideoItem } from "../interface"
 import { useEffect, useState } from "react"
 import { videoAtom } from "@store/videoAtom"
 import getVideoData from "@api/getVideoData"
@@ -6,17 +6,18 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-import getVideoAPI from "@api/getVideoAPI"
+// import getVideoAPI from "@api/getVideoAPI"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
+  const [scrollFetching, setScrollFetching] = useState(false)
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
   const [dataVariable, setDataVariable] = useState<string[]>([])
 
   useEffect(() => {
     const dataFetching = async () => {
       try {
-        const response = await getVideoAPI()
+        const response = await getVideoData()
         const formattedDates = response.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
@@ -31,9 +32,43 @@ function VideoMain() {
     dataFetching()
   }, [setVideoData])
 
+  const fetchMoreData = async () => {
+    try {
+      setScrollFetching(true)
+      const moreData = await getVideoData()
+      setVideoData((prevData) => [...prevData, ...moreData])
+
+      const formattedDates = moreData.map((item: VideoItem) => {
+        return formatDateDifference(item.snippet.publishedAt)
+      })
+      setDataVariable((prevDates) => [...prevDates, ...formattedDates])
+    } catch (error) {
+      console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+    } finally {
+      setScrollFetching(false)
+    }
+  }
+
   const filteredData = videoData.filter((video) =>
     video.snippet.title.toLowerCase().includes(searchBarValue.toLowerCase()),
   )
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight
+    const scrollTop = document.documentElement.scrollTop
+    const clientHeight = document.documentElement.clientHeight
+
+    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+      fetchMoreData()
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [handleScroll])
 
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white">
