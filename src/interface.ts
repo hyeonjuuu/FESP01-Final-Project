@@ -61,6 +61,10 @@ export interface CommentType {
   anonymous_user_id: string
 }
 
+export interface FilterCommentResponse {
+  comments: CommentType[]
+}
+
 export interface AddCommentProps {
   videoId: string
   setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
