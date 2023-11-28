@@ -12,10 +12,11 @@ import formatDateDifference from "@api/formatDateDifference"
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
+  const [, setWindowWidth] = useState(window.outerWidth)
+  const [scrollFetching, setScrollFetching] = useState(false)
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -37,7 +38,7 @@ function VideoDetail() {
   }, [locationRoute.channelId])
 
   useEffect(() => {
-    const promiseData = filterComment(location.state.item.id)
+    const promiseData = filterComment(location.state.item.id, 0, 2)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
@@ -47,6 +48,7 @@ function VideoDetail() {
       })
   }, [])
 
+  // 반응형
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth)
@@ -59,15 +61,56 @@ function VideoDetail() {
     }
   }, [])
 
+  const fetchMoreData = async () => {
+    try {
+      setScrollFetching(true)
+
+      const startRange = commentData.length
+      const endRange = startRange + 2 // 예시로 2개씩 불러오도록 설정
+
+      const moreDataComments = await filterComment(
+        location.state.item.id,
+        startRange,
+        endRange,
+      )
+
+      if (moreDataComments) {
+        setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
+      }
+    } catch (error) {
+      console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+    } finally {
+      setScrollFetching(false)
+    }
+  }
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight
+    const scrollTop = document.documentElement.scrollTop
+    const clientHeight = document.documentElement.clientHeight
+
+    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+      fetchMoreData()
+      console.log("gookd work")
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [handleScroll])
+
   const renderCommentsSection = () => (
     <div className="min-w-[360px] lgpc:mt-3 pc:mt-3">
       <AddComment
         videoId={location.state.item.id}
         setCommentData={setCommentData}
       />
-      {commentData.map((item) => (
+      {commentData.map((item, index) => (
         <Comment
-          key={item.id}
+          key={`${item.anonymous_user_id}_${index}`}
           commentId={item.anonymous_user_id}
           date={item.created_at}
           text={item.text}

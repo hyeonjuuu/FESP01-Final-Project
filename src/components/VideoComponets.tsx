@@ -54,6 +54,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
+          {/* <YoutubeVideo videoId={item.id} /> */}
           <img
             src={
               item.snippet.thumbnails.maxres?.url ||

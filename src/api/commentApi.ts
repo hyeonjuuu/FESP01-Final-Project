@@ -81,13 +81,18 @@ export const modifyComment = async (
   }
 }
 
-// 필터링
-export const filterComment = async (video_id: string) => {
+// filterComment 함수의 수정
+export const filterComment = async (
+  video_id: string,
+  startRange: number,
+  endRange: number,
+) => {
   try {
     const { data, error } = await supabaseAdmin
       .from("video_comment")
       .select("*")
       .eq("video_id", video_id)
+      .range(startRange, endRange)
 
     if (error) {
       console.error(`데이터 통신에 실패하였습니다..😵‍💫 ${error.message}`)

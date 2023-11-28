@@ -1,39 +1,76 @@
 import { VideoItem } from "../interface"
+import getVideoAPI from "@api/getVideoAPI"
 import { useEffect, useState } from "react"
 import { videoAtom } from "@store/videoAtom"
-import getVideoData from "@api/getVideoData"
 import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-import getVideoAPI from "@api/getVideoAPI"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
-  const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
+  const [scrollFetching, setScrollFetching] = useState(false)
   const [dataVariable, setDataVariable] = useState<string[]>([])
+  const [pageToken, setPageToken] = useState<string>()
+  const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
   useEffect(() => {
     const dataFetching = async () => {
       try {
         const response = await getVideoAPI()
-        const formattedDates = response.map((item: VideoItem) => {
+        const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
-        setVideoData(response)
+        setVideoData(response.items)
         setDataVariable(formattedDates)
+        setPageToken(response.nextPageToken)
       } catch (error) {
         console.error(`❌ 에러가 발생하였습니다 : ${error}`)
       }
     }
 
     dataFetching()
-  }, [setVideoData])
+  }, [])
+
+  const fetchMoreData = async () => {
+    try {
+      setScrollFetching(true)
+      const moreData = await getVideoAPI(pageToken)
+      setPageToken(moreData.nextPageToken)
+      setVideoData((prevData) => [...prevData, ...moreData.items])
+
+      const formattedDates = moreData.items.map((item: VideoItem) => {
+        return formatDateDifference(item.snippet.publishedAt)
+      })
+      setDataVariable((prevDates) => [...prevDates, ...formattedDates])
+    } catch (error) {
+      console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+    } finally {
+      setScrollFetching(false)
+    }
+  }
 
   const filteredData = videoData.filter((video) =>
     video.snippet.title.toLowerCase().includes(searchBarValue.toLowerCase()),
   )
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight
+    const scrollTop = document.documentElement.scrollTop
+    const clientHeight = document.documentElement.clientHeight
+
+    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+      fetchMoreData()
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [handleScroll])
 
   return (
     <div className="py-6 px-8 dark:bg-[#202124] dark:text-white">

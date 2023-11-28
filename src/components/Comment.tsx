@@ -49,16 +49,16 @@ function Comment({
     setModifyCommentText(e.target.value)
   }
 
-  useEffect(() => {
-    const promiseData = filterComment(videoId)
-    promiseData
-      .then((comments) => {
-        setCommentData(comments || [])
-      })
-      .catch((error) => {
-        console.error("에러 발생: ", error)
-      })
-  }, [isDelete])
+  // useEffect(() => {
+  //   const promiseData = filterComment(videoId, 0, 2)
+  //   promiseData
+  //     .then((comments) => {
+  //       setCommentData(comments || [])
+  //     })
+  //     .catch((error) => {
+  //       console.error("에러 발생: ", error)
+  //     })
+  // }, [isDelete])
 
   return (
     <div className="w-full">

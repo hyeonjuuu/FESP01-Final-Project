@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { enterComment, filterComment, readComment } from "@api/commentApi"
+import { enterComment, filterComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
 import React, { useEffect, useRef, useState } from "react"
 
@@ -29,16 +29,16 @@ function AddComment({ videoId, setCommentData }: AddCommentProps) {
     setText("")
   }
 
-  useEffect(() => {
-    const promiseData = filterComment(videoId)
-    promiseData
-      .then((comments) => {
-        setCommentData(comments || [])
-      })
-      .catch((error) => {
-        console.error("에러 발생: ", error)
-      })
-  }, [isSubmit])
+  // useEffect(() => {
+  //   const promiseData = filterComment(videoId, 0, 2)
+  //   promiseData
+  //     .then((comments) => {
+  //       setCommentData(comments || [])
+  //     })
+  //     .catch((error) => {
+  //       console.error("에러 발생: ", error)
+  //     })
+  // }, [isSubmit])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
