@@ -18,16 +18,16 @@ function VideoMain() {
   useEffect(() => {
     const dataFetching = async () => {
       try {
-        // const response = await getVideoAPI()
-        const response = await getVideoData()
+        const response = await getVideoAPI()
+        // const response = await getVideoData()
         console.log("response : ", response)
-        // const formattedDates = response?.items?.map((item: VideoItem) => {
-        const formattedDates = response?.map((item: VideoItem) => {
+        const formattedDates = response?.items?.map((item: VideoItem) => {
+          // const formattedDates = response?.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
-        setVideoData(response)
-        // setVideoData(response.items)
+        // setVideoData(response)
+        setVideoData(response.items)
         setDataVariable(formattedDates)
         setPageToken(response.nextPageToken)
       } catch (error) {

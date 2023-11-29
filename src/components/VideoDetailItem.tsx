@@ -34,8 +34,8 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
-          // `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+          // `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
         )
 
         const channelThumbnailUrl = response.data.items.map(
