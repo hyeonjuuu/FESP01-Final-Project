@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -7,6 +7,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 function SearchBar() {
   const [searchBarValue, setSearchBarValue] = useRecoilState(searchBarValueAtom)
   const [searchBarClicked, setSearchBarClicked] = useState(false)
+  const [, setWindowWidth] = useState(window.outerWidth)
 
   const handleSearchBarClicked = () => {
     setSearchBarClicked((prevClicked) => !prevClicked)
@@ -30,9 +31,22 @@ function SearchBar() {
     )
   }
 
-  return (
+  // 반응형
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const resizeSearchBar = () => (
     <div className="flex justify-center items-center border rounded-[35px] sm:w-full lgpc:w-[45rem] pc:w-[39.375rem] tb:w-[38.85rem] mo:w-[37rem] dark:bg-[#202124] dark:text-white">
-      <div className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem]">
+      <div className="flex justify-between w-full sm:w-full md:w-full lg:w-[39.375rem] pc:w-[39.375rem] ">
         <div
           className={`w-full h-[2.5rem] ${
             searchBarClicked ? "border-[#e6e6e6]" : "border-[#1A62B9]"
@@ -61,6 +75,18 @@ function SearchBar() {
       </div>
     </div>
   )
+
+  const moSearchBar = () => (
+    <button
+      type="button"
+      aria-label="검색"
+      className="w-11 h-11 aspect-square rounded-full bg-[#F0F0F0] "
+    >
+      <FontAwesomeIcon icon={faMagnifyingGlass} className="text-[#222222]" />
+    </button>
+  )
+
+  return <>{window.innerWidth < 450 ? moSearchBar() : resizeSearchBar()}</>
 }
 
 export default SearchBar
