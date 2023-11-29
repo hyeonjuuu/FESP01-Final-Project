@@ -20,6 +20,7 @@ interface VideoComponentsProps {
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
   const [isSound, setIsSound] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
   const channelId = item.snippet.channelId
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
     channelThumbnailAtom(channelId),
@@ -30,7 +31,15 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     e.preventDefault()
   }
 
-  /* useEffect(() => {
+  const handleMouseOver = () => {
+    setIsHovering(true)
+  }
+
+  const handleMouseOut = () => {
+    setIsHovering(false)
+  }
+
+  useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -48,21 +57,38 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail]) */
+  }, [channelId, setChannelThumbnail])
 
   return (
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
           {/* <YoutubeVideo videoId={item.id} /> */}
-          <img
-            src={
-              item.snippet.thumbnails.maxres?.url ||
-              item.snippet.thumbnails.standard?.url
-            }
-            alt={item.snippet.title}
-            className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
-          />
+          {isHovering === true ? (
+            <iframe
+              id="ytplayer"
+              // type="text/html"
+              src={`https://www.youtube.com/embed/${item.id}?autoplay=1`}
+              frameBorder="0"
+              allowFullScreen
+              allow="autoplay"
+              className="aspect-video w-full"
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            ></iframe>
+          ) : (
+            <img
+              src={
+                item.snippet.thumbnails.maxres?.url ||
+                item.snippet.thumbnails.standard?.url
+              }
+              alt={item.snippet.title}
+              className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            />
+          )}
+
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
             {isSound ? (
               <button className="p-2">
