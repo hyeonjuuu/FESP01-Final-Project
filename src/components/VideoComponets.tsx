@@ -58,7 +58,6 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
 
     channelDetail()
   }, [channelId, setChannelThumbnail])
-
   const videoImage = () => (
     <img
       src={
@@ -78,7 +77,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       src={`https://www.youtube.com/embed/${item.id}?autoplay=1`}
       frameBorder="0"
       allowFullScreen
-      allow="autoplay"
+      allow="autoplay "
       className="aspect-video w-full"
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
