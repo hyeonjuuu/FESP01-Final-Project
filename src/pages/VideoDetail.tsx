@@ -1,4 +1,4 @@
-import axios from "axios"
+// import axios from "axios"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -7,7 +7,7 @@ import { filterComment } from "@api/commentApi"
 import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
-import formatDateDifference from "@api/formatDateDifference"
+// import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
   const location = useLocation()
@@ -18,24 +18,24 @@ function VideoDetail() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
 
-  useEffect(() => {
-    const fetchDetailData = async () => {
-      try {
-        const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-        )
-        const formattedDates = response.data.items.map((item: VideoItem) => {
-          return formatDateDifference(item.snippet.publishedAt)
-        })
-        setDataVariable(formattedDates)
-        setDetailData(response.data.items)
-      } catch (error) {
-        console.error("Error fetching detail data:", error)
-      }
-    }
+  // useEffect(() => {
+  //   const fetchDetailData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+  //       )
+  //       const formattedDates = response.data.items.map((item: VideoItem) => {
+  //         return formatDateDifference(item.snippet.publishedAt)
+  //       })
+  //       setDataVariable(formattedDates)
+  //       setDetailData(response.data.items)
+  //     } catch (error) {
+  //       console.error("Error fetching detail data:", error)
+  //     }
+  //   }
 
-    fetchDetailData()
-  }, [locationRoute.channelId])
+  //   fetchDetailData()
+  // }, [locationRoute.channelId])
 
   useEffect(() => {
     const promiseData = filterComment(location.state.item.id, 0, 2)
@@ -101,6 +101,16 @@ function VideoDetail() {
     }
   }, [handleScroll])
 
+  // 수정 & 삭제버튼 이벤트 콜백함수
+  const handleOptionBtnCallback = async () => {
+    try {
+      const updatedComments = await filterComment(location.state.item.id, 0, 2)
+      setCommentData(updatedComments || [])
+    } catch (error) {
+      console.error("댓글 수정 및 가져오기 실패:", error)
+    }
+  }
+
   const renderCommentsSection = () => (
     <div className="min-w-[360px] lgpc:mt-3 pc:mt-3">
       <AddComment
@@ -115,6 +125,7 @@ function VideoDetail() {
           text={item.text}
           setCommentData={setCommentData}
           videoId={location.state.item.id}
+          optionBtnCallback={handleOptionBtnCallback}
         />
       ))}
     </div>

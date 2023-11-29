@@ -1,12 +1,14 @@
 import axios from "axios"
 import { motion } from "framer-motion"
-import { useRecoilState } from "recoil"
 import { Link } from "react-router-dom"
 import { VideoItem } from "../interface"
 import { useEffect, useState } from "react"
+import { RecoilEnv, useRecoilState } from "recoil"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
+
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 interface VideoComponentsProps {
   key: string
@@ -16,8 +18,8 @@ interface VideoComponentsProps {
 }
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
-  const [isSound, setIsSound] = useState(false)
   const channelId = item.snippet.channelId
+  const [isSound, setIsSound] = useState(false)
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
     channelThumbnailAtom(channelId),
   )
@@ -27,25 +29,25 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     e.preventDefault()
   }
 
-  useEffect(() => {
-    const channelDetail = async () => {
-      try {
-        const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-        )
+  // useEffect(() => {
+  //   const channelDetail = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+  //       )
 
-        const channelThumbnailUrl = response.data.items.map(
-          (item: any) => item?.snippet?.thumbnails?.high.url,
-        )[0]
+  //       const channelThumbnailUrl = response.data.items.map(
+  //         (item: any) => item?.snippet?.thumbnails?.high.url,
+  //       )[0]
 
-        setChannelThumbnail(channelThumbnailUrl)
-      } catch (error) {
-        console.error("Error fetching detail data:", error)
-      }
-    }
+  //       setChannelThumbnail(channelThumbnailUrl)
+  //     } catch (error) {
+  //       console.error("Error fetching detail data:", error)
+  //     }
+  //   }
 
-    channelDetail()
-  }, [channelId, setChannelThumbnail])
+  //   channelDetail()
+  // }, [channelId, setChannelThumbnail])
 
   return (
     <div className="relative">

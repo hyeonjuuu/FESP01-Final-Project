@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { deleteComment, modifyComment } from "@api/commentApi"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
-function Comment({ text, date, commentId }: CommentProps) {
+function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isDelete, setIsDelete] = useState(false)
   const [modifyChecked, setModifyChecked] = useState(false)
@@ -24,18 +24,17 @@ function Comment({ text, date, commentId }: CommentProps) {
     setIsButtonsVisible(!isButtonsVisible)
   }
 
-  const handleEditClick = async () => {
+  const handleEditClick = () => {
     setModifyChecked((prevBtn) => !prevBtn)
-    setIsDelete((prevState) => !prevState)
     if (!modifyChecked) return
-    else await modifyComment(commentId, modifyCommentText)
-    alert("댓글이 수정되었습니다! 🛠️")
-    setIsDelete((prevState) => !prevState)
+    else modifyComment(commentId, modifyCommentText)
+    optionBtnCallback()
+    // alert("댓글이 수정되었습니다! 🛠️")
   }
 
   const handleDeleteClick = async () => {
     await deleteComment(commentId)
-    setIsDelete((prevState) => !prevState)
+    optionBtnCallback()
     alert("댓글이 삭제되었습니다!")
   }
 

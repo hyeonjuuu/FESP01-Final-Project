@@ -30,28 +30,28 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
     }
   }
 
-  useEffect(() => {
-    const channelDetail = async () => {
-      try {
-        const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-        )
+  // useEffect(() => {
+  //   const channelDetail = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+  //       )
 
-        const channelThumbnailUrl = response.data.items.map(
-          (item: any) => item?.snippet?.thumbnails?.high.url,
-        )[0]
+  //       const channelThumbnailUrl = response.data.items.map(
+  //         (item: any) => item?.snippet?.thumbnails?.high.url,
+  //       )[0]
 
-        const channelThumbnailDescription = response.data.items[0].snippet.title
+  //       const channelThumbnailDescription = response.data.items[0].snippet.title
 
-        setChannelThumbnail(channelThumbnailUrl)
-        setChannelDescription(channelThumbnailDescription)
-      } catch (error) {
-        console.error("Error fetching detail data:", error)
-      }
-    }
+  //       setChannelThumbnail(channelThumbnailUrl)
+  //       setChannelDescription(channelThumbnailDescription)
+  //     } catch (error) {
+  //       console.error("Error fetching detail data:", error)
+  //     }
+  //   }
 
-    channelDetail()
-  }, [channelId, setChannelThumbnail])
+  //   channelDetail()
+  // }, [channelId, setChannelThumbnail])
 
   return (
     <>

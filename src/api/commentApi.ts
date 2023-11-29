@@ -92,6 +92,7 @@ export const filterComment = async (
       .from("video_comment")
       .select("*")
       .eq("video_id", video_id)
+      .order("created_at", { ascending: false })
       .range(startRange, endRange)
 
     if (error) {

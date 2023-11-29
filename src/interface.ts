@@ -76,4 +76,5 @@ export interface CommentProps {
   commentId: string
   setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
   videoId: string
+  optionBtnCallback: () => void
 }
