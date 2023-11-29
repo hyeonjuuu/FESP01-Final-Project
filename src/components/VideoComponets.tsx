@@ -59,35 +59,38 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     channelDetail()
   }, [channelId, setChannelThumbnail])
 
+  const videoImage = () => (
+    <img
+      src={
+        item.snippet.thumbnails.maxres?.url ||
+        item.snippet.thumbnails.standard?.url
+      }
+      alt={item.snippet.title}
+      className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    />
+  )
+  const videoIframe = () => (
+    <iframe
+      id="ytplayer"
+      // type="text/html"
+      src={`https://www.youtube.com/embed/${item.id}?autoplay=1`}
+      frameBorder="0"
+      allowFullScreen
+      allow="autoplay"
+      className="aspect-video w-full"
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    ></iframe>
+  )
+
   return (
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
           {/* <YoutubeVideo videoId={item.id} /> */}
-          {isHovering === true ? (
-            <iframe
-              id="ytplayer"
-              // type="text/html"
-              src={`https://www.youtube.com/embed/${item.id}?autoplay=1`}
-              frameBorder="0"
-              allowFullScreen
-              allow="autoplay"
-              className="aspect-video w-full"
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            ></iframe>
-          ) : (
-            <img
-              src={
-                item.snippet.thumbnails.maxres?.url ||
-                item.snippet.thumbnails.standard?.url
-              }
-              alt={item.snippet.title}
-              className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            />
-          )}
+          {isHovering === true ? videoIframe() : videoImage()}
 
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
             {isSound ? (
