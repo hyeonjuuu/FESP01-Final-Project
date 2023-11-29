@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
+import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
@@ -18,10 +19,14 @@ function VideoMain() {
     const dataFetching = async () => {
       try {
         const response = await getVideoAPI()
-        const formattedDates = response.items.map((item: VideoItem) => {
+        // const response = await getVideoData()
+        console.log("response : ", response)
+        const formattedDates = response?.items?.map((item: VideoItem) => {
+          // const formattedDates = response?.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
+        // setVideoData(response)
         setVideoData(response.items)
         setDataVariable(formattedDates)
         setPageToken(response.nextPageToken)
@@ -60,7 +65,7 @@ function VideoMain() {
     const scrollTop = document.documentElement.scrollTop
     const clientHeight = document.documentElement.clientHeight
 
-    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+    if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
       fetchMoreData()
     }
   }
