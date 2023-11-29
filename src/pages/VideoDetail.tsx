@@ -12,6 +12,7 @@ import formatDateDifference from "@api/formatDateDifference"
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
+  const videoId = location.state.item.id
   const [, setWindowWidth] = useState(window.outerWidth)
   const [scrollFetching, setScrollFetching] = useState(false)
   const [detailData, setDetailData] = useState<VideoItem[]>([])
@@ -146,6 +147,7 @@ function VideoDetail() {
             <VideoDetailItem
               item={locationRoute}
               imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
+              videoId={videoId}
             />
           </section>
         </div>

@@ -16,7 +16,7 @@ function VideoMain() {
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
   // #API 사용
-  useEffect(() => {
+  /* useEffect(() => {
     const dataFetching = async () => {
       try {
         const response = await getVideoAPI()
@@ -33,10 +33,10 @@ function VideoMain() {
     }
 
     dataFetching()
-  }, [])
+  }, []) */
 
   // #JSON 사용
-  /*   useEffect(() => {
+  useEffect(() => {
     const dataFetching = async () => {
       try {
         const response = await getVideoData()
@@ -52,7 +52,7 @@ function VideoMain() {
     }
 
     dataFetching()
-  }, [setVideoData]) */
+  }, [setVideoData])
 
   const fetchMoreData = async () => {
     try {

@@ -7,9 +7,10 @@ import axios from "axios"
 export interface VideoDetailItemProps {
   item: VideoSnippet
   imageUrl: string
+  videoId: string
 }
 
-function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
+function VideoDetailItem({ item, videoId, imageUrl }: VideoDetailItemProps) {
   const [viewMore, setViewMore] = useState(false)
   const channelId = item?.channelId
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
@@ -55,13 +56,15 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
 
   return (
     <>
-      <img
-        src={imageUrl}
-        alt={channelDescription}
-        aria-labelledby="title"
-        className="w-full h-auto min-w-[360px] rounded-lg"
-      />
-      {/* <ul className=" grid grid-cols-6"> */}
+      <iframe
+        id="ytplayer"
+        // type="text/html"
+        src={`https://www.youtube.com/embed/${videoId}?amp;autoplay=1`}
+        frameBorder="0"
+        allowFullScreen
+        className="aspect-video w-full"
+        allow="autoplay"
+      ></iframe>
       <ul className=" grid  grid-cols-[50px_minmax(20px,_1fr)_100px] gap-1">
         <li
           id="title"

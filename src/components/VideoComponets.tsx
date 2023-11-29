@@ -58,6 +58,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
 
     channelDetail()
   }, [channelId, setChannelThumbnail])
+
   const videoImage = () => (
     <img
       src={
@@ -83,7 +84,6 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       onMouseOut={handleMouseOut}
     ></iframe>
   )
-
   return (
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
