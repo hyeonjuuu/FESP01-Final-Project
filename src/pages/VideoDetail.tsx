@@ -66,7 +66,7 @@ function VideoDetail() {
       setScrollFetching(true)
 
       const startRange = commentData.length
-      const endRange = startRange + 2 // 예시로 2개씩 불러오도록 설정
+      const endRange = startRange + 2
 
       const moreDataComments = await filterComment(
         location.state.item.id,
@@ -91,7 +91,6 @@ function VideoDetail() {
 
     if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
       fetchMoreData()
-      console.log("gookd work")
     }
   }
 

@@ -1,18 +1,12 @@
 import { CommentProps } from "interface"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { deleteComment, filterComment, modifyComment } from "@api/commentApi"
+import { deleteComment, modifyComment } from "@api/commentApi"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
-function Comment({
-  text,
-  date,
-  commentId,
-  setCommentData,
-  videoId,
-}: CommentProps) {
+function Comment({ text, date, commentId }: CommentProps) {
   const [count, setCount] = useState(0)
   const [isDelete, setIsDelete] = useState(false)
   const [modifyChecked, setModifyChecked] = useState(false)

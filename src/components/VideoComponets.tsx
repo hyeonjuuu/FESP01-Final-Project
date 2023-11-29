@@ -1,15 +1,12 @@
+import axios from "axios"
+import { motion } from "framer-motion"
+import { useRecoilState } from "recoil"
 import { Link } from "react-router-dom"
 import { VideoItem } from "../interface"
-import { motion } from "framer-motion"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
-import axios from "axios"
-import { RecoilEnv, useRecoilState } from "recoil"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
-
-// recoil Key 오류 방지
-RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
+import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 
 interface VideoComponentsProps {
   key: string

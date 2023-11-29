@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { VideoSnippet } from "interface"
-import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
-import { useRecoilState } from "recoil"
 import axios from "axios"
+import { useRecoilState } from "recoil"
+import { VideoSnippet } from "interface"
+import { useEffect, useState } from "react"
+import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 
 export interface VideoDetailItemProps {
   item: VideoSnippet
@@ -61,7 +61,6 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
         aria-labelledby="title"
         className="w-full h-auto min-w-[360px] rounded-lg"
       />
-      {/* <ul className=" grid grid-cols-6"> */}
       <ul className=" grid  grid-cols-[50px_minmax(50px,_1fr)_100px] gap-1">
         <li
           id="title"
