@@ -7,6 +7,7 @@ import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
 import getVideoData from "@api/getVideoData"
+import { videoHoveringAtom } from "@store/videoHoveringAtom"
 
 function VideoMain() {
   const searchBarValue = useRecoilValue(searchBarValueAtom)
@@ -14,6 +15,7 @@ function VideoMain() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [pageToken, setPageToken] = useState<string>()
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
+  const videoId = videoData.map((item) => item.id)
 
   // #API 사용
   /* useEffect(() => {

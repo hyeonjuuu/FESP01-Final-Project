@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { RecoilEnv, useRecoilState } from "recoil"
 import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
+import { videoHoveringAtom } from "@store/videoHoveringAtom"
 
 // recoil Key 오류 방지
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -19,12 +20,13 @@ interface VideoComponentsProps {
 }
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
-  const [isSound, setIsSound] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
   const channelId = item.snippet.channelId
+  const videoId = item.id
+  const [isSound, setIsSound] = useState(false)
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
     channelThumbnailAtom(channelId),
   )
+  const [videoHover, setVideoHover] = useRecoilState(videoHoveringAtom(videoId))
 
   const handleSound = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsSound(!isSound)
@@ -32,14 +34,14 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
   }
 
   const handleMouseOver = () => {
-    setIsHovering(true)
+    setVideoHover(true)
   }
 
   const handleMouseOut = () => {
-    setIsHovering(false)
+    setVideoHover(false)
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -57,7 +59,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail])
+  }, [channelId, setChannelThumbnail]) */
 
   const videoImage = () => (
     <img
@@ -75,7 +77,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     <iframe
       id="ytplayer"
       // type="text/html"
-      src={`https://www.youtube.com/embed/${item.id}?autoplay=1&controls=0`}
+      src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&disablekb=1`}
       frameBorder="0"
       allowFullScreen
       allow="autoplay"
@@ -88,37 +90,25 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-          {/* <YoutubeVideo videoId={item.id} /> */}
-          {isHovering === true ? videoIframe() : videoImage()}
+          {videoHover ? videoIframe() : videoImage()}
 
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
-            {isSound ? (
-              <button className="p-2">
-                <FontAwesomeIcon
-                  icon={faVolumeLow}
-                  className="text-white"
-                  title="음소거 해제"
-                />
-              </button>
-            ) : (
-              <button className="p-2">
-                <FontAwesomeIcon
-                  icon={faVolumeXmark}
-                  className="text-white"
-                  title="음소거"
-                />
-              </button>
-            )}
+            <button className="p-2">
+              <FontAwesomeIcon
+                icon={isSound ? faVolumeLow : faVolumeXmark}
+                className="text-white"
+                title={isSound ? "음소거 해제" : "음소거"}
+              />
+            </button>
           </div>
         </motion.div>
-
         <div className="mt-2 mo:mb-3 tb:mb-0 flex gap-2 mo:mt-4 ">
           <img
             src={channelThumbnail}
             alt=""
             className="w-[10%] h-[10%] rounded-full"
           />
-          <dl className=" grow-0 w-[90%]">
+          <dl className="grow-0 w-[90%]">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
