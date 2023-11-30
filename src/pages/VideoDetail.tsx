@@ -85,6 +85,7 @@ function VideoDetail() {
         return
       }
       setPageToken(moreRelatedVideos.nextPageToken)
+      console.log("11")
 
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
@@ -99,6 +100,7 @@ function VideoDetail() {
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
+        console.log("33")
       }
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
@@ -113,7 +115,7 @@ function VideoDetail() {
     const scrollTop = document.documentElement.scrollTop
     const clientHeight = document.documentElement.clientHeight
 
-    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+    if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
       fetchMoreData()
     }
   }
