@@ -7,9 +7,10 @@ import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 export interface VideoDetailItemProps {
   item: VideoSnippet
   imageUrl: string
+  videoId: string
 }
 
-function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
+function VideoDetailItem({ item, videoId }: VideoDetailItemProps) {
   const [viewMore, setViewMore] = useState(false)
   const channelId = item?.channelId
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
@@ -30,38 +31,39 @@ function VideoDetailItem({ item, imageUrl }: VideoDetailItemProps) {
     }
   }
 
-  // useEffect(() => {
-  //   const channelDetail = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-  //       )
+  useEffect(() => {
+    const channelDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+        )
 
-  //       const channelThumbnailUrl = response.data.items.map(
-  //         (item: any) => item?.snippet?.thumbnails?.high.url,
-  //       )[0]
+        const channelThumbnailUrl = response.data.items.map(
+          (item: any) => item?.snippet?.thumbnails?.high.url,
+        )[0]
 
-  //       const channelThumbnailDescription = response.data.items[0].snippet.title
+        const channelThumbnailDescription = response.data.items[0].snippet.title
 
-  //       setChannelThumbnail(channelThumbnailUrl)
-  //       setChannelDescription(channelThumbnailDescription)
-  //     } catch (error) {
-  //       console.error("Error fetching detail data:", error)
-  //     }
-  //   }
+        setChannelThumbnail(channelThumbnailUrl)
+        setChannelDescription(channelThumbnailDescription)
+      } catch (error) {
+        console.error("Error fetching detail data:", error)
+      }
+    }
 
-  //   channelDetail()
-  // }, [channelId, setChannelThumbnail])
+    channelDetail()
+  }, [channelId, setChannelThumbnail])
 
   return (
     <>
-      <img
-        src={imageUrl}
-        alt={channelDescription}
-        aria-labelledby="title"
-        className="w-full h-auto min-w-[360px] rounded-lg"
-      />
-      <ul className=" grid  grid-cols-[50px_minmax(50px,_1fr)_100px] gap-1">
+      <iframe
+        id="ytplayer"
+        src={`https://www.youtube.com/embed/${videoId}?amp;autoplay=1`}
+        allowFullScreen
+        className="aspect-video w-full"
+        allow="autoplay"
+      ></iframe>
+      <ul className=" grid  grid-cols-[50px_minmax(20px,_1fr)_100px] gap-1">
         <li
           id="title"
           className="text-lg font-semibold  tb:w-full min-w-[360px] mt-3 col-start-2 col-end-7 row-start-1"

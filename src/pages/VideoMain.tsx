@@ -6,7 +6,6 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const [pageToken, setPageToken] = useState<string>()
@@ -15,12 +14,12 @@ function VideoMain() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
+  // #API 사용
   useEffect(() => {
     const dataFetching = async () => {
       try {
-        // const response = await getVideoAPI()
-        const response = await getVideoData()
-        const formattedDates = response.items.map((item: VideoItem) => {
+        const response = await getVideoAPI()
+        const formattedDates = response?.items?.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
@@ -38,8 +37,7 @@ function VideoMain() {
   const fetchMoreData = async () => {
     try {
       setScrollFetching(true)
-      // const moreData = await getVideoAPI(pageToken)
-      const moreData = await getVideoData()
+      const moreData = await getVideoAPI(pageToken)
       setPageToken(moreData.nextPageToken)
       setVideoData((prevData) => [...prevData, ...moreData.items])
 
@@ -63,7 +61,7 @@ function VideoMain() {
     const scrollTop = document.documentElement.scrollTop
     const clientHeight = document.documentElement.clientHeight
 
-    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+    if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
       fetchMoreData()
     }
   }

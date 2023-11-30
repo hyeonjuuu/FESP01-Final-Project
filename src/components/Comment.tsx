@@ -1,5 +1,5 @@
-import { CommentProps } from "interface"
 import { useState } from "react"
+import { CommentProps } from "interface"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

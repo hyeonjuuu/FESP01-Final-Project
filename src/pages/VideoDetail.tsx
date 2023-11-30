@@ -4,38 +4,41 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import AddComment from "@components/AddComment"
 import { filterComment } from "@api/commentApi"
+import getRelatedVideo from "@api/getRelatedVideo"
 import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
-// import formatDateDifference from "@api/formatDateDifference"
+import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
+  const videoId = location.state.item.id
   const [, setWindowWidth] = useState(window.outerWidth)
   const [scrollFetching, setScrollFetching] = useState(false)
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
+  const [pageToken, setPageToken] = useState<string>("")
 
-  // useEffect(() => {
-  //   const fetchDetailData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-  //       )
-  //       const formattedDates = response.data.items.map((item: VideoItem) => {
-  //         return formatDateDifference(item.snippet.publishedAt)
-  //       })
-  //       setDataVariable(formattedDates)
-  //       setDetailData(response.data.items)
-  //     } catch (error) {
-  //       console.error("Error fetching detail data:", error)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchDetailData = async () => {
+      try {
+        const response = await getRelatedVideo(locationRoute)
+        const formattedDates = response.items.map((item: VideoItem) => {
+          return formatDateDifference(item.snippet.publishedAt)
+        })
 
-  //   fetchDetailData()
-  // }, [locationRoute.channelId])
+        setDataVariable(formattedDates)
+        setDetailData(response.items)
+        setPageToken(response.nextPageToken)
+      } catch (error) {
+        console.error("Error fetching detail data:", error)
+      }
+    }
+
+    fetchDetailData()
+  }, [locationRoute.channelId])
 
   useEffect(() => {
     const promiseData = filterComment(location.state.item.id, 0, 2)
@@ -65,6 +68,20 @@ function VideoDetail() {
     try {
       setScrollFetching(true)
 
+      const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
+      if (!moreRelatedVideos) {
+        console.error("getRelatedVideo did not return any data")
+        return
+      }
+
+      if (!moreRelatedVideos.nextPageToken) {
+        console.log("No more related videos available")
+        return
+      }
+      setPageToken(moreRelatedVideos.nextPageToken)
+
+      setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
+
       const startRange = commentData.length
       const endRange = startRange + 2
 
@@ -80,7 +97,7 @@ function VideoDetail() {
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
     } finally {
-      setScrollFetching(false)
+      setScrollFetching(true)
     }
   }
 
@@ -156,6 +173,7 @@ function VideoDetail() {
             <VideoDetailItem
               item={locationRoute}
               imageUrl={locationRoute.thumbnails?.maxres?.url || ""}
+              videoId={videoId}
             />
           </section>
         </div>

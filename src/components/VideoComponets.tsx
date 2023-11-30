@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { VideoItem } from "../interface"
 import { useEffect, useState } from "react"
 import { RecoilEnv, useRecoilState } from "recoil"
+import { videoHoveringAtom } from "@store/videoHoveringAtom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
@@ -19,77 +20,94 @@ interface VideoComponentsProps {
 
 function VideoComponents({ item, date, page }: VideoComponentsProps) {
   const channelId = item.snippet.channelId
+  const videoId = item.id
   const [isSound, setIsSound] = useState(false)
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
     channelThumbnailAtom(channelId),
   )
+  const [videoHover, setVideoHover] = useRecoilState(videoHoveringAtom(videoId))
 
   const handleSound = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsSound(!isSound)
     e.preventDefault()
   }
 
-  // useEffect(() => {
-  //   const channelDetail = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-  //       )
+  const handleMouseOver = () => {
+    setVideoHover(true)
+  }
 
-  //       const channelThumbnailUrl = response.data.items.map(
-  //         (item: any) => item?.snippet?.thumbnails?.high.url,
-  //       )[0]
+  const handleMouseOut = () => {
+    setVideoHover(false)
+  }
 
-  //       setChannelThumbnail(channelThumbnailUrl)
-  //     } catch (error) {
-  //       console.error("Error fetching detail data:", error)
-  //     }
-  //   }
+  useEffect(() => {
+    const channelDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+          // `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+        )
 
-  //   channelDetail()
-  // }, [channelId, setChannelThumbnail])
+        const channelThumbnailUrl = response.data.items.map(
+          (item: any) => item?.snippet?.thumbnails?.high.url,
+        )[0]
 
+        setChannelThumbnail(channelThumbnailUrl)
+      } catch (error) {
+        console.error("Error fetching detail data:", error)
+      }
+    }
+
+    channelDetail()
+  }, [channelId, setChannelThumbnail])
+
+  const videoImage = () => (
+    <img
+      src={
+        item.snippet.thumbnails.maxres?.url ||
+        item.snippet.thumbnails.standard?.url
+      }
+      alt={item.snippet.title}
+      className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    />
+  )
+  const videoIframe = () => (
+    <iframe
+      id="ytplayer"
+      // type="text/html"
+      src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&disablekb=1`}
+      allowFullScreen
+      allow="autoplay"
+      className="aspect-video w-full"
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    ></iframe>
+  )
   return (
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-          {/* <YoutubeVideo videoId={item.id} /> */}
-          <img
-            src={
-              item.snippet.thumbnails.maxres?.url ||
-              item.snippet.thumbnails.standard?.url
-            }
-            alt={item.snippet.title}
-            className="mo:flex-shrink rounded-lg hover:rounded-none tb:aspect-video tb:object-cover pc:aspect-video pc:object-cover lgpc:aspect-video lgpc:object-cover"
-          />
+          {videoHover ? videoIframe() : videoImage()}
+
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
-            {isSound ? (
-              <button className="p-2">
-                <FontAwesomeIcon
-                  icon={faVolumeLow}
-                  className="text-white"
-                  title="음소거 해제"
-                />
-              </button>
-            ) : (
-              <button className="p-2">
-                <FontAwesomeIcon
-                  icon={faVolumeXmark}
-                  className="text-white"
-                  title="음소거"
-                />
-              </button>
-            )}
+            <button className="p-2">
+              <FontAwesomeIcon
+                icon={isSound ? faVolumeLow : faVolumeXmark}
+                className="text-white"
+                title={isSound ? "음소거 해제" : "음소거"}
+              />
+            </button>
           </div>
         </motion.div>
-
         <div className="mt-2 mo:mb-3 tb:mb-0 flex gap-2 mo:mt-4 ">
           <img
             src={channelThumbnail}
             alt=""
             className="w-[10%] h-[10%] rounded-full"
           />
-          <dl className=" grow-0 w-[90%]">
+          <dl className="grow-0 w-[90%]">
             <dt className="text-lg font-semibold text-ellipsis overflow-hidden truncate">
               {item.snippet.title}
             </dt>
