@@ -1,4 +1,4 @@
-name: Build and Deploy # Github Action 이름
+name: Build on FESPwetube# Github Action 이름
 
 on:
   push:
