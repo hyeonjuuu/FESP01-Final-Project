@@ -1,5 +1,5 @@
-// import axios from "axios"
 import Comment from "@components/Comment"
+import Spinner from "@components/Spinner"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import AddComment from "@components/AddComment"
@@ -15,26 +15,21 @@ function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
   const videoId = location.state.item.id
-  const channelId = location.state.item.snippet.channelId
 
+  const [isLoading, setIsLoading] = useState(false)
   const [, setWindowWidth] = useState(window.outerWidth)
+  const [pageToken, setPageToken] = useState<string>("")
   const [scrollFetching, setScrollFetching] = useState(false)
   const [detailData, setDetailData] = useState<VideoItem[]>([])
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
-  const [pageToken, setPageToken] = useState<string>("")
 
   useEffect(() => {
     const fetchDetailData = async () => {
       try {
-        // const response = await getRelatedVideo(locationRoute)
-        const response = await axios.get(
-          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
-        )
-        // console.log("response : ", response)
-
-        // const formattedDates = response.items.map((item: VideoItem) => {
-        const formattedDates = response.data.items.map((item: VideoItem) => {
+        setIsLoading(true)
+        const response = await getRelatedVideo(locationRoute)
+        const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
@@ -45,6 +40,8 @@ function VideoDetail() {
         setPageToken(response.data.nextPageToken)
       } catch (error) {
         console.error("Error fetching detail data:", error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -79,6 +76,7 @@ function VideoDetail() {
     // console.log("fetchMoreData start") // 추가한 로그
 
     try {
+      setIsLoading(true)
       setScrollFetching(true)
 
       // const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
@@ -117,7 +115,6 @@ function VideoDetail() {
         return
       }
       setPageToken(moreRelatedVideos.nextPageToken)
-
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
       const startRange = commentData.length
@@ -132,13 +129,13 @@ function VideoDetail() {
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
+        console.log("33")
       }
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
     } finally {
-      // setScrollFetching(true)
+      setIsLoading(false)
       setScrollFetching(false)
-      // console.log("fetchMoreData end") // 추가한 로그
     }
   }
 
@@ -205,9 +202,9 @@ function VideoDetail() {
   return (
     <div className="py-6 px-4 dark:bg-[#202124] dark:text-white pc:grid pc:grid-cols-4 gap-3 lgpc:grid lgpc:grid-cols-4">
       <h2 className="sr-only">유튜브 상세 페이지</h2>
-
       {/* 왼쪽 윗칸 차지 */}
       <section className="w-full pb-10 flex-shrink pc:col-span-3 lgpc:col-span-3 auto-rows-fr ">
+        {isLoading && <Spinner />}
         <h3 className="sr-only">해당 영상</h3>
         <div className="min-w-[360px]">
           <section key={location.state.item.id}>

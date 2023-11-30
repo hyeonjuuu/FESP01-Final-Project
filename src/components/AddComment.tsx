@@ -4,9 +4,8 @@ import { enterComment } from "@api/commentApi"
 import React, { useEffect, useRef, useState } from "react"
 
 function AddComment({ videoId }: AddCommentProps) {
-  const [isFocus, setIsFocus] = useState(false)
   const [text, setText] = useState<string>("")
-  // const [isSubmit, setIsSubmit] = useState(false)
+  const [isFocus, setIsFocus] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleInputFocus = () => {
@@ -25,20 +24,8 @@ function AddComment({ videoId }: AddCommentProps) {
 
   const handleCommentSubmit = async () => {
     await enterComment(text, videoId)
-    // setIsSubmit((prevState) => !prevState)
     setText("")
   }
-
-  // useEffect(() => {
-  //   const promiseData = filterComment(videoId, 0, 2)
-  //   promiseData
-  //     .then((comments) => {
-  //       setCommentData(comments || [])
-  //     })
-  //     .catch((error) => {
-  //       console.error("에러 발생: ", error)
-  //     })
-  // }, [isSubmit])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {

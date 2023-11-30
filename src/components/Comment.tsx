@@ -2,13 +2,12 @@ import { useState } from "react"
 import { CommentProps } from "interface"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { deleteComment, modifyComment } from "@api/commentApi"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 
 function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const [count, setCount] = useState(0)
-  const [isDelete, setIsDelete] = useState(false)
   const [modifyChecked, setModifyChecked] = useState(false)
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
@@ -29,7 +28,7 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
     if (!modifyChecked) return
     else modifyComment(commentId, modifyCommentText)
     optionBtnCallback()
-    // alert("댓글이 수정되었습니다! 🛠️")
+    alert("댓글이 수정되었습니다! 🛠️")
   }
 
   const handleDeleteClick = async () => {
@@ -41,17 +40,6 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setModifyCommentText(e.target.value)
   }
-
-  // useEffect(() => {
-  //   const promiseData = filterComment(videoId, 0, 2)
-  //   promiseData
-  //     .then((comments) => {
-  //       setCommentData(comments || [])
-  //     })
-  //     .catch((error) => {
-  //       console.error("에러 발생: ", error)
-  //     })
-  // }, [isDelete])
 
   return (
     <div className="w-full">
