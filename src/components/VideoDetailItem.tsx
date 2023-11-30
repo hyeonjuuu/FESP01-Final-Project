@@ -35,8 +35,7 @@ function VideoDetailItem({ item, videoId }: VideoDetailItemProps) {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
-          // `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
         )
 
         const channelThumbnailUrl = response.data.items.map(
@@ -57,13 +56,13 @@ function VideoDetailItem({ item, videoId }: VideoDetailItemProps) {
 
   return (
     <>
-      {/* <iframe
+      <iframe
         id="ytplayer"
         src={`https://www.youtube.com/embed/${videoId}?amp;autoplay=1`}
         allowFullScreen
         className="aspect-video w-full"
         allow="autoplay"
-      ></iframe> */}
+      ></iframe>
       <ul className=" grid  grid-cols-[50px_minmax(20px,_1fr)_100px] gap-1">
         <li
           id="title"
