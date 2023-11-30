@@ -7,7 +7,6 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const [isLoading, setIsLoading] = useState(true)
@@ -17,7 +16,6 @@ function VideoMain() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
-  // #API 사용
   useEffect(() => {
     const dataFetching = async () => {
       try {
@@ -44,7 +42,7 @@ function VideoMain() {
     try {
       setIsLoading(true)
       setScrollFetching(true)
-      const moreData = await getVideoAPI()
+      const moreData = await getVideoAPI(pageToken)
       setPageToken(moreData.nextPageToken)
       setVideoData((prevData) => [...prevData, ...moreData.items])
 

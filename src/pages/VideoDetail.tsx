@@ -85,8 +85,6 @@ function VideoDetail() {
         return
       }
       setPageToken(moreRelatedVideos.nextPageToken)
-      console.log("11")
-
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
       const startRange = commentData.length
