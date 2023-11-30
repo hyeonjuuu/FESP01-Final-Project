@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { VideoSnippet } from "interface"
-import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
-import { useRecoilState } from "recoil"
 import axios from "axios"
+import { useRecoilState } from "recoil"
+import { VideoSnippet } from "interface"
+import { useEffect, useState } from "react"
+import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 
 export interface VideoDetailItemProps {
   item: VideoSnippet
@@ -10,7 +10,7 @@ export interface VideoDetailItemProps {
   videoId: string
 }
 
-function VideoDetailItem({ item, videoId, imageUrl }: VideoDetailItemProps) {
+function VideoDetailItem({ item, videoId }: VideoDetailItemProps) {
   const [viewMore, setViewMore] = useState(false)
   const channelId = item?.channelId
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
@@ -36,7 +36,6 @@ function VideoDetailItem({ item, videoId, imageUrl }: VideoDetailItemProps) {
       try {
         const response = await axios.get(
           `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-          // `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
         )
 
         const channelThumbnailUrl = response.data.items.map(
@@ -59,9 +58,7 @@ function VideoDetailItem({ item, videoId, imageUrl }: VideoDetailItemProps) {
     <>
       <iframe
         id="ytplayer"
-        // type="text/html"
         src={`https://www.youtube.com/embed/${videoId}?amp;autoplay=1`}
-        frameBorder="0"
         allowFullScreen
         className="aspect-video w-full"
         allow="autoplay"

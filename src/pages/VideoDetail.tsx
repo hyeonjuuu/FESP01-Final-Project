@@ -1,14 +1,14 @@
-import axios from "axios"
+// import axios from "axios"
 import Comment from "@components/Comment"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import AddComment from "@components/AddComment"
 import { filterComment } from "@api/commentApi"
+import getRelatedVideo from "@api/getRelatedVideo"
 import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
-import getRelatedVideo from "@api/getRelatedVideo"
 
 function VideoDetail() {
   const location = useLocation()
@@ -21,19 +21,14 @@ function VideoDetail() {
   const [commentData, setCommentData] = useState<CommentType[]>([])
   const [pageToken, setPageToken] = useState<string>("")
 
-  // const [showMoreRelatedVideos, setShowMoreRelatedVideos] = useState(false)
-
   useEffect(() => {
     const fetchDetailData = async () => {
       try {
-        // const response = await axios.get(
-        //   `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=${locationRoute.channelId}&maxResults=25&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
         const response = await getRelatedVideo(locationRoute)
-        // `/videos/searchByChannels/search-by-channel-id-${locationRoute.channelId}.json`,
-        // )
         const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
+
         setDataVariable(formattedDates)
         setDetailData(response.items)
         setPageToken(response.nextPageToken)
@@ -45,10 +40,8 @@ function VideoDetail() {
     fetchDetailData()
   }, [locationRoute.channelId])
 
-  // console.log("location.state.item.id : ", location.state.item.id)
-
   useEffect(() => {
-    const promiseData = filterComment(location.state.item.id, 0, 2) // 처음에 댓글 3개만 불러오기
+    const promiseData = filterComment(location.state.item.id, 0, 2)
     promiseData
       .then((comments) => {
         setCommentData(comments || [])
@@ -87,18 +80,10 @@ function VideoDetail() {
       }
       setPageToken(moreRelatedVideos.nextPageToken)
 
-      if (moreRelatedVideos) {
-        setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
-      }
-      // if (Array.isArray(moreRelatedVideos)) {
-      //   // setPageToken(moreRelatedVideos.nextPageToken)
-      //   setDetailData((prevData) => [...prevData, ...moreRelatedVideos])
-      // } else {
-      //   console.error("getRelatedVideo did not return an array")
-      // }
+      setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
       const startRange = commentData.length
-      const endRange = startRange + 2 // 10개씩 불러오도록 설정
+      const endRange = startRange + 2
 
       const moreDataComments = await filterComment(
         location.state.item.id,
@@ -112,7 +97,7 @@ function VideoDetail() {
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
     } finally {
-      // setShowMoreRelatedVideos(false)
+      setScrollFetching(true)
     }
   }
 
@@ -123,13 +108,7 @@ function VideoDetail() {
 
     if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
       fetchMoreData()
-      // setShowMoreRelatedVideos(true)
-      console.log("gookd work")
     }
-    // else {
-    //   // 스크롤이 아닌 경우, 즉 Related 영상이 펼쳐지지 않아야 할 때는 false로 설정합니다.
-    //   setShowMoreRelatedVideos(false)
-    // }
   }
 
   useEffect(() => {
@@ -138,6 +117,16 @@ function VideoDetail() {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [handleScroll])
+
+  // 수정 & 삭제버튼 이벤트 콜백함수
+  const handleOptionBtnCallback = async () => {
+    try {
+      const updatedComments = await filterComment(location.state.item.id, 0, 2)
+      setCommentData(updatedComments || [])
+    } catch (error) {
+      console.error("댓글 수정 및 가져오기 실패:", error)
+    }
+  }
 
   const renderCommentsSection = () => (
     <div className="min-w-[360px] lgpc:mt-3 pc:mt-3">
@@ -153,6 +142,7 @@ function VideoDetail() {
           text={item.text}
           setCommentData={setCommentData}
           videoId={location.state.item.id}
+          optionBtnCallback={handleOptionBtnCallback}
         />
       ))}
     </div>
@@ -161,11 +151,6 @@ function VideoDetail() {
   const renderRelatedSection = () => (
     <div className="min-w-[360px]  tb:mt-3 mo:mt-3  pc:col-span-1">
       <h3 className="sr-only">관련된 영상</h3>
-      {/* <div
-        className={`${
-          showMoreRelatedVideos ? "h-auto" : "h-calc(100vh - 100px)"
-        } overflow-auto`}
-      > */}
       {detailData?.map((item, index) => (
         <RelatedVideo
           key={`${item.id}_${index}`}
@@ -173,7 +158,6 @@ function VideoDetail() {
           date={dataVariable[index]}
         />
       ))}
-      {/* </div> */}
     </div>
   )
 

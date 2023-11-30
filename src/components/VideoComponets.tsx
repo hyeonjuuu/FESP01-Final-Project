@@ -1,15 +1,14 @@
+import axios from "axios"
+import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { VideoItem } from "../interface"
-import { motion } from "framer-motion"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { RecoilEnv, useRecoilState } from "recoil"
-import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 import { videoHoveringAtom } from "@store/videoHoveringAtom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
+import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 
-// recoil Key 오류 방지
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 interface VideoComponentsProps {
@@ -41,7 +40,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     setVideoHover(false)
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -60,7 +59,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail]) */
+  }, [channelId, setChannelThumbnail])
 
   const videoImage = () => (
     <img
@@ -79,7 +78,6 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       id="ytplayer"
       // type="text/html"
       src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&disablekb=1`}
-      frameBorder="0"
       allowFullScreen
       allow="autoplay"
       className="aspect-video w-full"
