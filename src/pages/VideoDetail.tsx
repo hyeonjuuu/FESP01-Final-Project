@@ -9,7 +9,6 @@ import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
-import axios from "axios"
 
 function VideoDetail() {
   const location = useLocation()
@@ -34,10 +33,8 @@ function VideoDetail() {
         })
 
         setDataVariable(formattedDates)
-        // setDetailData(response.items)
-        setDetailData(response.data.items)
-        // setPageToken(response.nextPageToken)
-        setPageToken(response.data.nextPageToken)
+        setDetailData(response.items)
+        setPageToken(response.nextPageToken)
       } catch (error) {
         console.error("Error fetching detail data:", error)
       } finally {
@@ -73,38 +70,11 @@ function VideoDetail() {
   }, [])
 
   const fetchMoreData = async () => {
-    // console.log("fetchMoreData start") // 추가한 로그
-
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
-      // const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
-
-      const moreRelatedVideosFunction = async () => {
-        try {
-          const response = await axios.get(
-            `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              params: {
-                pageToken,
-              },
-            },
-          )
-          console.log("response.data : ", response.data)
-          return response.data
-        } catch (error) {
-          console.error(`❌ 에러가 발생하였습니다 : ${error}`)
-          throw error
-        }
-      }
-
-      const moreRelatedVideos = await moreRelatedVideosFunction() // 함수 호출 추가
-      console.log("moreRelatedVideos : ", moreRelatedVideos)
-
+      const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
       if (!moreRelatedVideos) {
         console.error("getRelatedVideo did not return any data")
         return
@@ -118,7 +88,6 @@ function VideoDetail() {
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
       const startRange = commentData.length
-      console.log("startRange : ", startRange)
       const endRange = startRange + 2
 
       const moreDataComments = await filterComment(
