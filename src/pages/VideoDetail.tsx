@@ -9,11 +9,14 @@ import { CommentType, VideoItem } from "interface"
 import RelatedVideo from "@components/RelatedVideo"
 import VideoDetailItem from "@components/VideoDetailItem"
 import formatDateDifference from "@api/formatDateDifference"
+import axios from "axios"
 
 function VideoDetail() {
   const location = useLocation()
   const locationRoute = location.state.item.snippet
   const videoId = location.state.item.id
+  const channelId = location.state.item.snippet.channelId
+
   const [, setWindowWidth] = useState(window.outerWidth)
   const [scrollFetching, setScrollFetching] = useState(false)
   const [detailData, setDetailData] = useState<VideoItem[]>([])
@@ -24,14 +27,22 @@ function VideoDetail() {
   useEffect(() => {
     const fetchDetailData = async () => {
       try {
-        const response = await getRelatedVideo(locationRoute)
-        const formattedDates = response.items.map((item: VideoItem) => {
+        // const response = await getRelatedVideo(locationRoute)
+        const response = await axios.get(
+          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+        )
+        // console.log("response : ", response)
+
+        // const formattedDates = response.items.map((item: VideoItem) => {
+        const formattedDates = response.data.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
         setDataVariable(formattedDates)
-        setDetailData(response.items)
-        setPageToken(response.nextPageToken)
+        // setDetailData(response.items)
+        setDetailData(response.data.items)
+        // setPageToken(response.nextPageToken)
+        setPageToken(response.data.nextPageToken)
       } catch (error) {
         console.error("Error fetching detail data:", error)
       }
@@ -65,10 +76,37 @@ function VideoDetail() {
   }, [])
 
   const fetchMoreData = async () => {
+    // console.log("fetchMoreData start") // 추가한 로그
+
     try {
       setScrollFetching(true)
 
-      const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
+      // const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
+
+      const moreRelatedVideosFunction = async () => {
+        try {
+          const response = await axios.get(
+            `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              params: {
+                pageToken,
+              },
+            },
+          )
+          console.log("response.data : ", response.data)
+          return response.data
+        } catch (error) {
+          console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+          throw error
+        }
+      }
+
+      const moreRelatedVideos = await moreRelatedVideosFunction() // 함수 호출 추가
+      console.log("moreRelatedVideos : ", moreRelatedVideos)
+
       if (!moreRelatedVideos) {
         console.error("getRelatedVideo did not return any data")
         return
@@ -83,6 +121,7 @@ function VideoDetail() {
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
 
       const startRange = commentData.length
+      console.log("startRange : ", startRange)
       const endRange = startRange + 2
 
       const moreDataComments = await filterComment(
@@ -97,7 +136,9 @@ function VideoDetail() {
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
     } finally {
-      setScrollFetching(true)
+      // setScrollFetching(true)
+      setScrollFetching(false)
+      // console.log("fetchMoreData end") // 추가한 로그
     }
   }
 
@@ -106,7 +147,7 @@ function VideoDetail() {
     const scrollTop = document.documentElement.scrollTop
     const clientHeight = document.documentElement.clientHeight
 
-    if (scrollTop + clientHeight >= scrollHeight && !scrollFetching) {
+    if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
       fetchMoreData()
     }
   }

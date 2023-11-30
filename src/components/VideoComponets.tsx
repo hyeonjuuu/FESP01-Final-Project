@@ -44,8 +44,8 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-          // `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
+          // `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
+          `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
         )
 
         const channelThumbnailUrl = response.data.items.map(
@@ -73,23 +73,24 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       onMouseOut={handleMouseOut}
     />
   )
-  const videoIframe = () => (
-    <iframe
-      id="ytplayer"
-      // type="text/html"
-      src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&disablekb=1`}
-      allowFullScreen
-      allow="autoplay"
-      className="aspect-video w-full"
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
-    ></iframe>
-  )
+  // const videoIframe = () => (
+  //   <iframe
+  //     id="ytplayer"
+  //     // type="text/html"
+  //     src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&disablekb=1`}
+  //     allowFullScreen
+  //     allow="autoplay"
+  //     className="aspect-video w-full"
+  //     onMouseOver={handleMouseOver}
+  //     onMouseOut={handleMouseOut}
+  //   ></iframe>
+  // )
   return (
     <div className="relative">
       <Link to={`/videoDetail/${item.id}`} state={{ item: item }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-          {videoHover ? videoIframe() : videoImage()}
+          {/* {videoHover ? videoIframe() : videoImage()} */}
+          {videoImage()}
 
           <div className="absolute top-1 right-1 group" onClick={handleSound}>
             <button className="p-2">

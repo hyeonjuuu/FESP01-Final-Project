@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
+import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const [pageToken, setPageToken] = useState<string>()
@@ -18,7 +19,10 @@ function VideoMain() {
   useEffect(() => {
     const dataFetching = async () => {
       try {
-        const response = await getVideoAPI()
+        // const response = await getVideoAPI()
+        const response = await getVideoData()
+        // console.log("response : ", response)
+
         const formattedDates = response?.items?.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
