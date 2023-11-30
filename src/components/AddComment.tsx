@@ -1,12 +1,12 @@
 import Button from "./Button"
-import { enterComment, filterComment } from "@api/commentApi"
 import { AddCommentProps } from "interface"
+import { enterComment } from "@api/commentApi"
 import React, { useEffect, useRef, useState } from "react"
 
-function AddComment({ videoId, setCommentData }: AddCommentProps) {
+function AddComment({ videoId }: AddCommentProps) {
   const [isFocus, setIsFocus] = useState(false)
   const [text, setText] = useState<string>("")
-  const [isSubmit, setIsSubmit] = useState(false)
+  // const [isSubmit, setIsSubmit] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleInputFocus = () => {
@@ -25,7 +25,7 @@ function AddComment({ videoId, setCommentData }: AddCommentProps) {
 
   const handleCommentSubmit = async () => {
     await enterComment(text, videoId)
-    setIsSubmit((prevState) => !prevState)
+    // setIsSubmit((prevState) => !prevState)
     setText("")
   }
 
