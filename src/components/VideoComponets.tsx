@@ -41,7 +41,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     setVideoHover(false)
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -60,7 +60,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail]) */
+  }, [channelId, setChannelThumbnail])
 
   const videoImage = () => (
     <img
