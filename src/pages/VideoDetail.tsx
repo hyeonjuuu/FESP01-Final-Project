@@ -97,7 +97,7 @@ function VideoDetail() {
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
     } finally {
-      setScrollFetching(true)
+      setScrollFetching(false)
     }
   }
 

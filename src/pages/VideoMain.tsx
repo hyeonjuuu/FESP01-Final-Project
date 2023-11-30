@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
+import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const [pageToken, setPageToken] = useState<string>()
@@ -15,7 +16,6 @@ function VideoMain() {
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
 
   // #API 사용
-  useEffect(() => {
   useEffect(() => {
     const dataFetching = async () => {
       try {
@@ -36,16 +36,17 @@ function VideoMain() {
   }, [])
 
   // #JSON 사용
-  /*   useEffect(() => {
+  /*  useEffect(() => {
     const dataFetching = async () => {
       try {
         const response = await getVideoData()
-        const formattedDates = response.map((item: VideoItem) => {
+        const formattedDates = response.items.map((item: VideoItem) => {
           return formatDateDifference(item.snippet.publishedAt)
         })
 
-        setVideoData(response)
+        setVideoData(response.items)
         setDataVariable(formattedDates)
+        setPageToken(response.nextPageToken)
       } catch (error) {
         console.error(`❌ 에러가 발생하였습니다 : ${error}`)
       }
