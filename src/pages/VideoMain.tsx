@@ -7,7 +7,6 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
-import getVideoData from "@api/getVideoData"
 
 function VideoMain() {
   const [isLoading, setIsLoading] = useState(true)

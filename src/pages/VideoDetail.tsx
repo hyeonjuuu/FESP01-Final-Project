@@ -12,8 +12,8 @@ import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
   const location = useLocation()
-  const locationRoute = location.state.item.snippet
   const videoId = location.state.item.id
+  const locationRoute = location.state.item.snippet
 
   const [isLoading, setIsLoading] = useState(false)
   const [, setWindowWidth] = useState(window.outerWidth)
@@ -113,7 +113,6 @@ function VideoDetail() {
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
-        console.log("추가 댓글 불러오기")
       }
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
