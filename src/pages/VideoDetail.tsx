@@ -69,12 +69,12 @@ function VideoDetail() {
     }
   }, [])
 
+  // 추가로 관련된 영상 불러오기
   const fetchMoreRelatidedVideo = async () => {
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
-      // 추가로 관련된 영상 불러오기
       const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
 
       if (!moreRelatedVideos) {
@@ -96,12 +96,12 @@ function VideoDetail() {
     }
   }
 
+  // 추가로 댓글 불러오기
   const fetchMoreComment = async () => {
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
-      // 추가로 댓글 불러오기
       const startRange = commentData.length
       const endRange = startRange + 2
 
@@ -110,6 +110,11 @@ function VideoDetail() {
         startRange,
         endRange,
       )
+
+      if (!moreDataComments || moreDataComments.length === 0) {
+        console.log("추가 댓글이 없습니다.")
+        return
+      }
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])

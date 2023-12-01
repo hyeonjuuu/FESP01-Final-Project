@@ -55,7 +55,7 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
         <div className="h-auto pr-4">
           <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
             <img
-              src="/smile.png"
+              src="https://haha41.github.io/FESP01-Final-Project/smile.png"
               alt="프로필 사진"
               className="w-full h-full object-cover"
             ></img>
