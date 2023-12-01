@@ -3,7 +3,7 @@ import { AddCommentProps } from "interface"
 import { enterComment } from "@api/commentApi"
 import React, { useEffect, useRef, useState } from "react"
 
-function AddComment({ videoId }: AddCommentProps) {
+function AddComment({ videoId, optionBtnCallback }: AddCommentProps) {
   const [text, setText] = useState<string>("")
   const [isFocus, setIsFocus] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -24,6 +24,7 @@ function AddComment({ videoId }: AddCommentProps) {
 
   const handleCommentSubmit = async () => {
     await enterComment(text, videoId)
+    optionBtnCallback()
     setText("")
   }
 

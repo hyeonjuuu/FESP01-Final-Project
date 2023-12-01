@@ -68,6 +68,7 @@ export interface FilterCommentResponse {
 export interface AddCommentProps {
   videoId: string
   setCommentData: React.Dispatch<React.SetStateAction<CommentType[]>>
+  optionBtnCallback: () => void
 }
 
 export interface CommentProps {

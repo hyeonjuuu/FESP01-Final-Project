@@ -162,6 +162,7 @@ function VideoDetail() {
       <AddComment
         videoId={location.state.item.id}
         setCommentData={setCommentData}
+        optionBtnCallback={handleOptionBtnCallback}
       />
       {commentData.map((item, index) => (
         <Comment
