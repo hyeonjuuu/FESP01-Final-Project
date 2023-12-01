@@ -26,8 +26,8 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const handleEditClick = async () => {
     setModifyChecked((prevBtn) => !prevBtn)
     if (!modifyChecked) return
-    else modifyComment(commentId, modifyCommentText)
-    await optionBtnCallback()
+    else await modifyComment(commentId, modifyCommentText)
+    optionBtnCallback()
     alert("댓글이 수정되었습니다! 🛠️")
   }
 
