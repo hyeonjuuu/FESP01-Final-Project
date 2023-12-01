@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom"
-import { VideoItem } from "../interface"
-import { motion } from "framer-motion"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, useState } from "react"
 import axios from "axios"
+import { Item } from "interface"
+import { VideoItem } from "interface"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { RecoilEnv, useRecoilState } from "recoil"
-import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
 import { videoHoveringAtom } from "@store/videoHoveringAtom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { channelThumbnailAtom } from "@store/channelThumbnailAtom"
+import { faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons"
 
 // recoil Key 오류 방지
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -46,16 +47,15 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
       try {
         const response = await axios.get(
           `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
-          // `/videos/searchByChannels/search-by-channel-id-${channelId}.json`,
         )
 
-        const channelThumbnailUrl = response.data.items.map(
-          (item: any) => item?.snippet?.thumbnails?.high.url,
+        const channelThumbnailUrl = (response.data.items as Item[]).map(
+          (item) => item?.snippet?.thumbnails?.high.url,
         )[0]
 
         setChannelThumbnail(channelThumbnailUrl)
       } catch (error) {
-        // console.error("Error fetching detail data:", error)
+        console.error("Error fetching detail data:", error)
       }
     }
 

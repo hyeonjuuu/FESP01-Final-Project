@@ -5,7 +5,7 @@ import BackButton from "@components/BackButton"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const Header = React.memo(function Header() {
+function Header() {
   return (
     <header className="flex justify-between px-8 pt-2 pb-8 items-center dark:bg-[#202124] dark:text-white">
       <div className="flex items-center">
@@ -28,6 +28,6 @@ const Header = React.memo(function Header() {
       </button>
     </header>
   )
-})
+}
 
 export default Header
