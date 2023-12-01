@@ -31,7 +31,10 @@ function RelatedVideo({ item, date }: RelatedVideoProps) {
         <div className="flex pb-2">
           <div className="min-w-[168px] h-[94px]">
             <img
-              src={item.snippet.thumbnails.high.url}
+              src={
+                item.snippet.thumbnails.high.url ||
+                item.snippet.thumbnails.standard?.url
+              }
               alt={item.snippet.title}
               className="w-full h-full border-neutral-500 border-[0.5px] object-cover rounded-lg"
             ></img>
