@@ -13,7 +13,7 @@ function Header() {
         <Link to="/">
           <div className="flex items-center gap-4 h-4 w-13 p-2 mr-10">
             <img
-              src="/youtubeLogo.svg"
+              src="https://haha41.github.io/FESP01-Final-Project/youtubeLogo.svg"
               alt="로고"
               className="w-12 h-12 mx-10"
             />

@@ -69,12 +69,12 @@ function VideoDetail() {
     }
   }, [])
 
+  // 추가로 관련된 영상 불러오기
   const fetchMoreRelatidedVideo = async () => {
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
-      // 추가로 관련된 영상 불러오기
       const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
 
       if (!moreRelatedVideos) {
@@ -96,12 +96,12 @@ function VideoDetail() {
     }
   }
 
+  // 추가로 댓글 불러오기
   const fetchMoreComment = async () => {
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
-      // 추가로 댓글 불러오기
       const startRange = commentData.length
       const endRange = startRange + 2
 
@@ -110,6 +110,11 @@ function VideoDetail() {
         startRange,
         endRange,
       )
+
+      if (!moreDataComments || moreDataComments.length === 0) {
+        console.log("추가 댓글이 없습니다.")
+        return
+      }
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
@@ -144,6 +149,7 @@ function VideoDetail() {
   const handleOptionBtnCallback = async () => {
     try {
       const updatedComments = await filterComment(location.state.item.id, 0, 2)
+
       setCommentData(updatedComments || [])
     } catch (error) {
       console.error("댓글 수정 및 가져오기 실패:", error)
@@ -155,6 +161,7 @@ function VideoDetail() {
       <AddComment
         videoId={location.state.item.id}
         setCommentData={setCommentData}
+        optionBtnCallback={handleOptionBtnCallback}
       />
       {commentData.map((item, index) => (
         <Comment
