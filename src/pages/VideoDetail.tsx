@@ -12,8 +12,8 @@ import formatDateDifference from "@api/formatDateDifference"
 
 function VideoDetail() {
   const location = useLocation()
-  const locationRoute = location.state.item.snippet
   const videoId = location.state.item.id
+  const locationRoute = location.state.item.snippet
 
   const [isLoading, setIsLoading] = useState(false)
   const [, setWindowWidth] = useState(window.outerWidth)
@@ -69,12 +69,14 @@ function VideoDetail() {
     }
   }, [])
 
-  const fetchMoreData = async () => {
+  const fetchMoreRelatidedVideo = async () => {
     try {
       setIsLoading(true)
       setScrollFetching(true)
 
+      // 추가로 관련된 영상 불러오기
       const moreRelatedVideos = await getRelatedVideo(locationRoute, pageToken)
+
       if (!moreRelatedVideos) {
         console.error("getRelatedVideo did not return any data")
         return
@@ -86,7 +88,20 @@ function VideoDetail() {
       }
       setPageToken(moreRelatedVideos.nextPageToken)
       setDetailData((prevData) => [...prevData, ...moreRelatedVideos.items])
+    } catch (error) {
+      console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+    } finally {
+      setIsLoading(false)
+      setScrollFetching(false)
+    }
+  }
 
+  const fetchMoreComment = async () => {
+    try {
+      setIsLoading(true)
+      setScrollFetching(true)
+
+      // 추가로 댓글 불러오기
       const startRange = commentData.length
       const endRange = startRange + 2
 
@@ -98,7 +113,6 @@ function VideoDetail() {
 
       if (moreDataComments) {
         setCommentData((prevData) => [...(prevData || []), ...moreDataComments])
-        console.log("33")
       }
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
@@ -114,7 +128,8 @@ function VideoDetail() {
     const clientHeight = document.documentElement.clientHeight
 
     if (scrollTop + clientHeight >= scrollHeight - 1 && !scrollFetching) {
-      fetchMoreData()
+      fetchMoreComment()
+      fetchMoreRelatidedVideo()
     }
   }
 
