@@ -79,3 +79,10 @@ export interface CommentProps {
   videoId: string
   optionBtnCallback: () => void
 }
+
+export interface Item {
+  etag: string
+  id: string
+  kind: string
+  snippet: Snippet
+}

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { Item } from "interface"
 import { useRecoilState } from "recoil"
 import { VideoSnippet } from "interface"
 import { useEffect, useState } from "react"
@@ -38,8 +39,8 @@ function VideoDetailItem({ item, videoId }: VideoDetailItemProps) {
           `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
         )
 
-        const channelThumbnailUrl = response.data.items.map(
-          (item: any) => item?.snippet?.thumbnails?.high.url,
+        const channelThumbnailUrl = (response.data.items as Item[]).map(
+          (item) => item?.snippet?.thumbnails?.high.url,
         )[0]
 
         const channelThumbnailDescription = response.data.items[0].snippet.title
