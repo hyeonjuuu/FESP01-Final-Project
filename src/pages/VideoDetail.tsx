@@ -150,6 +150,7 @@ function VideoDetail() {
   const handleOptionBtnCallback = async () => {
     try {
       const updatedComments = await filterComment(location.state.item.id, 0, 2)
+
       setCommentData(updatedComments || [])
     } catch (error) {
       console.error("댓글 수정 및 가져오기 실패:", error)
