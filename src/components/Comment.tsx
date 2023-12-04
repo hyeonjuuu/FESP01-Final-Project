@@ -56,6 +56,7 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
       try {
         const response = await axios.get(
           `https://picsum.photos/id/${randomThreeDigitNumber}/200/300`,
+          // `https://picsum.photos/200/300`,
         )
         // console.log(response)
 
