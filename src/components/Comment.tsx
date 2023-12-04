@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CommentProps } from "interface"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import formatDateDifference from "@api/formatDateDifference"
 import { deleteComment, modifyComment } from "@api/commentApi"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
+import axios from "axios"
 
 function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const [count, setCount] = useState(0)
@@ -12,6 +13,7 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
   const [isBarsVisible, setIsBarsVisible] = useState(false)
   const [isButtonsVisible, setIsButtonsVisible] = useState(false)
   const [modifyCommentText, setModifyCommentText] = useState<string>("")
+  const [profileImg, setProfileImg] = useState<string>("")
 
   const createdDate = formatDateDifference(date)
 
@@ -41,6 +43,33 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
     setModifyCommentText(e.target.value)
   }
 
+  function generateRandomThreeDigitNumber() {
+    // 100부터 999까지의 랜덤 정수 생성
+    const randomNumber = Math.floor(Math.random() * (999 - 100 + 1)) + 100
+    return randomNumber
+  }
+
+  const randomThreeDigitNumber = generateRandomThreeDigitNumber()
+
+  useEffect(() => {
+    const getProfileImg = async () => {
+      try {
+        const response = await axios.get(
+          `https://picsum.photos/id/${randomThreeDigitNumber}/200/300`,
+          // `https://picsum.photos/200/300`,
+        )
+        // console.log(response)
+
+        setProfileImg(response.config.url!)
+      } catch (error) {
+        console.error(`❌ 에러가 발생하였습니다 : ${error}`)
+        throw error
+      }
+    }
+
+    getProfileImg()
+  }, [])
+
   return (
     <div className="w-full">
       <div
@@ -54,11 +83,18 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
       >
         <div className="h-auto pr-4">
           <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
-            <img
-              src="https://haha41.github.io/FESP01-Final-Project/smile.png"
+            {/* <img
+              src={getProfileImg()}
               alt="프로필 사진"
               className="w-full h-full object-cover"
-            ></img>
+            ></img> */}
+            {profileImg && (
+              <img
+                src={profileImg}
+                alt="프로필 사진"
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
         </div>
 
