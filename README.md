@@ -97,7 +97,8 @@
  ┗ 📜tailwind.css
 ```
 
-#5. 결과
+# 5. 결과
+
 메인 페이지
 <img src="/public/main.gif"  width="100%">
 <br>
