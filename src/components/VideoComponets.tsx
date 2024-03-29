@@ -17,11 +17,20 @@ interface VideoComponentsProps {
   item: VideoItem
   date: string
   page: string
+  // onMouseOver: React.MouseEventHandler<HTMLElement>
+  // onMouseOut: React.MouseEventHandler<HTMLElement>
+  // hoverVideoComponent: boolean
+  videoId: string
 }
 
-function VideoComponents({ item, date, page }: VideoComponentsProps) {
+function VideoComponents({
+  item,
+  date,
+  page,
+
+  videoId,
+}: VideoComponentsProps) {
   const channelId = item.snippet.channelId
-  const videoId = item.id
   const [isSound, setIsSound] = useState(false)
   const [channelThumbnail, setChannelThumbnail] = useRecoilState(
     channelThumbnailAtom(channelId),
@@ -33,15 +42,41 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     e.preventDefault()
   }
 
-  const handleMouseOver: React.MouseEventHandler<HTMLElement> = () => {
-    setVideoHover(true)
+  const handleMouseOver: React.MouseEventHandler<HTMLElement> = (e) => {
+    const target = e.currentTarget
+    console.log(target)
+
+    if (
+      target instanceof HTMLImageElement ||
+      target instanceof HTMLIFrameElement
+    ) {
+      const src = target.src
+      // 이미지일때, 영상일때 url을 다르게 추출해야함.
+      const imageUrl = src.split("/")[4]
+      const videoUrl = imageUrl.split("?")[0]
+      console.log(videoUrl)
+
+      let count = 0
+      if (videoId.includes(imageUrl || videoUrl)) {
+        count++
+
+        if (count <= 1) {
+          console.log(count)
+          setTimeout(() => {
+            setVideoHover(true)
+          }, 1000)
+        } else {
+          setVideoHover(false)
+        }
+      }
+    }
   }
 
-  const handleMouseOut: React.MouseEventHandler<HTMLElement> = () => {
+  const handleMouseOut = () => {
     setVideoHover(false)
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     const channelDetail = async () => {
       try {
         const response = await axios.get(
@@ -60,7 +95,7 @@ function VideoComponents({ item, date, page }: VideoComponentsProps) {
     }
 
     channelDetail()
-  }, [channelId, setChannelThumbnail])
+  }, [channelId, setChannelThumbnail]) */
 
   const videoImage = () => (
     <img

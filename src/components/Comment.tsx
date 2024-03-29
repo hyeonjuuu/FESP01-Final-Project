@@ -23,11 +23,11 @@ function Comment({ text, date, commentId, optionBtnCallback }: CommentProps) {
     setIsButtonsVisible(!isButtonsVisible)
   }
 
-  const handleEditClick = () => {
+  const handleEditClick = async () => {
     setModifyChecked((prevBtn) => !prevBtn)
     if (!modifyChecked) return
     else modifyComment(commentId, modifyCommentText)
-    optionBtnCallback()
+    await optionBtnCallback()
     alert("댓글이 수정되었습니다! 🛠️")
   }
 

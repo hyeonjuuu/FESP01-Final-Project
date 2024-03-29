@@ -23,7 +23,7 @@ function VideoDetail() {
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [commentData, setCommentData] = useState<CommentType[]>([])
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchDetailData = async () => {
       try {
         setIsLoading(true)
@@ -43,7 +43,7 @@ function VideoDetail() {
     }
 
     fetchDetailData()
-  }, [locationRoute.channelId])
+  }, [locationRoute.channelId]) */
 
   useEffect(() => {
     const promiseData = filterComment(location.state.item.id, 0, 2)

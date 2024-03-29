@@ -8,6 +8,10 @@ import VideoComponents from "@components/VideoComponets"
 import formatDateDifference from "@api/formatDateDifference"
 import { searchBarValueAtom } from "@store/searchBarValueAtom"
 import getVideoData from "@api/getVideoData"
+import {
+  videoHoverVideoIdAtom,
+  videoHoveringAtom,
+} from "@store/videoHoveringAtom"
 
 function VideoMain() {
   const [isLoading, setIsLoading] = useState(true)
@@ -16,8 +20,11 @@ function VideoMain() {
   const [scrollFetching, setScrollFetching] = useState(false)
   const [dataVariable, setDataVariable] = useState<string[]>([])
   const [videoData, setVideoData] = useRecoilState<VideoItem[]>(videoAtom)
+  const videoIds = videoData.map((item) => item.id)
+  const [hoverVideoComponent, setHoverVideoComponent] = useState(false)
 
-  useEffect(() => {
+  // #API
+  /*   useEffect(() => {
     const dataFetching = async () => {
       try {
         setIsLoading(true)
@@ -37,9 +44,10 @@ function VideoMain() {
     }
 
     dataFetching()
-  }, [])
+  }, []) */
 
-  /*   useEffect(() => {
+  // #JSON
+  useEffect(() => {
     const dataFetching = async () => {
       try {
         const response = await getVideoData()
@@ -56,7 +64,7 @@ function VideoMain() {
     }
 
     dataFetching()
-  }, [setVideoData]) */
+  }, [setVideoData])
 
   const fetchMoreData = async () => {
     try {
@@ -69,6 +77,7 @@ function VideoMain() {
       const formattedDates = moreData.items.map((item: VideoItem) => {
         return formatDateDifference(item.snippet.publishedAt)
       })
+
       setDataVariable((prevDates) => [...prevDates, ...formattedDates])
     } catch (error) {
       console.error(`❌ 에러가 발생하였습니다 : ${error}`)
@@ -110,6 +119,10 @@ function VideoMain() {
             key={`${item.id}_${index}`}
             item={item}
             date={dataVariable[index]}
+            // onMouseOver={handleMouseOver}
+            // onMouseOut={handleMouseOut}
+            // hoverVideoComponent={hoverVideoComponent}
+            videoId={item.id}
           />
         ))}
         {isLoading && <Spinner />}
