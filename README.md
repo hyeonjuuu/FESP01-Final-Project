@@ -31,10 +31,6 @@
 
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
-### 컨벤션
-
-<img src="https://camo.githubusercontent.com/7fa570effac021782513cef744bb38ef4f0ead358d185733a91723e571ff3736/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f50726574746965722d4637423933452e7376673f7374796c653d666c61742d737175617265266c6f676f3d5072657474696572266c6f676f436f6c6f723d626c61636b" data-canonical-src="https://img.shields.io/badge/Prettier-F7B93E.svg?style=flat-square&amp;logo=Prettier&amp;logoColor=black" style="max-width: 100%;">
-<img src="https://camo.githubusercontent.com/3d5cdee96e729a26a0d8fcb95511218055e59a0a7e325373b389835f129a6fae/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f45534c696e742d3442333243332e7376673f7374796c653d666c61742d737175617265266c6f676f3d45534c696e74266c6f676f436f6c6f723d7768697465" data-canonical-src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat-square&amp;logo=ESLint&amp;logoColor=white" style="max-width: 100%;">
 
 # 3. Git 컨벤션
 
@@ -99,10 +95,4 @@
  ┗ 📜tailwind.css
 ```
 
-# 5. 결과
 
-메인 페이지
-<img src="/public/main.gif"  width="100%">
-<br>
-상세 페이지
-<img src="/public/detail.gif" width="100%">
