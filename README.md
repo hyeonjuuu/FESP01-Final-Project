@@ -1,3 +1,9 @@
+# WeTube
+## 프로젝트 소개
+WeTube는 YouTube API를 활용하여 영상 제공 서비스 제작을 목표한
+프로젝트입니다.
+TypeScript와 API에 대한 이해도를 높이고 반응형 디자인 구성 및 다크모드 기능 구현을 필수 목표로 설정 후 프로젝트를 진행하였습니다.
+
 [FEPS 1기🦁 | 11조 | Final 프로젝트]
 
 > 팀원 : [이호](https://github.com/bomlang), [장현주](https://github.com/hyeonjuuu), [정소희](https://github.com/haha41)
@@ -6,48 +12,68 @@
 
 > [배포 페이지](https://fesp-01-final-project-dib-team.vercel.app/)
 
-# 1. 프로젝트 소개
+### 개발환경
 
-해당 프로젝트는 유튜브를 바탕으로 UI와 영상 콘텐츠 관련한 기능 구현을 목표로 한 프로젝트 입니다.
 
-# 2. 기술 스택 및 개발 환경
+<table>
+<tr>
+ <td align="center" width="100px">Front-End</td>
+ <td width="800px">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>&nbsp
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=ReactRouter&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/recoil-3578E5?style=for-the-badge&logo=recoil&logoColor=white"/>
+    </td>
+</tr>
+<tr>
+ <td align="center">Back-End</td>
+ <td>
+  <img src="https://img.shields.io/badge/youtube%20api-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/>
+    <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=ffffff"/>&nbsp 
+  </td>
+</tr>
+  <tr>
+ <td align="center">패키지</td>
+ <td>
+    <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=ffffff"/>&nbsp 
+  </td>
+</tr>
+<tr>
+ <td align="center">포맷터</td>
+ <td>
+  <img src="https://img.shields.io/badge/Prettier-373338?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp 
+ <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">
+ </td>
+</tr>
+<tr>
+ <td align="center">버전 및 이슈관리</td>
+ <td>
+ <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">&nbsp 
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp 
+ </td>
+ <tr>
+</tr>
+<tr>
+ <td align="center">IDE</td>
+ <td>
+    <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp
+</tr>
+</table>
 
-### FrontEnd
+<br />
 
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 
-  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+## 주요기능
 
-### BackEnd
+|메인페이지|상세페이지|  검색   |
+|--|--|--|
+| - Youtube API 활용한 영상 렌더링<br />- 콘텐츠 정보 렌더링<br />- 영상 자동 재생 | - 영상 콘텐츠 상세 정보 렌더링 <br /> - 댓글 작성 / 수정 / 삭제<br />- 관련 영상 렌더링<br />| - 검색어 기반 콘텐츠 검색|
 
-- Youtube API
-- supabase
 
-### 협업방식
+<br />
 
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-
-### 컨벤션
-
-<img src="https://camo.githubusercontent.com/7fa570effac021782513cef744bb38ef4f0ead358d185733a91723e571ff3736/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f50726574746965722d4637423933452e7376673f7374796c653d666c61742d737175617265266c6f676f3d5072657474696572266c6f676f436f6c6f723d626c61636b" data-canonical-src="https://img.shields.io/badge/Prettier-F7B93E.svg?style=flat-square&amp;logo=Prettier&amp;logoColor=black" style="max-width: 100%;">
-<img src="https://camo.githubusercontent.com/3d5cdee96e729a26a0d8fcb95511218055e59a0a7e325373b389835f129a6fae/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f45534c696e742d3442333243332e7376673f7374796c653d666c61742d737175617265266c6f676f3d45534c696e74266c6f676f436f6c6f723d7768697465" data-canonical-src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat-square&amp;logo=ESLint&amp;logoColor=white" style="max-width: 100%;">
-
-# 3. Git 컨벤션
-
-- [Feat] 새로운 기능 추가
-- [Fix] 버그 수정
-- [Design] CSS 등 사용자 UI 디자인 변경
-- [Modify] 함수명이나 변수명 등 코드를 수정한 경우
-- [Refactor] 코드 리팩토링 -> 기존 코드의 구조를 변경하거나 개선
-- [Docs] README 문서 수정 또는 코드 주석을 추가/수정하거나, 사용자 매뉴얼을 작성하는 등의 작업
-- [Test] 테스트 추가, 테스트 리팩토링
-- [Chore] 빌드 부분 혹은 패키지 매니저 수정
-- [Rename] 파일 혹은 폴더명 수정
-- [Remove]파일 혹은 폴더 삭제
-
-# 4. 프로젝트 구조
+## 폴더 구조 
 
 ```
 📦src
@@ -97,10 +123,20 @@
  ┗ 📜tailwind.css
 ```
 
-# 5. 결과
 
-메인 페이지
-<img src="/public/main.gif"  width="100%">
-<br>
-상세 페이지
-<img src="/public/detail.gif" width="100%">
+<br />
+
+## commit 컨벤션
+- [Feat] 새로운 기능 추가
+- [Fix] 버그 수정
+- [Design] CSS 등 사용자 UI 디자인 변경
+- [Modify] 함수명이나 변수명 등 코드를 수정한 경우
+- [Refactor] 코드 리팩토링 -> 기존 코드의 구조를 변경하거나 개선
+- [Docs] README 문서 수정 또는 코드 주석을 추가/수정하거나, 사용자 매뉴얼을 작성하는 등의 작업
+- [Test] 테스트 추가, 테스트 리팩토링
+- [Chore] 빌드 부분 혹은 패키지 매니저 수정
+- [Rename] 파일 혹은 폴더명 수정
+- [Remove]파일 혹은 폴더 삭제
+
+<br />
+
