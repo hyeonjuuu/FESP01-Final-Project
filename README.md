@@ -126,7 +126,7 @@ TypeScript와 API에 대한 이해도를 높이고 반응형 디자인 구성 �
 
 <br />
 
-## commit 컨벤션
+## Commit 컨벤션
 - [Feat] 새로운 기능 추가
 - [Fix] 버그 수정
 - [Design] CSS 등 사용자 UI 디자인 변경
