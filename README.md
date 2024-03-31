@@ -142,20 +142,20 @@ TypeScript와 API에 대한 이해도를 높이고 반응형 디자인 구성 �
 
 ## 기능구현 및 프로젝트를 통해 배운점
 
-1. API 활용 방법 학습
+### 1. API 활용 방법 학습
 API 키 발급 및 관리를 Youtube API를 연동할 수 있었으며, Youtube API의 공식 문서를 읽고 필요한 데이터를 axios의 get 메서드를 통해 렌더링할 수 있었습니다.
 
-2. Supabase 데이터 CRUD 학습
+### 2. Supabase 데이터 CRUD 학습
 데이터베이스로 Supabase를 활용하여 CRUD 기능을 구현하였습니다. Supabase의 데이터 테이블을 생성하여 유저의 댓글을 작성, 삭제, 수정할 수 있는 기능을 구현하였습니다.
 
-3. Tailwind CSS 활용한 반응형 디자인
+### 3. Tailwind CSS 활용한 반응형 디자인
 Tailwind CSS의 클래스 유틸리티를 활용하여 sm, md, lg, xl 사이즈에 대응하는 반응형 디자인을 구현하였습니다.
 또한 이에 따른 grid column 값을 제어하여 다양한 화면 크기에 맞는 레이아웃으로 조정하였습니다.
 
-4. TypeScript 프로젝트 경험
+### 4. TypeScript 프로젝트 경험
 TypeScript 프로젝트를 경험하며 정적 타입을 통한 코드의 안정성과 가독성에 대해 학습하였습니다. 이를 통해 타입 관련 오류를 미리 발견하며, 코드의 예측 가능성과 유지보수성을 높일 수 있었습니다.
 
-5. Recoil을 활용한 상태관리
+### 5. Recoil을 활용한 상태관리
 Recoil의 atom을 활용한 상태 구독, 업데이트 API를 사용하여 간단하고 안정적인 전역 상태를 관리하였습니다.
 useState를 사용할 때의 props drilling을 해결하고, useContext의 가독성 및 유지보수성이 취약한 점을 해결하고자 Recoil을 도입하였습니다. 크게 atom, selector의 기능만 사용해보았지만, atom 생성을 통해 useContext 사용시의 가독성이 떨어지는 점과 유지 보수성을 해결할 수 있었고, 전역 상태 관리를 통해 props drilling을 해결할 수 있어 효율적인 상태 관리 방법을 익힐 수 있었습니다.
 
